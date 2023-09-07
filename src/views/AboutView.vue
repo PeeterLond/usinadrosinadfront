@@ -1,5 +1,6 @@
 <template>
   <div class="about">
-    <h1>This is an about page</h1>
+    <img src="../assets/image/backgroundImage.jpg" alt="Vue image" height="850" width="1500">
+
   </div>
 </template>

@@ -1,30 +1,24 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+  <header>
+    <div class="header">
+      <div class="row justify-content-center">
+        <div class="col col-1">
+          <img src="../src/assets/logo.png" alt="ettevõtte logo" id="ettevõttelogo">
+        </div>
+        <div class="col">
+          <h1>Usinad Rosinad</h1>
+        </div>
+        <div class="col">
+          <button type="button" class="btn btn-light" >Logi sisse</button>
+        </div>
+
+      </div>
+    </div>
+
+  </header>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
 
-nav {
-  padding: 30px;
-}
 
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
+</script>

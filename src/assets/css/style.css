@@ -1,0 +1,12 @@
+.header {
+    border: solid 1px black;
+    height: 100px;
+    font-family: "Brush Script MT", serif;
+}
+#ettevõttelogo {
+    height: 75px;
+}
+.col{
+    border: solid 1px black;
+
+}

@@ -8,7 +8,7 @@
           <h1>Usinad Rosinad</h1>
         </div>
         <div class="col d-flex justify-content-center">
-          <button type="button" class="btn btn-light m-3" >Logi sisse</button>
+          <router-link to="/login"><button type="button" class="btn btn-light m-3" >Logi sisse</button></router-link>
         </div>
       </div>
   </header>
@@ -48,5 +48,16 @@
 
 <script>
 
+
+import router from "@/router";
+import {defineComponent} from "vue";
+
+export default defineComponent({
+  methods: {
+    router() {
+      return router
+    }
+  }
+})
 
 </script>

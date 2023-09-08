@@ -1,0 +1,97 @@
+<template>
+  <AlertDanger :alert-message="errorResponse.message"/>
+  <div class="row">
+    <div class="col d-flex justify-content-center m-5">
+      <input v-model="username" type="text" placeholder="Kasutajanimi">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col d-flex justify-content-center m-2">
+      <input v-model="password" type="password" placeholder="Salasõna">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col d-flex justify-content-center m-2">
+      <button @click="login" type="submit">Logi sisse</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col text-center m-5">
+      <p>Registreeri kasutaja</p>
+      <p>Unustasid salasõna?</p>
+    </div>
+  </div>
+
+
+</template>
+
+<script>
+import AlertDanger from "@/components/alert/AlertDanger.vue";
+import {FILL_MANDATORY_FIELDS} from "@/assets/script/AlertMessage";
+import {INCORRECT_CREDENTIALS} from "@/assets/script/ErrorCode";
+import router from "@/router";
+
+export default {
+  name: 'LoginView',
+  components: {AlertDanger},
+  data() {
+    return {
+      username: '',
+      password: '',
+      loginResponse: {
+        userId: 0,
+        roleName: ''
+      },
+      errorResponse: {
+        message: '',
+        errorCode: 0
+      },
+    }
+  },
+  methods: {
+
+login() {
+      this.resetErrorMessage();
+      if (this.mandatoryFieldsAreFilled()) {
+        this.sendLoginRequest();
+      } else {
+        this.errorResponse.message = FILL_MANDATORY_FIELDS
+      }
+      this.resetPassword();
+    },
+
+    resetErrorMessage: function () {
+      this.errorResponse.message = ''
+    },
+
+    mandatoryFieldsAreFilled() {
+      return this.username.length > 0 && this.password.length > 0
+    },
+
+    resetPassword: function () {
+      this.password = ''
+    },
+
+    sendLoginRequest: function () {
+      this.$http.get("/login", {
+            params: {
+              username: this.username,
+              password: this.password
+            }
+          }
+      ).then(response => {
+        this.loginResponse = response.data
+        sessionStorage.setItem('userId', this.loginResponse.userId)
+        sessionStorage.setItem('roleName', this.loginResponse.roleName)
+
+      }).catch(error => {
+        this.errorResponse = error.response.data
+        if (this.errorResponse.errorCode !== INCORRECT_CREDENTIALS) {
+          router.push({name: 'errorRoute'})
+        }
+      })
+
+    },
+  }
+}
+</script>

@@ -8,11 +8,12 @@
           <h1>Usinad Rosinad</h1>
         </div>
         <div class="col d-flex justify-content-center">
-          <router-link to="/login"><button type="button" class="btn btn-light m-3" >Logi sisse</button></router-link>
+          <router-link v-if="!loggedIn" to="/login"><button type="button" class="btn btn-light m-3" >Logi sisse</button></router-link>
+          <router-link v-else @click="handleLogOut" to="/"><button type="button" class="btn btn-danger m-3" >Logi välja</button></router-link>
         </div>
       </div>
   </header>
-  <nav>
+  <nav v-if="loggedIn">
     <div class="row">
       <div class="col col-1 d-flex justify-content-center">
         <router-link to="/">Kodu</router-link>
@@ -21,7 +22,7 @@
         <router-link to="/">Kuulutused</router-link>
       </div>
       <div class="col col-1 d-flex justify-content-center">
-        <router-link to="/">Minu profiil</router-link>
+        <router-link to="/dashboard">Minu töölaud</router-link>
       </div>
       <div class="col col-1 d-flex justify-content-center">
         <router-link to="/">Minu sõnumid</router-link>
@@ -29,7 +30,7 @@
     </div>
   </nav>
 <main>
-  <router-view></router-view>
+  <router-view @event-update-nav-menu="updateNavMenu"></router-view>
 </main>
  <footer>
    <div class="row">
@@ -53,7 +54,19 @@ import router from "@/router";
 import {defineComponent} from "vue";
 
 export default defineComponent({
+  data() {
+    return {
+      loggedIn: false
+    }
+  },
   methods: {
+    updateNavMenu() {
+      this.loggedIn = sessionStorage.getItem('userId') !== null
+    },
+    handleLogOut() {
+      sessionStorage.clear()
+      this.updateNavMenu()
+    },
     router() {
       return router
     }

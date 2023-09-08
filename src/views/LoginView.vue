@@ -17,7 +17,7 @@
   </div>
   <div class="row">
     <div class="col text-center m-5">
-      <p>Registreeri kasutaja</p>
+      <router-link to="/user"><p>Registreeri kasutaja</p></router-link>
       <p>Unustasid salasõna?</p>
     </div>
   </div>
@@ -83,6 +83,8 @@ login() {
         this.loginResponse = response.data
         sessionStorage.setItem('userId', this.loginResponse.userId)
         sessionStorage.setItem('roleName', this.loginResponse.roleName)
+        this.$emit('event-update-nav-menu')
+        router.push({name: 'dashboardRoute'})
 
       }).catch(error => {
         this.errorResponse = error.response.data

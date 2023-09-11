@@ -27,3 +27,6 @@ footer {
     bottom: 0;
     width: 100%;
 }
+td {
+    width: 200px;
+}

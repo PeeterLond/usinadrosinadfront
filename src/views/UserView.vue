@@ -2,72 +2,67 @@
 
 <div class="row">
   <div class="col">
-    <UserImage></UserImage>
-    <input type="file" accept="image/png,image/jpeg,image/gif">
+    <UserImage :image-data-base64="contactRequest.imageData"></UserImage>
+
+    <ImageInput @event-emit-base64="setContactRequestImageData"/>
+
+    <AlertDanger :alert-message="errorResponse.message"></AlertDanger>
 
   </div>
   <div class="col">
     <table>
       <tr>
         <td><label for="username">Kasutajanimi</label></td>
-        <td><input type="text" id="username"></td>
+        <td><input v-model="contactRequest.userUsername" type="text" id="username"></td>
       </tr>
       <tr>
         <td><label for="firstName">Eesnimi</label></td>
-        <td><input type="text" id="firstName"></td>
+        <td><input v-model="contactRequest.contactFirstName" type="text" id="firstName"></td>
       </tr>
       <tr>
         <td><label for="lastName">Perekonnanimi</label></td>
-        <td><input type="text" id="lastName"></td>
+        <td><input v-model="contactRequest.contactLastName" type="text" id="lastName"></td>
       </tr>
       <tr>
         <td><label for="telephone">Telefoni number</label></td>
-        <td><input type="text" id="telephone"></td>
+        <td><input v-model="contactRequest.contactMobileNumber" type="text" id="telephone"></td>
       </tr>
       <tr>
         <td><label for="email">Email</label></td>
-        <td><input type="email" id="email"></td>
+        <td><input v-model="contactRequest.contactEmail" type="email" id="email"></td>
       </tr>
       <tr>
         <td><label for="county">Maakond</label></td>
         <td>
-          <div class="dropdown">
-            <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="county">
-              Vali maakond
-            </button>
-            <ul class="dropdown-menu">
-              <li v-for="county in countyResponse" :value="county.countyId"><a class="dropdown-item">{{county.countyName}}</a></li>
-            </ul>
-          </div>
+          <select v-model="contactRequest.countyId" @change="getCities">
+            <option selected :value="0">Vali maakond</option>
+            <option v-for="county in countyResponse" id="county" :value="county.countyId" :key="county.countyId">{{county.countyName}}</option>
+          </select>
         </td>
       </tr>
       <tr>
         <td><label for="city">Linn</label></td>
         <td>
-          <div class="dropdown">
-            <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="city">
-              Vali linn
-            </button>
-            <ul class="dropdown-menu">
-              <li v-for="city in cityResponse" :value="city.cityId"><a class="dropdown-item">{{city.cityName}}</a></li>
-            </ul>
-          </div>
+          <select v-model="contactRequest.cityId">
+            <option selected :value="0">Vali linn</option>
+            <option v-for="city in cityResponse" id="city" :value="city.cityId" :key="city.cityId">{{city.cityName}}</option>
+          </select>
         </td>
       </tr>
       <tr>
         <td><label for="password">Salasõna</label></td>
-        <td><input type="password" id="password"></td>
+        <td><input  v-model="inputPassword1" type="password" id="password"></td>
       </tr>
       <tr>
         <td><label for="password2">Salasõna uuesti</label></td>
-        <td><input type="password" id="password2"></td>
+        <td><input v-model="inputPassword2" type="password" id="password2"></td>
       </tr>
     </table>
     <textarea placeholder="Koristaja lühitutvustus" cols="50" rows="5"></textarea>
     <table>
       <tr>
         <td><button type="submit" class="btn btn-light m-3">Katkesta</button></td>
-        <td><button type="submit" class="btn btn-light m-3">Kinnita</button></td>
+        <td><button @click="validateAndSendContactInfo" type="submit" class="btn btn-light m-3">Kinnita</button></td>
       </tr>
     </table>
 
@@ -83,25 +78,46 @@
 <script>
 import UserImage from "@/views/UserImage.vue";
 import router from "@/router";
+import AlertDanger from "@/components/alert/AlertDanger.vue";
+import {FILL_MANDATORY_FIELDS, PASSWORDS_DONT_MATCH} from "@/assets/script/AlertMessage";
+import ImageInput from "@/components/ImageInput.vue";
 
 export default {
   name: 'UserView',
-  components: {UserImage},
+  components: {ImageInput, AlertDanger, UserImage},
   data() {
     return {
       countyResponse: [
         {
-          "countyId": 0,
-          "countyName": "string"
+          countyId: 0,
+          countyName: ''
         }
       ],
       cityResponse: [
         {
-          "cityId": 0,
-          "countyId": 0,
-          "cityName": "string"
+          cityId: 0,
+          countyId: 0,
+          cityName: ''
         }
-      ]
+      ],
+      contactRequest: {
+        userUsername: '',
+        userPassword: '',
+        countyId: 0,
+        cityId: 0,
+        imageData: '',
+        contactFirstName: '',
+        contactLastName: '',
+        contactMobileNumber: '',
+        contactEmail: '',
+        contactIntroduction: ''
+      },
+      inputPassword1: '',
+      inputPassword2: '',
+      errorResponse: {
+        message: '',
+        errorCode: 0
+      }
 
     }
   },
@@ -116,19 +132,63 @@ export default {
           })
     },
     getCities() {
-      this.$http.get("/cities")
-          .then(response => {
-            // Siit saame kätte JSONi  ↓↓↓↓↓↓↓↓
-            this.cityResponse = response.data
-          })
-          .catch(error => {
-            router.push({name: 'errorRoute'})
-          })
+      this.$http.get("/cities", {
+            params: {
+              countyId: this.contactRequest.countyId,
+            }
+          }
+      ).then(response => {
+        this.cityResponse = response.data
+      }).catch(error => {
+       router.push({name: 'errorRoute'})
+      })
     },
+    validateAndSendContactInfo() {
+      this.alertMessage = ''
+      if (this.mandatoryFieldsAreFilled() && this.passwordsAreSame()) {
+        this.addContact()
+      }
+
+    },
+    addContact()
+    {
+      this.$http.post("/contact", this.contactRequest
+      ).then(response => {
+        const responseBody = response.data
+        alert("andmed saadetud")
+      }).catch(error => {
+
+        this.errorResponse = error.response.data
+      })
+    },
+    mandatoryFieldsAreFilled() {
+      if (this.contactRequest.userUsername.length > 0 &&
+          this.contactRequest.contactFirstName.length > 0 &&
+          this.contactRequest.contactLastName.length > 0 &&
+          this.contactRequest.contactEmail.length > 0 &&
+          this.inputPassword1.length > 0 &&
+          this.inputPassword2.length > 0 &&
+          this.contactRequest.countyId > 0) {
+        return true;
+      } else {
+        this.errorResponse.message = FILL_MANDATORY_FIELDS
+      }
+    },
+    passwordsAreSame() {
+      if (this.inputPassword1 === this.inputPassword2) {
+        this.contactRequest.userPassword = this.inputPassword1;
+        return true;
+      } else {
+        this.errorResponse.message = PASSWORDS_DONT_MATCH
+      }
+    },
+    setContactRequestImageData(imageDataBase64) {
+      this.contactRequest.imageData = imageDataBase64;
+    },
+
   },
   beforeMount() {
     this.getCounties()
-    this.getCities()
   }
 }
 </script>

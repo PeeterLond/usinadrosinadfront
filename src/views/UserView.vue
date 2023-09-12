@@ -1,14 +1,16 @@
 <template>
-
+  <div class="row">
+    <div class="col">
+      <h1>{{title}}</h1>
+    </div>
+  </div>
 <div class="row">
   <div class="col">
     <UserImage :image-data-base64="contactRequest.imageData"></UserImage>
-
     <ImageInput @event-emit-base64="setContactRequestImageData"/>
 
     <AlertDanger :alert-message="errorResponse.message"></AlertDanger>
     <AlertSuccess :alert-message="successMessage"></AlertSuccess>
-
   </div>
   <div class="col">
     <table>
@@ -89,6 +91,7 @@ export default {
   components: {AlertSuccess, ImageInput, AlertDanger, UserImage},
   data() {
     return {
+      title: 'Registreeri kasutaja',
       successMessage: '',
 
       countyResponse: [

@@ -7,6 +7,7 @@
     <ImageInput @event-emit-base64="setContactRequestImageData"/>
 
     <AlertDanger :alert-message="errorResponse.message"></AlertDanger>
+    <AlertSuccess :alert-message="successMessage"></AlertSuccess>
 
   </div>
   <div class="col">
@@ -79,14 +80,17 @@
 import UserImage from "@/views/UserImage.vue";
 import router from "@/router";
 import AlertDanger from "@/components/alert/AlertDanger.vue";
-import {FILL_MANDATORY_FIELDS, PASSWORDS_DONT_MATCH} from "@/assets/script/AlertMessage";
+import {FILL_MANDATORY_FIELDS, NEW_USER_SUCCESSFULLY_ADDED, PASSWORDS_DONT_MATCH} from "@/assets/script/AlertMessage";
 import ImageInput from "@/components/ImageInput.vue";
+import AlertSuccess from "@/components/alert/AlertSuccess.vue";
 
 export default {
   name: 'UserView',
-  components: {ImageInput, AlertDanger, UserImage},
+  components: {AlertSuccess, ImageInput, AlertDanger, UserImage},
   data() {
     return {
+      successMessage: '',
+
       countyResponse: [
         {
           countyId: 0,
@@ -145,6 +149,7 @@ export default {
     },
     validateAndSendContactInfo() {
       this.alertMessage = ''
+      this.successMessage = ''
       if (this.mandatoryFieldsAreFilled() && this.passwordsAreSame()) {
         this.addContact()
       }
@@ -154,8 +159,7 @@ export default {
     {
       this.$http.post("/contact", this.contactRequest
       ).then(response => {
-        const responseBody = response.data
-        alert("andmed saadetud")
+        this.successMessage = NEW_USER_SUCCESSFULLY_ADDED
       }).catch(error => {
 
         this.errorResponse = error.response.data

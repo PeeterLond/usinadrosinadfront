@@ -61,7 +61,7 @@
     <textarea placeholder="Koristaja lühitutvustus" cols="50" rows="5"></textarea>
     <table>
       <tr>
-        <td><button type="submit" class="btn btn-light m-3">Katkesta</button></td>
+        <td><router-link to="/login"><button type="submit" class="btn btn-light m-3">Katkesta</button></router-link></td>
         <td><button @click="validateAndSendContactInfo" type="submit" class="btn btn-light m-3">Kinnita</button></td>
       </tr>
     </table>

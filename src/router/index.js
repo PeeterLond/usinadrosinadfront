@@ -4,6 +4,7 @@ import LoginView from "@/views/LoginView.vue";
 import ErrorView from "@/views/ErrorView.vue";
 import DashBoardView from "@/views/DashBoardView.vue";
 import UserView from "@/views/UserView.vue";
+import advertisementView from "@/views/AdvertisementView.vue";
 
 const routes = [
   {
@@ -30,6 +31,11 @@ const routes = [
     path:'/user',
     name: 'userRoute',
     component: UserView
+  },
+  {
+    path:'/advertisement',
+    name: 'advertisementRoute',
+    component: advertisementView
   },
 
 ]

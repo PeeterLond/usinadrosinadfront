@@ -1,50 +1,46 @@
 <template>
-  <header>
-      <div class="row">
-        <div class="col col-1 text-center">
-          <img src="../src/assets/logo.png" alt="ettevõtte logo" id="companyLogo">
-        </div>
-        <div class="col col-9 m-3">
-          <h1>Usinad Rosinad</h1>
-        </div>
-        <div class="col d-flex justify-content-center">
-          <router-link v-if="!loggedIn" to="/login"><button type="button" class="btn btn-light m-3" >Logi sisse</button></router-link>
-          <router-link v-else @click="handleLogOut" to="/"><button type="button" class="btn btn-danger m-3" >Logi välja</button></router-link>
-        </div>
+  <div class="flex-master">
+    <header>
+      <div class="header-item company-logo">
+        <img src="../src/assets/logo.png" alt="ettevõtte logo" id="company-logo">
       </div>
-  </header>
-  <nav v-if="loggedIn">
-    <div class="row">
-      <div class="col col-1 d-flex justify-content-center">
+      <div class="header-item company-name">
+        <h1>Usinad Rosinad</h1>
+      </div>
+      <div class="header-item">
+        <router-link v-if="!loggedIn" to="/login"><button type="button" class="btn btn-light m-3" >Logi sisse</button></router-link>
+        <router-link v-else @click="handleLogOut" to="/"><button type="button" class="btn btn-danger m-3" >Logi välja</button></router-link>
+      </div>
+    </header>
+    <nav v-if="loggedIn">
+      <div class="nav-item">
         <router-link to="/">Kodu</router-link>
       </div>
-      <div class="col col-1 d-flex justify-content-center">
+      <div class="nav-item">
         <router-link to="/">Kuulutused</router-link>
       </div>
-      <div class="col col-1 d-flex justify-content-center">
+      <div class="nav-item">
         <router-link to="/dashboard">Minu töölaud</router-link>
       </div>
-      <div class="col col-1 d-flex justify-content-center">
+      <div class="nav-item nav-item1">
         <router-link to="/">Minu sõnumid</router-link>
       </div>
-    </div>
-  </nav>
-<main>
-  <router-view @event-update-nav-menu="updateNavMenu"></router-view>
-</main>
- <footer>
-   <div class="row">
-     <div class="col col-9 d-flex justify-content-end">
-      FB, Insta ja meili logo
-     </div>
-     <div class="col">
-      <p> Usinad Rosinad OÜ</p>
-       <p> Reg.nr 314159265</p>
-       <p>  AA: EE3141592658979323</p>
-       <p> Usina tn 1, Rosina maakond</p>
-     </div>
-   </div>
- </footer>
+    </nav>
+    <main>
+      <div class="main-item">
+        <router-view @event-update-nav-menu="updateNavMenu"></router-view>
+      </div>
+    </main>
+    <footer>
+      <div class="footer-item social-media-icons">FB, Insta ja meili logo</div>
+      <div class="footer-item">
+        <p> Usinad Rosinad OÜ <br>
+          Reg.nr 314159265 <br>
+          AA: EE3141592658979323 <br>
+          Usina tn 1, Rosina maakond </p>
+      </div>
+    </footer>
+  </div>
 </template>
 
 <script>
@@ -66,10 +62,10 @@ export default defineComponent({
     handleLogOut() {
       sessionStorage.clear()
       this.updateNavMenu()
-    },
-    router() {
-      return router
     }
+  },
+  beforeMount() {
+    this.updateNavMenu()
   }
 })
 

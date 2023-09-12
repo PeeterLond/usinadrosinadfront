@@ -44,7 +44,12 @@
 
   <div class="col">
     <div class="row">
-      Kuulutused
+      <h4>Kuulutused</h4>
+      <div class="dash-board-advertisements">
+      </div>
+      <div>
+        <router-link to="/advertisement"><button type="submit" class="btn btn-dark mt-2">Lisa kuulutus</button></router-link>
+      </div>
     </div>
     <div class="row">
       Tagasiside

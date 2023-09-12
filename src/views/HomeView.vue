@@ -10,6 +10,7 @@
         <button type="submit" class="btn btn-light ">Vaata kuulutusi</button>
       </div>
     </div>
+
   </div>
 </template>
 

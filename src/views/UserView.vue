@@ -160,8 +160,10 @@ export default {
       this.$http.post("/contact", this.contactRequest
       ).then(response => {
         this.successMessage = NEW_USER_SUCCESSFULLY_ADDED
+        setTimeout(() => {
+          router.push({name: 'dashboardRoute'})
+        }, 3000)
       }).catch(error => {
-
         this.errorResponse = error.response.data
       })
     },

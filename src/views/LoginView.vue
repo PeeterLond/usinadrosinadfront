@@ -12,7 +12,7 @@
   </div>
   <div class="row">
     <div class="col d-flex justify-content-center m-2">
-      <button @click="login" type="submit">Logi sisse</button>
+      <button @click="login"  class="btn btn-dark" type="submit">Logi sisse</button>
     </div>
   </div>
   <div class="row">

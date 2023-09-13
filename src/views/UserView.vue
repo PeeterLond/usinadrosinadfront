@@ -34,19 +34,13 @@
       <tr>
         <td><label for="county">Maakond</label></td>
         <td>
-          <select v-model="contactRequest.countyId" @change="getCities">
-            <option selected :value="0">Vali maakond</option>
-            <option v-for="county in countyResponse" id="county" :value="county.countyId" :key="county.countyId">{{county.countyName}}</option>
-          </select>
+          <CountyDropdown @event-update-selected-county-id="setContactRequestCountyId"/>
         </td>
       </tr>
       <tr>
         <td><label for="city">Linn</label></td>
         <td>
-          <select v-model="contactRequest.cityId">
-            <option selected :value="0">Vali linn</option>
-            <option v-for="city in cityResponse" id="city" :value="city.cityId" :key="city.cityId">{{city.cityName}}</option>
-          </select>
+          <CityDropdown @event-update-selected-city-id="setContactRequestCityId" ref="cityDropdownRef"/>
         </td>
       </tr>
       <tr>
@@ -61,8 +55,8 @@
     <textarea placeholder="Koristaja lühitutvustus" cols="50" rows="5"></textarea>
     <table>
       <tr>
-        <td><router-link to="/login"><button type="submit" class="btn btn-light m-3">Katkesta</button></router-link></td>
-        <td><button @click="validateAndSendContactInfo" type="submit" class="btn btn-light m-3">Kinnita</button></td>
+        <td><router-link to="/login"><button type="submit" class="btn btn-dark m-3">Katkesta</button></router-link></td>
+        <td><button @click="validateAndSendContactInfo" type="submit" class="btn btn-dark m-3">Kinnita</button></td>
       </tr>
     </table>
 
@@ -77,29 +71,17 @@
 
 <script>
 import UserImage from "@/views/UserImage.vue";
-import router from "@/router";
 import AlertDanger from "@/components/alert/AlertDanger.vue";
 import {FILL_MANDATORY_FIELDS, PASSWORDS_DONT_MATCH} from "@/assets/script/AlertMessage";
 import ImageInput from "@/components/ImageInput.vue";
+import CountyDropdown from "@/components/CountyDropdown.vue";
+import CityDropdown from "@/components/CityDropdown.vue";
 
 export default {
   name: 'UserView',
-  components: {ImageInput, AlertDanger, UserImage},
+  components: {CityDropdown, CountyDropdown, ImageInput, AlertDanger, UserImage},
   data() {
     return {
-      countyResponse: [
-        {
-          countyId: 0,
-          countyName: ''
-        }
-      ],
-      cityResponse: [
-        {
-          cityId: 0,
-          countyId: 0,
-          cityName: ''
-        }
-      ],
       contactRequest: {
         userUsername: '',
         userPassword: '',
@@ -122,26 +104,13 @@ export default {
     }
   },
   methods: {
-    getCounties() {
-      this.$http.get("/counties")
-          .then(response => {
-            this.countyResponse= response.data
-          })
-          .catch(error => {
-            router.push({name: 'errorRoute'})
-          })
+    setContactRequestCountyId(selectedCountyId) {
+      this.contactRequest.countyId = selectedCountyId
+      this.$refs.cityDropdownRef.selectedCountyId = selectedCountyId
+      this.$refs.cityDropdownRef.getCities()
     },
-    getCities() {
-      this.$http.get("/cities", {
-            params: {
-              countyId: this.contactRequest.countyId,
-            }
-          }
-      ).then(response => {
-        this.cityResponse = response.data
-      }).catch(error => {
-       router.push({name: 'errorRoute'})
-      })
+    setContactRequestCityId(selectedCityId) {
+      this.contactRequest.cityId = selectedCityId
     },
     validateAndSendContactInfo() {
       this.alertMessage = ''
@@ -157,7 +126,6 @@ export default {
         const responseBody = response.data
         alert("andmed saadetud")
       }).catch(error => {
-
         this.errorResponse = error.response.data
       })
     },
@@ -185,10 +153,6 @@ export default {
     setContactRequestImageData(imageDataBase64) {
       this.contactRequest.imageData = imageDataBase64;
     },
-
-  },
-  beforeMount() {
-    this.getCounties()
   }
 }
 </script>

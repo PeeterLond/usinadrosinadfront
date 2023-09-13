@@ -8,7 +8,7 @@
         <h1>Usinad Rosinad</h1>
       </div>
       <div class="header-item">
-        <router-link v-if="!loggedIn" to="/login"><button type="button" class="btn btn-light m-3" >Logi sisse</button></router-link>
+        <router-link v-if="!loggedIn" to="/login"><button type="button" class="btn btn-dark m-3" >Logi sisse</button></router-link>
         <router-link v-else @click="handleLogOut" to="/"><button type="button" class="btn btn-danger m-3" >Logi välja</button></router-link>
       </div>
     </header>

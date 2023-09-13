@@ -81,6 +81,7 @@ import {useRoute} from "vue-router";
 import EditPasswordModal from "@/components/modal/EditPasswordModal.vue";
 import CountyDropdown from "@/components/CountyDropdown.vue";
 import CityDropdown from "@/components/CityDropdown.vue";
+import router from "@/router";
 
 export default {
   name: 'UserView',
@@ -182,7 +183,6 @@ export default {
           }
       ).then(response => {
         this.contactRequest = response.data;
-        this.getCities()
       }).catch(error => {
         router.push({name: 'errorRoute'})
       })

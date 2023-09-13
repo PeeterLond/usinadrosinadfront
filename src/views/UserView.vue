@@ -1,4 +1,5 @@
 <template>
+  <EditPasswordModal ref="editPasswordModalRef"/>
   <div class="row">
     <div class="col">
       <h1>{{title}}</h1>
@@ -55,7 +56,7 @@
       <tr>
         <td><label for="password">Salasõna</label></td>
         <td v-if="!isEdit"><input  v-model="inputPassword1" type="password" id="password"></td>
-        <td v-else ><button type="submit" class="btn btn-dark">Muuda</button></td>
+        <td v-else ><button @click="handleEditPassword" type="submit" class="btn btn-dark" >Muuda</button></td>
       </tr>
       <tr v-if="!isEdit">
         <td><label for="password2">Salasõna uuesti</label></td>
@@ -84,10 +85,11 @@ import {FILL_MANDATORY_FIELDS, NEW_USER_SUCCESSFULLY_ADDED, PASSWORDS_DONT_MATCH
 import ImageInput from "@/components/ImageInput.vue";
 import AlertSuccess from "@/components/alert/AlertSuccess.vue";
 import {useRoute} from "vue-router";
+import EditPasswordModal from "@/components/modal/EditPasswordModal.vue";
 
 export default {
   name: 'UserView',
-  components: {AlertSuccess, ImageInput, AlertDanger, UserImage},
+  components: {EditPasswordModal, AlertSuccess, ImageInput, AlertDanger, UserImage},
   data() {
     return {
       title: 'Registreeri kasutaja:',
@@ -216,13 +218,14 @@ export default {
         router.push({name: 'errorRoute'})
       })
     },
+    handleEditPassword() {
+      this.$refs.editPasswordModalRef.$refs.modalRef.openModal()
+    },
 
   },
-
   mounted() {
     this.handleIsEdit()
   },
-
   beforeMount() {
     this.getCounties()
     this.isEdit = false

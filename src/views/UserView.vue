@@ -14,7 +14,7 @@
   </div>
   <div class="col">
     <table>
-      <tr>
+      <tr v-if="!isEdit">
         <td><label for="username">Kasutajanimi</label></td>
         <td><input v-model="contactRequest.userUsername" type="text" id="username"></td>
       </tr>
@@ -54,14 +54,15 @@
       </tr>
       <tr>
         <td><label for="password">Salasõna</label></td>
-        <td><input  v-model="inputPassword1" type="password" id="password"></td>
+        <td v-if="!isEdit"><input  v-model="inputPassword1" type="password" id="password"></td>
+        <td v-else ><button type="submit" class="btn btn-dark">Muuda</button></td>
       </tr>
-      <tr>
+      <tr v-if="!isEdit">
         <td><label for="password2">Salasõna uuesti</label></td>
         <td><input v-model="inputPassword2" type="password" id="password2"></td>
       </tr>
     </table>
-    <textarea placeholder="Koristaja lühitutvustus" cols="50" rows="5"></textarea>
+    <textarea v-model="contactRequest.contactIntroduction" placeholder="Koristaja lühitutvustus" cols="50" rows="5"></textarea>
     <table>
       <tr>
         <td><router-link to="/login"><button type="submit" class="btn btn-light m-3">Katkesta</button></router-link></td>
@@ -73,9 +74,6 @@
   </div>
 </div>
 
-
-
-
 </template>
 
 <script>
@@ -85,15 +83,17 @@ import AlertDanger from "@/components/alert/AlertDanger.vue";
 import {FILL_MANDATORY_FIELDS, NEW_USER_SUCCESSFULLY_ADDED, PASSWORDS_DONT_MATCH} from "@/assets/script/AlertMessage";
 import ImageInput from "@/components/ImageInput.vue";
 import AlertSuccess from "@/components/alert/AlertSuccess.vue";
+import {useRoute} from "vue-router";
 
 export default {
   name: 'UserView',
   components: {AlertSuccess, ImageInput, AlertDanger, UserImage},
   data() {
     return {
-      title: 'Registreeri kasutaja',
+      title: 'Registreeri kasutaja:',
       successMessage: '',
-
+      currentUserId: Number(useRoute().query.userId),
+      isEdit: false,
       countyResponse: [
         {
           countyId: 0,
@@ -132,7 +132,7 @@ export default {
     getCounties() {
       this.$http.get("/counties")
           .then(response => {
-            this.countyResponse= response.data
+            this.countyResponse = response.data
           })
           .catch(error => {
             router.push({name: 'errorRoute'})
@@ -147,7 +147,7 @@ export default {
       ).then(response => {
         this.cityResponse = response.data
       }).catch(error => {
-       router.push({name: 'errorRoute'})
+        router.push({name: 'errorRoute'})
       })
     },
     validateAndSendContactInfo() {
@@ -158,8 +158,7 @@ export default {
       }
 
     },
-    addContact()
-    {
+    addContact() {
       this.$http.post("/contact", this.contactRequest
       ).then(response => {
         this.successMessage = NEW_USER_SUCCESSFULLY_ADDED
@@ -195,9 +194,39 @@ export default {
       this.contactRequest.imageData = imageDataBase64;
     },
 
+
+    handleIsEdit() {
+      this.isEdit = !isNaN(this.currentUserId)
+
+      if (this.isEdit) {
+        this.title = 'Redigeeri andmeid:';
+        this.getCurrentUserContactData()
+      }
+    },
+    getCurrentUserContactData() {
+      this.$http.get("/contact", {
+            params: {
+              userId: this.currentUserId
+            }
+          }
+      ).then(response => {
+        this.contactRequest = response.data;
+        this.getCities()
+      }).catch(error => {
+        router.push({name: 'errorRoute'})
+      })
+    },
+
   },
+
+  mounted() {
+    this.handleIsEdit()
+  },
+
   beforeMount() {
     this.getCounties()
+    this.isEdit = false
+
   }
 }
 </script>

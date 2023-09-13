@@ -1,17 +1,21 @@
 <template>
-
+  <EditPasswordModal ref="editPasswordModalRef"/>
+  <div class="row">
+    <div class="col">
+      <h1>{{title}}</h1>
+    </div>
+  </div>
 <div class="row">
   <div class="col">
     <UserImage :image-data-base64="contactRequest.imageData"></UserImage>
-
     <ImageInput @event-emit-base64="setContactRequestImageData"/>
 
     <AlertDanger :alert-message="errorResponse.message"></AlertDanger>
-
+    <AlertSuccess :alert-message="successMessage"></AlertSuccess>
   </div>
   <div class="col">
     <table>
-      <tr>
+      <tr v-if="!isEdit">
         <td><label for="username">Kasutajanimi</label></td>
         <td><input v-model="contactRequest.userUsername" type="text" id="username"></td>
       </tr>
@@ -45,14 +49,15 @@
       </tr>
       <tr>
         <td><label for="password">Salasõna</label></td>
-        <td><input  v-model="inputPassword1" type="password" id="password"></td>
+        <td v-if="!isEdit"><input  v-model="inputPassword1" type="password" id="password"></td>
+        <td v-else ><button @click="handleEditPassword" type="submit" class="btn btn-dark" >Muuda</button></td>
       </tr>
-      <tr>
+      <tr v-if="!isEdit">
         <td><label for="password2">Salasõna uuesti</label></td>
         <td><input v-model="inputPassword2" type="password" id="password2"></td>
       </tr>
     </table>
-    <textarea placeholder="Koristaja lühitutvustus" cols="50" rows="5"></textarea>
+    <textarea v-model="contactRequest.contactIntroduction" placeholder="Koristaja lühitutvustus" cols="50" rows="5"></textarea>
     <table>
       <tr>
         <td><router-link to="/login"><button type="submit" class="btn btn-dark m-3">Katkesta</button></router-link></td>
@@ -64,24 +69,28 @@
   </div>
 </div>
 
-
-
-
 </template>
 
 <script>
 import UserImage from "@/views/UserImage.vue";
 import AlertDanger from "@/components/alert/AlertDanger.vue";
-import {FILL_MANDATORY_FIELDS, PASSWORDS_DONT_MATCH} from "@/assets/script/AlertMessage";
+import {FILL_MANDATORY_FIELDS, NEW_USER_SUCCESSFULLY_ADDED, PASSWORDS_DONT_MATCH} from "@/assets/script/AlertMessage";
 import ImageInput from "@/components/ImageInput.vue";
+import AlertSuccess from "@/components/alert/AlertSuccess.vue";
+import {useRoute} from "vue-router";
+import EditPasswordModal from "@/components/modal/EditPasswordModal.vue";
 import CountyDropdown from "@/components/CountyDropdown.vue";
 import CityDropdown from "@/components/CityDropdown.vue";
 
 export default {
   name: 'UserView',
-  components: {CityDropdown, CountyDropdown, ImageInput, AlertDanger, UserImage},
+  components: {CityDropdown, CountyDropdown, EditPasswordModal, AlertSuccess, ImageInput, AlertDanger, UserImage},
   data() {
     return {
+      title: 'Registreeri kasutaja:',
+      successMessage: '',
+      currentUserId: Number(useRoute().query.userId),
+      isEdit: false,
       contactRequest: {
         userUsername: '',
         userPassword: '',
@@ -114,17 +123,19 @@ export default {
     },
     validateAndSendContactInfo() {
       this.alertMessage = ''
+      this.successMessage = ''
       if (this.mandatoryFieldsAreFilled() && this.passwordsAreSame()) {
         this.addContact()
       }
 
     },
-    addContact()
-    {
+    addContact() {
       this.$http.post("/contact", this.contactRequest
       ).then(response => {
-        const responseBody = response.data
-        alert("andmed saadetud")
+        this.successMessage = NEW_USER_SUCCESSFULLY_ADDED
+        setTimeout(() => {
+          router.push({name: 'dashboardRoute'})
+        }, 3000)
       }).catch(error => {
         this.errorResponse = error.response.data
       })
@@ -153,6 +164,40 @@ export default {
     setContactRequestImageData(imageDataBase64) {
       this.contactRequest.imageData = imageDataBase64;
     },
+
+
+    handleIsEdit() {
+      this.isEdit = !isNaN(this.currentUserId)
+
+      if (this.isEdit) {
+        this.title = 'Redigeeri andmeid:';
+        this.getCurrentUserContactData()
+      }
+    },
+    getCurrentUserContactData() {
+      this.$http.get("/contact", {
+            params: {
+              userId: this.currentUserId
+            }
+          }
+      ).then(response => {
+        this.contactRequest = response.data;
+        this.getCities()
+      }).catch(error => {
+        router.push({name: 'errorRoute'})
+      })
+    },
+    handleEditPassword() {
+      this.$refs.editPasswordModalRef.$refs.modalRef.openModal()
+    },
+
+  },
+  mounted() {
+    this.handleIsEdit()
+  },
+  beforeMount() {
+    this.isEdit = false
+
   }
 }
 </script>

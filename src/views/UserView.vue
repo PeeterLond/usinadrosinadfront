@@ -68,7 +68,7 @@
               <button type="submit" class="btn btn-dark m-3">Katkesta</button>
             </router-link>
           </td>
-          <td>
+          <td v-else>
             <router-link to="/dashBoard">
               <button type="submit" class="btn btn-dark m-3">Katkesta</button>
             </router-link>

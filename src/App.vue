@@ -8,8 +8,12 @@
         <h1>Usinad Rosinad</h1>
       </div>
       <div class="header-item">
-        <router-link v-if="!loggedIn" to="/login"><button type="button" class="btn btn-dark m-3" >Logi sisse</button></router-link>
-        <router-link v-else @click="handleLogOut" to="/"><button type="button" class="btn btn-danger m-3" >Logi välja</button></router-link>
+        <router-link v-if="!loggedIn" to="/login">
+          <button type="button" class="btn btn-dark m-3">Logi sisse</button>
+        </router-link>
+        <router-link v-else @click="handleLogOut" to="/">
+          <button type="button" class="btn btn-danger m-3">Logi välja</button>
+        </router-link>
       </div>
     </header>
     <nav v-if="loggedIn">
@@ -32,7 +36,18 @@
       </div>
     </main>
     <footer>
-      <div class="footer-item social-media-icons">FB, Insta ja meili logo</div>
+      <div></div>
+      <div class="footer-item social-media-icons">
+        <a href="http://www.facebook.com" target="_blank" class="hoverable-link me-2">
+          <font-awesome-icon :icon="['fab', 'facebook']" size="2xl"/>
+        </a>
+        <a href="http://www.instagram.com" target="_blank" class="hoverable-link">
+          <font-awesome-icon :icon="['fab', 'instagram']" size="2xl"/>
+        </a>
+        <a href="mailto:usin@rosin.ee" class="hoverable-link ms-2">
+          <font-awesome-icon :icon="['far', 'envelope']" size="2xl"/>
+        </a>
+      </div>
       <div class="footer-item">
         <p> Usinad Rosinad OÜ <br>
           Reg.nr 314159265 <br>

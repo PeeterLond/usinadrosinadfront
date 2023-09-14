@@ -1,5 +1,4 @@
 <template>
-
   <div class="row">
     <div class="col">
       <UserImage :image-data-base64="userContactInfo.imageData" class="rounded" ></UserImage>

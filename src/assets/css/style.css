@@ -74,6 +74,10 @@ td {
     height: 100%;
     align-items: center;
 }
+.dashboard-introduction{
+    width: 400px;
+    text-align: justify;
+}
 
 
 

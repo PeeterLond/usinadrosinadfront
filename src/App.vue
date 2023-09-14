@@ -17,7 +17,7 @@
         <router-link to="/">Kodu</router-link>
       </div>
       <div class="nav-item">
-        <router-link to="/">Kuulutused</router-link>
+        <router-link to="/advertisements">Kuulutused</router-link>
       </div>
       <div class="nav-item">
         <router-link to="/dashboard">Minu töölaud</router-link>

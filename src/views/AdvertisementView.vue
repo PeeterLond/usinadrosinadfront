@@ -1,5 +1,6 @@
 <template>
   <AlertDanger :alert-message="errorResponse.message"></AlertDanger>
+  <AlertSuccess :alert-message="successMessage"></AlertSuccess>
 
   <div v-if="isChoresAdding" class="advertisement-view-master">
     <div class="advertisement-view-items">
@@ -10,12 +11,15 @@
         <tr v-for="chore in choreResponse">
           <td>{{chore.choreName}}</td>
           <td>
-            <button class="btn btn-dark" type="submit">Lisa</button>
-            <button class="btn btn-dark" type="submit">kustuta</button>
+            <button v-if="!isChoreSelected[chore.choreId - 1]" @click="handleAdvertisementChoreAdd(chore.choreId)" class="btn btn-dark" type="submit">Vali</button>
+            <button v-else @click="handleAdvertisementChoreDelete(chore.choreId)" class="btn btn-dark" type="submit">Eemalda</button>
           </td>
         </tr>
-
       </table>
+    </div>
+    <div class="advertisement-view-items">
+      <button @click="removeAddedAdvertisementAndAdvertisementChores" class="btn btn-dark" type="submit">Katkesta</button>
+      <button @click="ValidateAndPushToAdvertisements" class="btn btn-dark" type="submit"> Kinnita</button>
     </div>
   </div>
   <div v-else class="advertisement-view-master">
@@ -76,7 +80,7 @@ import router from "@/router";
 import CountyDropdown from "@/components/CountyDropdown.vue";
 import CityDropdown from "@/components/CityDropdown.vue";
 import AlertDanger from "@/components/alert/AlertDanger.vue";
-import {FILL_MANDATORY_FIELDS} from "@/assets/script/AlertMessage";
+import {FILL_MANDATORY_FIELDS, NEW_ADVERTISEMENT_ADDED} from "@/assets/script/AlertMessage";
 import AlertSuccess from "@/components/alert/AlertSuccess.vue";
 import {useRoute} from "vue-router";
 
@@ -86,6 +90,7 @@ export default {
   components: {AlertSuccess, AlertDanger, CityDropdown, CountyDropdown},
   data() {
     return {
+      isChoreSelected: [],
       advertisementRequest: {
         userId: sessionStorage.getItem('userId'),
         countyId: 0,
@@ -116,16 +121,93 @@ export default {
           choreName: ''
         }
       ],
+      advertisementChoreRequest: {
+        choreId: 0,
+        advertisementId: 0
+      },
       advertisementId: 0,
       isChoresAdding: false,
       selectedAdvertisementId: Number(useRoute().query.advertisementId),
       errorResponse: {
         message: '',
         errorCode: 0
-      }
+      },
+      successMessage: ''
     }
   },
   methods: {
+    removeAddedAdvertisementAndAdvertisementChores() {
+      this.deleteAllAdvertisementChores()
+      this.deleteAdvertisement()
+      router.push({name: 'dashboardRoute'})
+    },
+
+    deleteAdvertisement() {
+      this.$http.delete("/advertisement", {
+            params: {
+              advertisementId: this.selectedAdvertisementId
+            }
+          }
+      ).then(response => {
+        const responseBody = response.data
+      }).catch(error => {
+        router.push({name: 'errorRoute'})
+      })
+    },
+
+    deleteAllAdvertisementChores() {
+      this.$http.delete("/advertisement-chores", {
+            params: {
+              advertisementId: this.selectedAdvertisementId
+            }
+          }
+      ).then(response => {
+        const responseBody = response.data
+      }).catch(error => {
+       router.push({name: 'errorRoute'})
+      })
+    },
+
+    ValidateAndPushToAdvertisements() {
+      this.successMessage = NEW_ADVERTISEMENT_ADDED
+      setTimeout( () => {
+        router.push({name: 'advertisementsRoute'})
+      },2500)
+    },
+
+    handleAdvertisementChoreDelete(choreId) {
+      this.isChoreSelected[choreId - 1] = false
+      this.$http.delete("/advertisement-chore", {
+            params: {
+              choreId: choreId,
+              advertisementId: this.selectedAdvertisementId
+            }
+          }
+      ).then(response => {
+        const responseBody = response.data
+      }).catch(error => {
+        router.push({name: 'errorRoute'})
+      })
+
+    },
+
+    handleAdvertisementChoreAdd(choreId) {
+      this.isChoreSelected[choreId - 1] = true
+      this.advertisementChoreRequest.choreId = choreId
+      this.advertisementChoreRequest.advertisementId = this.selectedAdvertisementId
+      this.addAdvertisementChore()
+
+    },
+
+    addAdvertisementChore() {
+      this.$http.post("/advertisement-chore", this.advertisementChoreRequest
+      ).then(response => {
+        const responseBody = response.data
+      }).catch(error => {
+        router.push({name: 'errorRoute'})
+      })
+    },
+
     resetErrorMessage: function () {
       this.errorResponse.message = ''
     },
@@ -144,7 +226,6 @@ export default {
       } else {
           this.errorResponse.message = FILL_MANDATORY_FIELDS
       }
-
     },
 
     mandatoryFieldsAreFilled() {
@@ -190,10 +271,18 @@ export default {
       this.getAllChores()
     },
 
+    createIsChoreSelectedList() {
+      let nrOfChores = this.choreResponse.length;
+      for (let i = 0; i < nrOfChores; i++) {
+        this.isChoreSelected.push(false)
+      }
+    },
+
     getAllChores() {
       this.$http.get("/chore")
           .then(response => {
             this.choreResponse = response.data
+            this.createIsChoreSelectedList()
           })
           .catch(error => {
             router.push({name: 'errorRoute'})

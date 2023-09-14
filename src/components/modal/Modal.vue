@@ -10,14 +10,13 @@
           </h1>
         </div>
         <div class="modal-body form-floating">
-          <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
-          <label for="floatingTextarea"></label>
+<!--          <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>-->
+<!--          <label for="floatingTextarea"></label>-->
           <slot name="body">
           default
           </slot>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-dark" @click="closeModal">{{ closeButtonName }}</button>
           <slot name="footer">
           </slot>
         </div>

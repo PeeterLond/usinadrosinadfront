@@ -7,10 +7,14 @@
       </template>
 
       <template #body>
-        <td><label for="password">Uus salasõna</label></td>
-        <td><input  v-model="inputPassword1" type="password" id="password"></td>
-        <td><label for="password">Salasõna uuesti</label></td>
-        <td><input  v-model="inputPassword2" type="password" id="password"></td>
+        <tr>
+          <td><label for="password">Uus salasõna</label></td>
+          <td><input v-model="inputPassword1" type="password" id="password"></td>
+        </tr>
+        <tr>
+          <td><label for="password">Salasõna uuesti</label></td>
+          <td><input v-model="inputPassword2" type="password" id="password"></td>
+        </tr>
       </template>
 
       <template #footer>
@@ -32,6 +36,7 @@
 <script>
 
 import Modal from "@/components/modal/Modal.vue";
+
 export default {
   name: 'EditPasswordModal',
   components: {Modal},
@@ -43,6 +48,9 @@ export default {
       inputPassword1: '',
       inputPassword2: ''
     }
+  },
+  methods: {
+
   }
 }
 

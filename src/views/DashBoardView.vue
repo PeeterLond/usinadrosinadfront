@@ -36,7 +36,7 @@
     <textarea placeholder="Koristaja lühitutvustus" cols="50" rows="5"></textarea>
     <div class="row text-center">
       <div class="col col-3">
-        <button @click="navigateToUserView" type="submit" class="btn btn-dark m-3">Redigeeri andmeid</button>
+        <button @click="navigateToUserEditView" type="submit" class="btn btn-dark m-3">Redigeeri andmeid</button>
       </div>
     </div>
 
@@ -74,7 +74,7 @@ export default {
     }
   },
   methods: {
-    navigateToUserView() {
+    navigateToUserEditView() {
       router.push({name: 'userRoute', query: {userId: this.currentUserId}})
     }
   }

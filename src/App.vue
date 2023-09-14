@@ -21,7 +21,7 @@
         <router-link to="/">Kodu</router-link>
       </div>
       <div class="nav-item">
-        <router-link to="/">Kuulutused</router-link>
+        <router-link to="/advertisements">Kuulutused</router-link>
       </div>
       <div class="nav-item">
         <router-link to="/dashboard">Minu töölaud</router-link>
@@ -32,7 +32,7 @@
     </nav>
     <main>
       <div class="main-item">
-        <router-view @event-update-nav-menu="updateNavMenu"></router-view>
+        <router-view :key="$route.fullPath" @event-update-nav-menu="updateNavMenu"></router-view>
       </div>
     </main>
     <footer>

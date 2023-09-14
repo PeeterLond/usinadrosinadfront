@@ -5,6 +5,7 @@ import ErrorView from "@/views/ErrorView.vue";
 import DashBoardView from "@/views/DashBoardView.vue";
 import UserView from "@/views/UserView.vue";
 import advertisementView from "@/views/AdvertisementView.vue";
+import advertisementsView from "@/views/AdvertisementsView.vue";
 
 const routes = [
   {
@@ -37,6 +38,11 @@ const routes = [
     name: 'advertisementRoute',
     component: advertisementView
   },
+  {
+    path:'/advertisements',
+    name: 'advertisementsRoute',
+    component: advertisementsView
+  }
 
 ]
 

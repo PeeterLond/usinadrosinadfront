@@ -41,28 +41,26 @@
       </tr>
       <div class="row text-center">
         <div class="col col-3 ">
-          <button @click="navigateToUserView" type="submit" class="btn btn-dark m-3 ">Redigeeri andmeid</button>
+          <button @click="navigateToUserEditView" type="submit" class="btn btn-dark m-3 ">Redigeeri andmeid</button>
         </div>
       </div>
 
     </div>
 
-    <div class="col">
-      <div class="row">
-        <h4>Kuulutused</h4>
-        <div class="dash-board-advertisements">
-        </div>
-        <div>
-          <router-link to="/advertisement">
-            <button type="submit" class="btn btn-dark mt-2">Lisa kuulutus</button>
-          </router-link>
-        </div>
+  <div class="col">
+    <div class="row">
+      <h4>Kuulutused</h4>
+      <div class="dash-board-advertisements">
       </div>
-      <div class="row">
-        Tagasiside
+      <div>
+        <router-link to="/advertisement"><button type="submit" class="btn btn-dark mt-2">Lisa kuulutus</button></router-link>
       </div>
+    </div>
+    <div class="row">
+      Tagasiside
     </div>
   </div>
+</div>
 
 
 </template>
@@ -92,7 +90,7 @@ export default {
     }
   },
   methods: {
-    navigateToUserView() {
+    navigateToUserEditView() {
       router.push({name: 'userRoute', query: {userId: this.currentUserId}})
     },
     getUserContactInfo() {

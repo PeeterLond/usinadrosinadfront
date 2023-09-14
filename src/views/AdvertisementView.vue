@@ -1,5 +1,28 @@
 <template>
-  <div class="advertisement-view-master">
+  <AlertDanger :alert-message="errorResponse.message"></AlertDanger>
+  <AlertSuccess :alert-message="successMessage"></AlertSuccess>
+
+  <div v-if="isChoresAdding" class="advertisement-view-master">
+    <div class="advertisement-view-items">
+      <h4 class="mb-5">Vali Teenused:</h4>
+    </div>
+    <div class="advertisement-view-items">
+      <table>
+        <tr v-for="chore in choreResponse">
+          <td>{{chore.choreName}}</td>
+          <td>
+            <button v-if="!isChoreSelected[chore.choreId - 1]" @click="handleAdvertisementChoreAdd(chore.choreId)" class="btn btn-dark" type="submit">Vali</button>
+            <button v-else @click="handleAdvertisementChoreDelete(chore.choreId)" class="btn btn-dark" type="submit">Eemalda</button>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="advertisement-view-items">
+      <button @click="removeAddedAdvertisementAndAdvertisementChores" class="btn btn-dark" type="submit">Katkesta</button>
+      <button @click="ValidateAndPushToAdvertisements" class="btn btn-dark" type="submit"> Kinnita</button>
+    </div>
+  </div>
+  <div v-else class="advertisement-view-master">
     <div class="advertisement-view-items">
       <h4 class="mb-5">Lisa kuulutus</h4>
       <div v-for="type in typeResponse">
@@ -9,8 +32,6 @@
       </div>
     </div>
     <div class="advertisement-view-items">
-
-
       <table>
         <tr>
           <td><label for="county">Maakond</label></td>
@@ -37,9 +58,6 @@
           <td><input v-model="advertisementRequest.advertisementArea" type="text" id="area"></td>
         </tr>
       </table>
-
-
-
     </div>
     <div class="advertisement-view-items">
       <textarea v-model="advertisementRequest.advertisementDescription" placeholder="Kuulutuse tekst" class="mb-4" cols="50" rows="5"></textarea>
@@ -50,7 +68,7 @@
       </div>
       <div class="mt-5">
         <router-link to="/dashboard"><button class="btn btn-dark m-3" type="submit">Tagasi</button></router-link>
-        <button @click="addAdvertisementToUser" class="btn btn-dark m-3" type="submit">Edasi</button>
+        <button @click="validateFieldsAndAddAdvertisementToUser" class="btn btn-dark m-3" type="submit">Edasi</button>
       </div>
     </div>
   </div>
@@ -61,12 +79,18 @@
 import router from "@/router";
 import CountyDropdown from "@/components/CountyDropdown.vue";
 import CityDropdown from "@/components/CityDropdown.vue";
+import AlertDanger from "@/components/alert/AlertDanger.vue";
+import {FILL_MANDATORY_FIELDS, NEW_ADVERTISEMENT_ADDED} from "@/assets/script/AlertMessage";
+import AlertSuccess from "@/components/alert/AlertSuccess.vue";
+import {useRoute} from "vue-router";
+
 
 export default {
   name: 'AdvertisementView',
-  components: {CityDropdown, CountyDropdown},
+  components: {AlertSuccess, AlertDanger, CityDropdown, CountyDropdown},
   data() {
     return {
+      isChoreSelected: [],
       advertisementRequest: {
         userId: sessionStorage.getItem('userId'),
         countyId: 0,
@@ -91,18 +115,125 @@ export default {
           toolName: ''
         }
       ],
+      choreResponse: [
+        {
+          choreId: 0,
+          choreName: ''
+        }
+      ],
+      advertisementChoreRequest: {
+        choreId: 0,
+        advertisementId: 0
+      },
       advertisementId: 0,
+      isChoresAdding: false,
+      selectedAdvertisementId: Number(useRoute().query.advertisementId),
+      errorResponse: {
+        message: '',
+        errorCode: 0
+      },
+      successMessage: ''
     }
   },
   methods: {
-    addAdvertisementToUser() {
-      this.$http.post("/advertisement", this.advertisementRequest
+    removeAddedAdvertisementAndAdvertisementChores() {
+      this.deleteAllAdvertisementChores()
+      this.deleteAdvertisement()
+      router.push({name: 'dashboardRoute'})
+    },
+
+    deleteAdvertisement() {
+      this.$http.delete("/advertisement", {
+            params: {
+              advertisementId: this.selectedAdvertisementId
+            }
+          }
       ).then(response => {
-        alert('YEEEEEEEEEEEEEEEEEEE')
-        this.advertisementId = response.data
+        const responseBody = response.data
       }).catch(error => {
         router.push({name: 'errorRoute'})
       })
+    },
+
+    deleteAllAdvertisementChores() {
+      this.$http.delete("/advertisement-chores", {
+            params: {
+              advertisementId: this.selectedAdvertisementId
+            }
+          }
+      ).then(response => {
+        const responseBody = response.data
+      }).catch(error => {
+       router.push({name: 'errorRoute'})
+      })
+    },
+
+    ValidateAndPushToAdvertisements() {
+      this.successMessage = NEW_ADVERTISEMENT_ADDED
+      setTimeout( () => {
+        router.push({name: 'advertisementsRoute'})
+      },2500)
+    },
+
+    handleAdvertisementChoreDelete(choreId) {
+      this.isChoreSelected[choreId - 1] = false
+      this.$http.delete("/advertisement-chore", {
+            params: {
+              choreId: choreId,
+              advertisementId: this.selectedAdvertisementId
+            }
+          }
+      ).then(response => {
+        const responseBody = response.data
+      }).catch(error => {
+        router.push({name: 'errorRoute'})
+      })
+
+    },
+
+    handleAdvertisementChoreAdd(choreId) {
+      this.isChoreSelected[choreId - 1] = true
+      this.advertisementChoreRequest.choreId = choreId
+      this.advertisementChoreRequest.advertisementId = this.selectedAdvertisementId
+      this.addAdvertisementChore()
+
+    },
+
+    addAdvertisementChore() {
+      this.$http.post("/advertisement-chore", this.advertisementChoreRequest
+      ).then(response => {
+        const responseBody = response.data
+      }).catch(error => {
+        router.push({name: 'errorRoute'})
+      })
+    },
+
+    resetErrorMessage: function () {
+      this.errorResponse.message = ''
+    },
+
+    validateFieldsAndAddAdvertisementToUser() {
+      this.resetErrorMessage();
+      if (this.mandatoryFieldsAreFilled()) {
+        this.$http.post("/advertisement", this.advertisementRequest
+        ).then(response => {
+          this.advertisementId = response.data
+          router.push({name: 'advertisementRoute', query: {advertisementId: this.advertisementId}})
+
+        }).catch(error => {
+          router.push({name: 'errorRoute'})
+        });
+      } else {
+          this.errorResponse.message = FILL_MANDATORY_FIELDS
+      }
+    },
+
+    mandatoryFieldsAreFilled() {
+      return this.advertisementRequest.typeId > 0 &&
+          this.advertisementRequest.toolId > 0 &&
+          this.advertisementRequest.countyId > 0 &&
+          this.advertisementRequest.advertisementPrice > 0 &&
+          this.advertisementRequest.advertisementDescription.length > 0
     },
 
     setSelectedCountyId(selectedCountyId) {
@@ -110,9 +241,11 @@ export default {
       this.$refs.cityDropdownRef.selectedCountyId = selectedCountyId
       this.$refs.cityDropdownRef.getCities()
     },
+
     setSelectedCityId(selectedCityId) {
       this.advertisementRequest.cityId = selectedCityId
     },
+
     getAdvertisementTypes() {
       this.$http.get("/type")
           .then(response => {
@@ -122,6 +255,7 @@ export default {
             router.push({name: 'errorRoute'})
           })
     },
+
     getAdvertisementTools() {
       this.$http.get("/tool")
           .then(response => {
@@ -131,10 +265,36 @@ export default {
            router.push({name: 'errorRoute'})
           })
     },
+
+    handleIsChoresAdding() {
+      this.isChoresAdding = !isNaN(this.selectedAdvertisementId)
+      this.getAllChores()
+    },
+
+    createIsChoreSelectedList() {
+      let nrOfChores = this.choreResponse.length;
+      for (let i = 0; i < nrOfChores; i++) {
+        this.isChoreSelected.push(false)
+      }
+    },
+
+    getAllChores() {
+      this.$http.get("/chore")
+          .then(response => {
+            this.choreResponse = response.data
+            this.createIsChoreSelectedList()
+          })
+          .catch(error => {
+            router.push({name: 'errorRoute'})
+          })
+    },
   },
   beforeMount() {
-    this.getAdvertisementTypes()
-    this.getAdvertisementTools()
+    this.handleIsChoresAdding()
+    if (!this.isChoresAdding) {
+      this.getAdvertisementTypes()
+      this.getAdvertisementTools()
+    }
   }
 }
 

@@ -1,27 +1,24 @@
 <template>
   <div>
-    <Modal ref="modalRef">
+    <Modal close-button-name="Katkesta" ref="modalRef">
 
       <template #header>
         Muuda salasõna:
       </template>
 
       <template #body>
-        <td><label for="password">Uus salasõna</label></td>
-        <td><input  v-model="inputPassword1" type="password" id="password"></td>
-        <td><label for="password">Salasõna uuesti</label></td>
-        <td><input  v-model="inputPassword2" type="password" id="password"></td>
+        <tr>
+          <td><label for="password">Uus salasõna</label></td>
+          <td><input v-model="inputPassword1" type="password" id="password"></td>
+        </tr>
+        <tr>
+          <td><label for="password">Salasõna uuesti</label></td>
+          <td><input v-model="inputPassword2" type="password" id="password"></td>
+        </tr>
       </template>
 
       <template #footer>
-        <div class="row">
-          <div class="col justify-content-center">
-            <button @click="this.$router.go(-1)" type="submit" class="btn btn-dark">Katkesta</button>
-          </div>
-          <div class="col justify-content-center">
             <button type="submit" class="btn btn-dark">Muuda</button>
-          </div>
-        </div>
       </template>
 
     </Modal>
@@ -32,6 +29,9 @@
 <script>
 
 import Modal from "@/components/modal/Modal.vue";
+import {PASSWORDS_DONT_MATCH} from "@/assets/script/AlertMessage";
+import {useRoute} from "vue-router";
+
 export default {
   name: 'EditPasswordModal',
   components: {Modal},
@@ -40,10 +40,23 @@ export default {
   },
   data() {
     return {
+      currentUserId: Number(useRoute().query.userId),
       inputPassword1: '',
       inputPassword2: ''
     }
-  }
+  },
+  methods() {
+  //   passwordsAreSame() {
+  //     if (this.inputPassword1 === this.inputPassword2) {
+  //       this.contactRequest.userPassword = this.inputPassword1;
+  //       return true;
+  //     } else {
+  //       this.errorResponse.message = PASSWORDS_DONT_MATCH
+  //     }
+  // }
+
+},
 }
+
 
 </script>

@@ -157,7 +157,7 @@ export default {
       ).then(response => {
         this.successMessage = NEW_USER_SUCCESSFULLY_ADDED
         setTimeout(() => {
-          router.push({name: 'dashboardRoute'})
+          router.push({name: 'loginRoute'})
         }, 2500)
       }).catch(error => {
         this.errorResponse = error.response.data

@@ -43,7 +43,7 @@ const routes = [
     path:'/advertisements',
     name: 'advertisementsRoute',
     component: advertisementsView
-  }
+  },
   {
     path:'/mailbox',
     name: 'mailboxRoute',

@@ -5,6 +5,7 @@ import ErrorView from "@/views/ErrorView.vue";
 import DashBoardView from "@/views/DashBoardView.vue";
 import UserView from "@/views/UserView.vue";
 import advertisementView from "@/views/AdvertisementView.vue";
+import mailboxView from "@/views/MailboxView.vue";
 
 const routes = [
   {
@@ -36,6 +37,11 @@ const routes = [
     path:'/advertisement',
     name: 'advertisementRoute',
     component: advertisementView
+  },
+  {
+    path:'/mailbox',
+    name: 'mailboxRoute',
+    component: mailboxView
   },
 
 ]

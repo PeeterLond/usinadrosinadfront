@@ -27,7 +27,7 @@
         <router-link to="/dashboard">Minu töölaud</router-link>
       </div>
       <div class="nav-item nav-item1">
-        <router-link to="/">Minu sõnumid</router-link>
+        <router-link to="/mailbox">Minu sõnumid</router-link>
       </div>
     </nav>
     <main>

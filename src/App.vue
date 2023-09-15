@@ -38,13 +38,13 @@
     <footer>
       <div></div>
       <div class="footer-item social-media-icons">
-        <a href="http://www.facebook.com" target="_blank" class="hoverable-link me-2">
+        <a href="http://www.facebook.com" target="_blank" class=" me-2">
           <font-awesome-icon :icon="['fab', 'facebook']" size="2xl"/>
         </a>
-        <a href="http://www.instagram.com" target="_blank" class="hoverable-link">
+        <a href="http://www.instagram.com" target="_blank" >
           <font-awesome-icon :icon="['fab', 'instagram']" size="2xl"/>
         </a>
-        <a href="mailto:usin@rosin.ee" class="hoverable-link ms-2">
+        <a href="mailto:usin@rosin.ee" class="ms-2">
           <font-awesome-icon :icon="['far', 'envelope']" size="2xl"/>
         </a>
       </div>

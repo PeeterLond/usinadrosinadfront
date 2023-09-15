@@ -7,7 +7,8 @@
   </div>
   <div class="row">
     <div class="col text-center">
-      <UserImage :image-data-base64="contactRequest.imageData"></UserImage>
+      <UserImage :image-data-base64="contactRequest.imageData" :img-height="USERVIEW_IMAGE.height"
+                 :img-width="USERVIEW_IMAGE.width"></UserImage>
       <ImageInput @event-emit-base64="setContactRequestImageData"/>
 
       <AlertDanger :alert-message="errorResponse.message"></AlertDanger>
@@ -90,7 +91,7 @@
 </template>
 
 <script>
-import UserImage from "@/views/UserImage.vue";
+import UserImage from "@/components/image/UserImage.vue";
 import AlertDanger from "@/components/alert/AlertDanger.vue";
 import {
   FILL_MANDATORY_FIELDS,
@@ -98,16 +99,25 @@ import {
   PASSWORDS_DONT_MATCH,
   USER_DATA_SUCCESSFULLY_UPDATED
 } from "@/assets/script/AlertMessage";
-import ImageInput from "@/components/ImageInput.vue";
+import ImageInput from "@/components/image/ImageInput.vue";
 import AlertSuccess from "@/components/alert/AlertSuccess.vue";
 import {useRoute} from "vue-router";
 import EditPasswordModal from "@/components/modal/EditPasswordModal.vue";
 import CountyDropdown from "@/components/CountyDropdown.vue";
 import CityDropdown from "@/components/CityDropdown.vue";
 import router from "@/router";
+import {DASHBOARD_PROFILE_IMAGE, USER_VIEW_IMAGE} from "@/assets/script/ImageSizes";
 
 export default {
   name: 'UserView',
+  computed: {
+    USERVIEW_IMAGE() {
+      return USER_VIEW_IMAGE
+    },
+    DASHBOARD_PROFILE_IMAGE() {
+      return DASHBOARD_PROFILE_IMAGE
+    }
+  },
   components: {CityDropdown, CountyDropdown, EditPasswordModal, AlertSuccess, ImageInput, AlertDanger, UserImage},
   data() {
     return {

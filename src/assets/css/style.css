@@ -27,6 +27,7 @@ header {
 nav {
     display: flex;
     height: 4vh;
+    border: 1px solid black;
 
 }
 .nav-item {
@@ -60,8 +61,9 @@ td {
 .dash-board-advertisements {
     overflow: auto;
     border: solid 1px black;
-    height: 200px;
-    width: 500px;
+    height: 40vh;
+    width: 40vw;
+    display: flex;
 }
 
 .social-media-icons {
@@ -78,9 +80,83 @@ td {
     width: 400px;
     text-align: justify;
 }
-.hoverable-link{
-    cursor: pointer;
+
+.advertisements-master {
+    border: 1px solid black;
+    width: 50%;
+    height: 87%;
+    display: flex;
+    flex-wrap: wrap;
+    overflow: auto;
+    position: relative;
+    top: 10%;
+    left: 30%;
+
 }
+
+.advertisements-item {
+    border: 1px solid black;
+    border-radius: 10%;
+    width: 26%;
+    height: 40%;
+    margin: 3.5%;
+    background: aqua;
+    display: flex;
+
+    align-items: flex-start;
+    transform-style: preserve-3d;
+    transition: 2s ease;
+    justify-content: left;
+}
+
+.advertisements-item:hover {
+    transform: rotateY(180deg) scale(1.2);
+    z-index: 1;
+}
+
+.front,
+.back {
+    backface-visibility: hidden;
+    display: flex;
+    position: absolute;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.back {
+    transform: rotateY(180deg);
+    color: red;
+    padding: 2%;
+}
+
+.front-item {
+    border: 1px solid red;
+    flex: 1;
+}
+
+#advertisement-image-id {
+    float: left;
+    margin: 3%;
+}
+
+.front-item-text {
+    line-height: 225%;
+}
+
+.rating {
+    position: absolute;
+    left: 70%;
+    bottom: 0;
+}
+
+.user-name {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+
+
 
 
 

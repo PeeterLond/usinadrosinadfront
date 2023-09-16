@@ -1,16 +1,11 @@
 <template>
   <div class="home">
-   <div class="row m-5">
-     <div class="col d-flex justify-content-center">
-       <h2> Mingi tutvustav tekst</h2>
-     </div>
-  </div>
-    <div class="row mt-5">
-      <div class="col d-flex justify-content-center">
-        <button type="submit" class="btn btn-light ">Vaata kuulutusi</button>
-      </div>
+    <div>
+      <h2> Tere tulemast Usinate Rosinate leheküljele.</h2>
     </div>
-
+    <div>
+      <router-link to="/advertisements"><button type="submit" class="btn btn-dark">Vaata kuulutusi</button></router-link>
+    </div>
   </div>
 </template>
 

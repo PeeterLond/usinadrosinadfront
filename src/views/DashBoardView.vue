@@ -1,68 +1,67 @@
 <template>
-  <div class="row">
-    <div class="col">
-      <UserImage :image-data-base64="userContactInfo.imageData" :img-height="DASHBOARD_PROFILE_IMAGE.height"
-                 :img-width="DASHBOARD_PROFILE_IMAGE.width"></UserImage>
-      <table>
-        <tbody>
-        <tr>
-          <td>Kasutajanimi</td>
-          <td>{{ userContactInfo.userUsername }}</td>
-        </tr>
-        <tr>
-          <td>Eesnimi</td>
-          <td>{{ userContactInfo.contactFirstName }}</td>
-        </tr>
-        <tr>
-          <td>Perekonnanimi</td>
-          <td>{{ userContactInfo.contactLastName }}</td>
-        </tr>
-        <tr>
-          <td>Maakond</td>
-          <td>{{ userContactInfo.countyName }}</td>
-        </tr>
-        <tr>
-          <td>Linn</td>
-          <td>{{ userContactInfo.cityName }}</td>
-        </tr>
-        <tr>
-          <td>Telefoni number</td>
-          <td>{{ userContactInfo.contactMobileNumber }}</td>
-        </tr>
-        <tr>
-          <td>Email</td>
-          <td>{{ userContactInfo.contactEmail }}</td>
-        </tr>
-        </tbody>
-      </table>
-      <div class="dashboard-introduction mt-3" >
+
+  <div class="dashboard-master">
+    <div class="dashboard-item">
+      <div class="dashboard-item-item">
+        <UserImage :image-data-base64="userContactInfo.imageData" :img-height="DASHBOARD_PROFILE_IMAGE.height"
+                   :img-width="DASHBOARD_PROFILE_IMAGE.width"></UserImage>
+      </div>
+      <div class="dashboard-item-item">
+        <table>
+          <tbody>
+          <tr>
+            <td>Kasutajanimi</td>
+            <td>{{ userContactInfo.userUsername }}</td>
+          </tr>
+          <tr>
+            <td>Eesnimi</td>
+            <td>{{ userContactInfo.contactFirstName }}</td>
+          </tr>
+          <tr>
+            <td>Perekonnanimi</td>
+            <td>{{ userContactInfo.contactLastName }}</td>
+          </tr>
+          <tr>
+            <td>Maakond</td>
+            <td>{{ userContactInfo.countyName }}</td>
+          </tr>
+          <tr>
+            <td>Linn</td>
+            <td>{{ userContactInfo.cityName }}</td>
+          </tr>
+          <tr>
+            <td>Telefoni number</td>
+            <td>{{ userContactInfo.contactMobileNumber }}</td>
+          </tr>
+          <tr>
+            <td>Email</td>
+            <td>{{ userContactInfo.contactEmail }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="dashboard-item-item-intro">
         {{ userContactInfo.contactIntroduction }}
       </div>
-      <div class="row text-center">
-        <div class="col col-3 ">
-          <button @click="navigateToUserEditView" type="submit" class="btn btn-dark m-3 ">Redigeeri andmeid</button>
+      <div class="dashboard-item-item">
+        <button @click="navigateToUserEditView" type="submit" class="btn btn-dark m-3 ">Redigeeri andmeid</button>
+      </div>
+    </div>
+    <div class="dashboard-item">
+      <div class="dashboard-item-item">
+        <h4>Minu kuulutused</h4>
+        <div class="dashboard-advertisements">
+          <Advertisement :advertisement-response="advertisementResponse"></Advertisement>
+        </div>
+        <div>
+          <router-link to="/advertisement"><button type="submit" class="btn btn-dark mt-2">Lisa kuulutus</button></router-link>
         </div>
       </div>
-
-    </div>
-
-  <div class="col">
-    <div class="row">
-      <h4>Minu kuulutused</h4>
-      <div class="dash-board-advertisements">
-        <Advertisement :advertisement-response="advertisementResponse"></Advertisement>
+      <div class="dashboard-item-item">
+        Tagasiside
       </div>
-      <div>
-        <router-link to="/advertisement"><button type="submit" class="btn btn-dark mt-2">Lisa kuulutus</button></router-link>
-      </div>
-    </div>
-    <div class="row">
-      Tagasiside
     </div>
   </div>
-</div>
-
-
 </template>
 
 <script>

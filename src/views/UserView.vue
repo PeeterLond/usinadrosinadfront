@@ -7,8 +7,8 @@
   </div>
   <div class="row">
     <div class="col text-center">
-      <UserImage :image-data-base64="contactRequest.imageData" :img-height="USERVIEW_IMAGE.height"
-                 :img-width="USERVIEW_IMAGE.width"></UserImage>
+      <UserImage :image-data-base64="contactRequest.imageData" :img-height="USER_VIEW_IMAGE.height"
+                 :img-width="USER_VIEW_IMAGE.width"></UserImage>
       <ImageInput @event-emit-base64="setContactRequestImageData"/>
 
       <AlertDanger :alert-message="errorResponse.message"></AlertDanger>
@@ -75,26 +75,23 @@
             </router-link>
           </td>
           <td v-if="!isEdit">
-            <button @click="validateAndSendContactInfo" type="submit" class="btn btn-dark m-3">Kinnita</button>
+            <button @click="validateAndCreateContact" type="submit" class="btn btn-dark m-3">Kinnita</button>
           </td>
           <td v-else>
-            <button @click="updateUserInfo" type="submit" class="btn btn-dark m-3">Kinnita</button>
+            <button @click="validateAndUpdateContact" type="submit" class="btn btn-dark m-3">Kinnita</button>
           </td>
-
         </tr>
       </table>
-
-
     </div>
   </div>
-
 </template>
 
 <script>
 import UserImage from "@/components/image/UserImage.vue";
 import AlertDanger from "@/components/alert/AlertDanger.vue";
 import {
-  FILL_MANDATORY_FIELDS,
+  EMAIL_INCORRECT_FORMAT,
+  FILL_MANDATORY_FIELDS, MOBILE_NUMBER_INCORRECT_FORMAT,
   NEW_USER_SUCCESSFULLY_ADDED,
   PASSWORDS_DONT_MATCH,
   USER_DATA_SUCCESSFULLY_UPDATED
@@ -106,16 +103,13 @@ import EditPasswordModal from "@/components/modal/EditPasswordModal.vue";
 import CountyDropdown from "@/components/CountyDropdown.vue";
 import CityDropdown from "@/components/CityDropdown.vue";
 import router from "@/router";
-import {DASHBOARD_PROFILE_IMAGE, USER_VIEW_IMAGE} from "@/assets/script/ImageSizes";
+import {USER_VIEW_IMAGE} from "@/assets/script/ImageSizes";
 
 export default {
   name: 'UserView',
   computed: {
-    USERVIEW_IMAGE() {
+    USER_VIEW_IMAGE() {
       return USER_VIEW_IMAGE
-    },
-    DASHBOARD_PROFILE_IMAGE() {
-      return DASHBOARD_PROFILE_IMAGE
     }
   },
   components: {CityDropdown, CountyDropdown, EditPasswordModal, AlertSuccess, ImageInput, AlertDanger, UserImage},
@@ -152,16 +146,65 @@ export default {
       this.$refs.cityDropdownRef.selectedCountyId = selectedCountyId
       this.$refs.cityDropdownRef.getCities()
     },
+
     setContactRequestCityId(selectedCityId) {
       this.contactRequest.cityId = selectedCityId
     },
-    validateAndSendContactInfo() {
-      this.alertMessage = ''
-      this.successMessage = ''
-      if (this.mandatoryFieldsAreFilled() && this.passwordsAreSame()) {
-        this.addContact()
+
+    setContactRequestImageData(imageDataBase64) {
+      this.contactRequest.imageData = imageDataBase64;
+    },
+
+    validateAndCreateContact() {
+      this.resetErrorMessage();
+      this.resetSuccessMessage();
+
+      if (!this.mandatoryFieldsAreFilled() && !this.mandatoryPasswordFieldsAreFilled()) {
+        this.errorResponse.message = FILL_MANDATORY_FIELDS
+      } else if (!this.passwordsAreSame()) {
+        this.errorResponse.message = PASSWORDS_DONT_MATCH
+      } else if (!this.contactMobileNumberHasCorrectFormat()) {
+        this.errorResponse.message = MOBILE_NUMBER_INCORRECT_FORMAT
+      } else if (!this.contactEmailHasCorrectFormat()) {
+        this.errorResponse.message = EMAIL_INCORRECT_FORMAT
+      } else {
+        this.contactRequest.userPassword = this.inputPassword1;
+        this.addContact();
       }
     },
+
+    resetErrorMessage() {
+      this.alertMessage = ''
+    },
+
+    resetSuccessMessage() {
+      this.successMessage = ''
+    },
+
+    mandatoryFieldsAreFilled() {
+      return this.contactRequest.userUsername.length > 0 && this.contactRequest.contactFirstName.length > 0 &&
+          this.contactRequest.contactLastName.length > 0 && this.contactRequest.contactEmail.length > 0 &&
+           this.contactRequest.countyId > 0
+    },
+
+    mandatoryPasswordFieldsAreFilled() {
+      return this.inputPassword1.length > 0 && this.inputPassword2.length > 0
+    },
+
+    passwordsAreSame() {
+      return this.inputPassword1 === this.inputPassword2
+    },
+
+    contactMobileNumberHasCorrectFormat() {
+      let nrRegex = /^(\+)?\d+(\s\d+)*$/
+      return nrRegex.test(this.contactRequest.contactMobileNumber)
+    },
+
+    contactEmailHasCorrectFormat() {
+      let emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/
+      return emailRegex.test(this.contactRequest.contactEmail)
+    },
+
     addContact() {
       this.$http.post("/contact", this.contactRequest
       ).then(response => {
@@ -173,41 +216,6 @@ export default {
         this.errorResponse = error.response.data
       })
     },
-    mandatoryFieldsForUpdateAreFilled() {
-      if (this.contactRequest.userUsername.length > 0 &&
-          this.contactRequest.contactFirstName.length > 0 &&
-          this.contactRequest.contactLastName.length > 0 &&
-          this.contactRequest.contactEmail.length > 0 &&
-          this.contactRequest.countyId > 0) {
-        return true;
-      } else {
-        this.errorResponse.message = FILL_MANDATORY_FIELDS
-      }
-    },
-    mandatoryFieldsAreFilled() {
-      if (this.contactRequest.userUsername.length > 0 &&
-          this.contactRequest.contactFirstName.length > 0 &&
-          this.contactRequest.contactLastName.length > 0 &&
-          this.contactRequest.contactEmail.length > 0 &&
-          this.inputPassword1.length > 0 &&
-          this.inputPassword2.length > 0 &&
-          this.contactRequest.countyId > 0) {
-        return true;
-      } else {
-        this.errorResponse.message = FILL_MANDATORY_FIELDS
-      }
-    },
-    passwordsAreSame() {
-      if (this.inputPassword1 === this.inputPassword2) {
-        this.contactRequest.userPassword = this.inputPassword1;
-        return true;
-      } else {
-        this.errorResponse.message = PASSWORDS_DONT_MATCH
-      }
-    },
-    setContactRequestImageData(imageDataBase64) {
-      this.contactRequest.imageData = imageDataBase64;
-    },
 
     handleIsEdit() {
       this.isEdit = !isNaN(this.currentUserId)
@@ -217,6 +225,7 @@ export default {
         this.getCurrentUserContactData()
       }
     },
+
     getCurrentUserContactData() {
       this.$http.get("/contact", {
             params: {
@@ -230,9 +239,6 @@ export default {
         router.push({name: 'errorRoute'})
       })
     },
-    handleEditPassword() {
-      this.$refs.editPasswordModalRef.$refs.modalRef.openModal()
-    },
 
     setLocationFields() {
       this.$refs.countyDropdownRef.selectedCountyId = this.contactRequest.countyId
@@ -240,26 +246,25 @@ export default {
       this.$refs.cityDropdownRef.selectedCityId = this.contactRequest.cityId
     },
 
-    updateUserInfo() {
-      this.errorResponse.message = ''
-      this.successMessage = ''
-      if (this.mandatoryFieldsForUpdateAreFilled()) {
-        this.sendUpdateContactInfoRequest()
-      } else {
+    handleEditPassword() {
+      this.$refs.editPasswordModalRef.$refs.modalRef.openModal()
+    },
+
+    validateAndUpdateContact() {
+      this.resetErrorMessage();
+      this.resetSuccessMessage();
+
+      if (!this.mandatoryFieldsAreFilled()) {
         this.errorResponse.message = FILL_MANDATORY_FIELDS
+      } else if (!this.contactMobileNumberHasCorrectFormat()) {
+        this.errorResponse.message = MOBILE_NUMBER_INCORRECT_FORMAT
+      } else if (!this.contactEmailHasCorrectFormat()) {
+        this.errorResponse.message = EMAIL_INCORRECT_FORMAT
+      } else {
+        this.sendUpdateContactInfoRequest()
       }
     },
-    resetAllFields() {
-      this.contactRequest.imageData = ''
-      this.contactRequest.contactFirstName = ''
-      this.contactRequest.contactLastName = ''
-      this.contactRequest.contactMobileNumber = ''
-      this.contactRequest.contactEmail = ''
-      this.$refs.countyDropdownRef.selectedCountyId = 0
-      this.$refs.cityDropdownRef.selectedCityId = 0
-      this.contactRequest.contactIntroduction = ''
 
-    },
     sendUpdateContactInfoRequest() {
       this.$http.put("/contact", this.contactRequest, {
             params: {
@@ -275,16 +280,15 @@ export default {
         router.push({name: 'errorRoute'})
       })
     },
-
   },
+
   mounted() {
     this.handleIsEdit()
   },
-  beforeRouteUpdate() {
-    this.isEdit = false
-    this.resetAllFields()
 
-  },
+  beforeMount() {
+    this.isEdit = false
+  }
 }
 </script>
 

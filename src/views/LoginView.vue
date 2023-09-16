@@ -1,28 +1,22 @@
 <template>
-  <AlertDanger :alert-message="errorResponse.message"/>
-  <div class="row">
-    <div class="col d-flex justify-content-center m-5">
+  <div class="login-master">
+    <div class="login-item">
+      <AlertDanger :alert-message="errorResponse.message"/>
+    </div>
+    <div class="login-item">
       <input v-model="username" type="text" placeholder="Kasutajanimi">
     </div>
-  </div>
-  <div class="row">
-    <div class="col d-flex justify-content-center m-2">
+    <div class="login-item">
       <input v-model="password" type="password" placeholder="Salasõna">
     </div>
-  </div>
-  <div class="row">
-    <div class="col d-flex justify-content-center m-2">
+    <div class="login-item">
       <button @click="login"  class="btn btn-dark" type="submit">Logi sisse</button>
     </div>
-  </div>
-  <div class="row">
-    <div class="col text-center m-5">
+    <div class="login-item">
       <router-link to="/user"><p>Registreeri kasutaja</p></router-link>
       <p>Unustasid salasõna?</p>
     </div>
   </div>
-
-
 </template>
 
 <script>

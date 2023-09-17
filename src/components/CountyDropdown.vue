@@ -1,5 +1,5 @@
 <template>
-  <select v-model="selectedCountyId" @change="emitSelectedCountyId">
+  <select v-model="selectedCountyId" @change="emitSelectedCountyId" class="dropdowns">
     <option selected :value="0">Vali maakond</option>
     <option v-for="county in countyResponse" id="county" :value="county.countyId" :key="county.countyId">
       {{ county.countyName }}

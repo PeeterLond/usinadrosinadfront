@@ -3,10 +3,10 @@
   <AlertSuccess :alert-message="successMessage"></AlertSuccess>
 
   <div v-if="isChoresAdding" class="advertisement-view-master">
-    <div class="advertisement-view-items">
+    <div class="advertisement-chore-header">
       <h4 class="mb-5">Vali Teenused:</h4>
     </div>
-    <div class="advertisement-view-items">
+    <div class="advertisement-chore-items">
       <table>
         <tr v-for="chore in choreResponse">
           <td>{{chore.choreName}}</td>
@@ -18,20 +18,20 @@
       </table>
     </div>
     <div class="advertisement-view-items">
-      <button @click="removeAddedAdvertisementAndAdvertisementChores" class="btn btn-dark" type="submit">Katkesta</button>
+      <button @click="removeAddedAdvertisementAndAdvertisementChores" class="btn btn-dark me-3" type="submit">Katkesta</button>
       <button @click="ValidateAndPushToAdvertisements" class="btn btn-dark" type="submit"> Kinnita</button>
     </div>
   </div>
   <div v-else class="advertisement-view-master">
-    <div class="advertisement-view-items">
-      <h4 class="mb-5">Lisa kuulutus</h4>
+    <div class="advertisement-view-item1">
+      <h2>Lisa kuulutus:</h2>
       <div v-for="type in typeResponse">
         <input v-model="advertisementRequest.typeId" type="radio" name="radio" :id="type.typeName" :value="type.typeId">
-        <label :for="type.typeName">{{type.typeName}}</label>
+        <label :for="type.typeName" class="radio-label">{{type.typeName}}</label>
         <br>
       </div>
     </div>
-    <div class="advertisement-view-items">
+    <div class="advertisement-view-item2">
       <table>
         <tr>
           <td><label for="county">Maakond</label></td>
@@ -59,11 +59,11 @@
         </tr>
       </table>
     </div>
-    <div class="advertisement-view-items">
+    <div class="advertisement-view-item3">
       <textarea v-model="advertisementRequest.advertisementDescription" placeholder="Kuulutuse tekst" class="mb-4" cols="50" rows="5"></textarea>
       <div v-for="tool in toolResponse">
         <input v-model="advertisementRequest.toolId" type="radio" name="radio2" :id="tool.toolName" :value="tool.toolId">
-        <label :for="tool.toolName">{{tool.toolName}}</label>
+        <label :for="tool.toolName" class="radio-label">{{tool.toolName}}</label>
         <br>
       </div>
       <div class="mt-5">
@@ -80,7 +80,7 @@ import router from "@/router";
 import CountyDropdown from "@/components/CountyDropdown.vue";
 import CityDropdown from "@/components/CityDropdown.vue";
 import AlertDanger from "@/components/alert/AlertDanger.vue";
-import {FILL_MANDATORY_FIELDS, NEW_ADVERTISEMENT_ADDED} from "@/assets/script/AlertMessage";
+import {ATLEAST_ONE_CHORE_SELECTED, FILL_MANDATORY_FIELDS, NEW_ADVERTISEMENT_ADDED} from "@/assets/script/AlertMessage";
 import AlertSuccess from "@/components/alert/AlertSuccess.vue";
 import {useRoute} from "vue-router";
 
@@ -169,10 +169,19 @@ export default {
     },
 
     ValidateAndPushToAdvertisements() {
-      this.successMessage = NEW_ADVERTISEMENT_ADDED
-      setTimeout( () => {
-        router.push({name: 'advertisementsRoute'})
-      },2500)
+      this.resetErrorMessage();
+      if (this.atLeastOneChoreSelected) {
+        this.successMessage = NEW_ADVERTISEMENT_ADDED;
+        setTimeout(() => {
+          router.push({name: 'advertisementsRoute'})
+        }, 2500);
+      } else {
+        this.errorResponse.message = ATLEAST_ONE_CHORE_SELECTED
+      }
+    },
+
+    atLeastOneChoreSelected() {
+      return this.isChoreSelected.contains('true')
     },
 
     handleAdvertisementChoreDelete(choreId) {
@@ -208,7 +217,7 @@ export default {
       })
     },
 
-    resetErrorMessage: function () {
+    resetErrorMessage () {
       this.errorResponse.message = ''
     },
 
@@ -268,7 +277,6 @@ export default {
 
     handleIsChoresAdding() {
       this.isChoresAdding = !isNaN(this.selectedAdvertisementId)
-      this.getAllChores()
     },
 
     createIsChoreSelectedList() {
@@ -291,9 +299,11 @@ export default {
   },
   beforeMount() {
     this.handleIsChoresAdding()
-    if (!this.isChoresAdding) {
-      this.getAdvertisementTypes()
-      this.getAdvertisementTools()
+    if (this.isChoresAdding) {
+      this.getAllChores()
+    } else {
+      this.getAdvertisementTypes();
+      this.getAdvertisementTools();
     }
   }
 }

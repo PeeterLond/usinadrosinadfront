@@ -1,7 +1,12 @@
 <template>
-
-  <img src="../assets/image/noid.jpg" alt="nõia pilt" height="1000" width="1500"/>
-
+  <div class="error-master">
+    <div class="error-item">
+      <h1>Midagi läks valesti :(</h1>
+    </div>
+    <div class="error-item">
+      <img src="../assets/image/noid.jpg" alt="nõia pilt" style="height: 50vh; width: 50vw"/>
+    </div>
+  </div>
 </template>
 
 <script>

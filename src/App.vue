@@ -1,18 +1,20 @@
 <template>
   <div class="flex-master">
     <header>
-      <div class="header-item company-logo">
-        <img src="../src/assets/logo.png" alt="ettevõtte logo" id="company-logo">
-      </div>
-      <div class="header-item company-name">
-        <h1>Usinad Rosinad</h1>
+      <div class="header-item">
+        <div class="company-logo">
+          <img src="@/assets/image/logo.png" alt="ettevõtte logo" id="company-logo">
+        </div>
+        <div @click="goHome" class="company-name">
+          <h1>Usinad Rosinad</h1>
+        </div>
       </div>
       <div class="header-item">
         <router-link v-if="!loggedIn" to="/login">
-          <button type="button" class="btn btn-dark m-3">Logi sisse</button>
+          <button type="button" class="btn btn-dark">Logi sisse</button>
         </router-link>
         <router-link v-else @click="handleLogOut" to="/">
-          <button type="button" class="btn btn-danger m-3">Logi välja</button>
+          <button type="button" class="btn btn-danger">Logi välja</button>
         </router-link>
       </div>
     </header>
@@ -26,7 +28,7 @@
       <div class="nav-item">
         <router-link to="/dashboard">Minu töölaud</router-link>
       </div>
-      <div class="nav-item nav-item1">
+      <div class="nav-item">
         <router-link to="/mailbox">Minu sõnumid</router-link>
       </div>
     </nav>
@@ -36,15 +38,14 @@
       </div>
     </main>
     <footer>
-      <div></div>
       <div class="footer-item social-media-icons">
-        <a href="http://www.facebook.com" target="_blank" class="hoverable-link me-2">
+        <a href="https://www.facebook.com" class="icon">
           <font-awesome-icon :icon="['fab', 'facebook']" size="2xl"/>
         </a>
-        <a href="http://www.instagram.com" target="_blank" class="hoverable-link">
+        <a href="https://www.instagram.com" class="icon">
           <font-awesome-icon :icon="['fab', 'instagram']" size="2xl"/>
         </a>
-        <a href="mailto:usin@rosin.ee" class="hoverable-link ms-2">
+        <a href="mailto:usin@rosin.ee" class="icon">
           <font-awesome-icon :icon="['far', 'envelope']" size="2xl"/>
         </a>
       </div>
@@ -71,6 +72,9 @@ export default defineComponent({
     }
   },
   methods: {
+    goHome() {
+      router.push({name: 'homeRoute'})
+    },
     updateNavMenu() {
       this.loggedIn = sessionStorage.getItem('userId') !== null
     },

@@ -2,6 +2,9 @@
     display: flex;
     flex-direction: column;
     height: 100vh;
+    /*background-image: url("@/assets/image/backgroundImage.jpg");*/
+    /*background-size: cover;*/
+
 }
 
 header {
@@ -10,16 +13,19 @@ header {
     height: 10vh;
     font-family: "Brush Script MT", serif;
     align-items: center;
-    padding: 0 2vw;
+    padding: 0 4vw 0 2vw;
+    justify-content: space-between;
 }
 
 .header-item {
-    flex: 1;
+    display: flex;
+    align-items: flex-end;
+
 }
 
 .company-name {
-    flex: 7;
     cursor: pointer;
+    margin-left: 4vw;
 }
 
 #company-logo {
@@ -96,6 +102,23 @@ footer {
     justify-content: center;
 }
 
+.user-master {
+    display: flex;
+    justify-content: space-evenly;
+    padding-top: 5vh;
+    height: 100%;
+}
+
+
+.user-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-item-image {
+    margin: 1vh 0 4vh 0;
+}
+
 td {
     width: 13vw;
 }
@@ -108,10 +131,10 @@ td {
     align-items: center;
 }
 
-.dashboard-item-item-intro {
+
+.dashboard-item-intro {
     width: 50%;
 }
-
 
 .dashboard-advertisements {
     overflow: auto;
@@ -120,10 +143,7 @@ td {
     width: 40vw;
     display: flex;
 }
-.dashboard-introduction{
-    width: 400px;
-    text-align: justify;
-}
+
 .advertisement-view-master {
     display: flex;
     justify-content: space-around;
@@ -133,13 +153,13 @@ td {
 
 .advertisements-master {
     border: 1px solid black;
-    width: 50%;
-    height: 87%;
+    width: 55vw;
+    height: 66vh;
     display: flex;
     flex-wrap: wrap;
     overflow: auto;
     position: relative;
-    top: 10%;
+    top: 7%;
     left: 30%;
 
 }
@@ -147,16 +167,16 @@ td {
 .advertisements-item {
     border: 1px solid black;
     border-radius: 10%;
-    width: 26%;
-    height: 40%;
-    margin: 3.5%;
+    width: 14vw;
+    height: 26vh;
+    margin: 3%;
     background: aqua;
     display: flex;
-
     align-items: flex-start;
     transform-style: preserve-3d;
     transition: 2s ease;
     justify-content: left;
+    cursor: pointer;
 }
 
 .advertisements-item:hover {
@@ -172,26 +192,36 @@ td {
     justify-content: center;
     width: 100%;
     height: 100%;
+
 }
 
 .back {
     transform: rotateY(180deg);
     color: red;
     padding: 2%;
+    display: flex;
+    height: 100%;
+    align-items: center;
 }
 
 .front-item {
-    border: 1px solid red;
     flex: 1;
 }
 
 #advertisement-image-id {
     float: left;
     margin: 3%;
+    border-radius: 50%;
+    overflow: hidden;
 }
 
 .front-item-text {
-    line-height: 225%;
+    line-height: 190%;
+    margin-left: 3%;
+}
+
+.user-price {
+    margin-top: 7%;
 }
 
 .rating {
@@ -201,7 +231,8 @@ td {
 }
 
 .user-name {
+    margin-top: 3%;
     font-weight: bold;
-    font-size: 20px;
+    font-size: 110%;
 }
 

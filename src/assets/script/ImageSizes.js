@@ -3,10 +3,10 @@ export const DASHBOARD_PROFILE_IMAGE = {
     width: '10vw'
 }
 export const USER_VIEW_IMAGE = {
-    height: '10%',
-    width: '10%'
+    height: '30vh',
+    width: '15vw'
 }
 export const ADVERTISEMENTS_IMAGE = {
-    height: '5vh',
+    height: '10vh',
     width: '5vw'
 }

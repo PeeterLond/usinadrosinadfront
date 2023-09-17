@@ -2,7 +2,7 @@
 
   <div class="dashboard-master">
     <div class="dashboard-item">
-      <div class="dashboard-item-item">
+      <div class="dashboard-item-image">
         <UserImage :image-data-base64="userContactInfo.imageData" :img-height="DASHBOARD_PROFILE_IMAGE.height"
                    :img-width="DASHBOARD_PROFILE_IMAGE.width"></UserImage>
       </div>
@@ -40,7 +40,7 @@
           </tbody>
         </table>
       </div>
-      <div class="dashboard-item-item-intro">
+      <div class="dashboard-item-intro">
         {{ userContactInfo.contactIntroduction }}
       </div>
       <div class="dashboard-item-item">

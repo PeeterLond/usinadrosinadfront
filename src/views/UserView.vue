@@ -1,87 +1,97 @@
 <template>
   <EditPasswordModal ref="editPasswordModalRef"/>
-  <div class="row">
-    <div class="col col-6 text-center m-4">
-      <h1>{{ title }}</h1>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col text-center">
-      <UserImage :image-data-base64="contactRequest.imageData" :img-height="USER_VIEW_IMAGE.height"
-                 :img-width="USER_VIEW_IMAGE.width"></UserImage>
-      <ImageInput @event-emit-base64="setContactRequestImageData"/>
 
-      <AlertDanger :alert-message="errorResponse.message"></AlertDanger>
-      <AlertSuccess :alert-message="successMessage"></AlertSuccess>
+  <div class="user-master">
+    <div class="user-item">
+      <div class="user-item-item">
+        <h1>{{ title }}</h1>
+      </div>
+      <div class="user-item-image">
+        <UserImage :image-data-base64="contactRequest.imageData" :img-height="USER_VIEW_IMAGE.height"
+                   :img-width="USER_VIEW_IMAGE.width"></UserImage>
+        <ImageInput @event-emit-base64="setContactRequestImageData"/>
+      </div>
+      <div class="user-item-item">
+        <AlertDanger :alert-message="errorResponse.message"></AlertDanger>
+        <AlertSuccess :alert-message="successMessage"></AlertSuccess>
+      </div>
+
+
     </div>
-    <div class="col">
-      <table>
-        <tr v-if="!isEdit">
-          <td><label for="username">Kasutajanimi</label></td>
-          <td><input v-model="contactRequest.userUsername" type="text" id="username"></td>
-        </tr>
-        <tr>
-          <td><label for="firstName">Eesnimi</label></td>
-          <td><input v-model="contactRequest.contactFirstName" type="text" id="firstName"></td>
-        </tr>
-        <tr>
-          <td><label for="lastName">Perekonnanimi</label></td>
-          <td><input v-model="contactRequest.contactLastName" type="text" id="lastName"></td>
-        </tr>
-        <tr>
-          <td><label for="telephone">Telefoni number</label></td>
-          <td><input v-model="contactRequest.contactMobileNumber" type="text" id="telephone"></td>
-        </tr>
-        <tr>
-          <td><label for="email">Email</label></td>
-          <td><input v-model="contactRequest.contactEmail" type="email" id="email"></td>
-        </tr>
-        <tr>
-          <td><label for="county">Maakond</label></td>
-          <td>
-            <CountyDropdown @event-update-selected-county-id="setContactRequestCountyId" ref="countyDropdownRef"/>
-          </td>
-        </tr>
-        <tr>
-          <td><label for="city">Linn</label></td>
-          <td>
-            <CityDropdown @event-update-selected-city-id="setContactRequestCityId" ref="cityDropdownRef"/>
-          </td>
-        </tr>
-        <tr>
-          <td><label for="password">Salasõna</label></td>
-          <td v-if="!isEdit"><input v-model="inputPassword1" type="password" id="password"></td>
-          <td v-else>
-            <button @click="handleEditPassword" type="submit" class="btn btn-dark">Muuda</button>
-          </td>
-        </tr>
-        <tr v-if="!isEdit">
-          <td><label for="password2">Salasõna uuesti</label></td>
-          <td><input v-model="inputPassword2" type="password" id="password2"></td>
-        </tr>
-      </table>
+    <div class="user-item">
+      <div class="user-item-item">
+        <table>
+          <tr v-if="!isEdit">
+            <td><label for="username">Kasutajanimi</label></td>
+            <td><input v-model="contactRequest.userUsername" type="text" id="username"></td>
+          </tr>
+          <tr>
+            <td><label for="firstName">Eesnimi</label></td>
+            <td><input v-model="contactRequest.contactFirstName" type="text" id="firstName"></td>
+          </tr>
+          <tr>
+            <td><label for="lastName">Perekonnanimi</label></td>
+            <td><input v-model="contactRequest.contactLastName" type="text" id="lastName"></td>
+          </tr>
+          <tr>
+            <td><label for="telephone">Telefoni number</label></td>
+            <td><input v-model="contactRequest.contactMobileNumber" type="text" id="telephone"></td>
+          </tr>
+          <tr>
+            <td><label for="email">Email</label></td>
+            <td><input v-model="contactRequest.contactEmail" type="email" id="email"></td>
+          </tr>
+          <tr>
+            <td><label for="county">Maakond</label></td>
+            <td>
+              <CountyDropdown @event-update-selected-county-id="setContactRequestCountyId" ref="countyDropdownRef"/>
+            </td>
+          </tr>
+          <tr>
+            <td><label for="city">Linn</label></td>
+            <td>
+              <CityDropdown @event-update-selected-city-id="setContactRequestCityId" ref="cityDropdownRef"/>
+            </td>
+          </tr>
+          <tr>
+            <td><label for="password">Salasõna</label></td>
+            <td v-if="!isEdit"><input v-model="inputPassword1" type="password" id="password"></td>
+            <td v-else>
+              <button @click="handleEditPassword" type="submit" class="btn btn-dark">Muuda</button>
+            </td>
+          </tr>
+          <tr v-if="!isEdit">
+            <td><label for="password2">Salasõna uuesti</label></td>
+            <td><input v-model="inputPassword2" type="password" id="password2"></td>
+          </tr>
+        </table>
+      </div>
+      <div class="user-item-item">
       <textarea v-model="contactRequest.contactIntroduction" placeholder="Koristaja lühitutvustus" cols="50"
                 rows="5"></textarea>
-      <table>
-        <tr>
-          <td v-if="!isEdit">
-            <router-link to="/login">
-              <button type="submit" class="btn btn-dark m-3">Katkesta</button>
-            </router-link>
-          </td>
-          <td v-else>
-            <router-link to="/dashBoard">
-              <button type="submit" class="btn btn-dark m-3">Katkesta</button>
-            </router-link>
-          </td>
-          <td v-if="!isEdit">
-            <button @click="validateAndCreateContact" type="submit" class="btn btn-dark m-3">Kinnita</button>
-          </td>
-          <td v-else>
-            <button @click="validateAndUpdateContact" type="submit" class="btn btn-dark m-3">Kinnita</button>
-          </td>
-        </tr>
-      </table>
+      </div>
+      <div class="user-item-item">
+        <table>
+          <tr>
+            <td v-if="!isEdit">
+              <router-link to="/login">
+                <button type="submit" class="btn btn-dark m-3">Katkesta</button>
+              </router-link>
+            </td>
+            <td v-else>
+              <router-link to="/dashBoard">
+                <button type="submit" class="btn btn-dark m-3">Katkesta</button>
+              </router-link>
+            </td>
+            <td v-if="!isEdit">
+              <button @click="validateAndCreateContact" type="submit" class="btn btn-dark m-3">Kinnita</button>
+            </td>
+            <td v-else>
+              <button @click="validateAndUpdateContact" type="submit" class="btn btn-dark m-3">Kinnita</button>
+            </td>
+          </tr>
+        </table>
+      </div>
     </div>
   </div>
 </template>
@@ -159,7 +169,7 @@ export default {
       this.resetErrorMessage();
       this.resetSuccessMessage();
 
-      if (!this.mandatoryFieldsAreFilled() && !this.mandatoryPasswordFieldsAreFilled()) {
+      if (!this.mandatoryFieldsAreFilled() || !this.mandatoryPasswordFieldsAreFilled()) {
         this.errorResponse.message = FILL_MANDATORY_FIELDS
       } else if (!this.passwordsAreSame()) {
         this.errorResponse.message = PASSWORDS_DONT_MATCH
@@ -174,7 +184,7 @@ export default {
     },
 
     resetErrorMessage() {
-      this.alertMessage = ''
+      this.errorResponse.message = ''
     },
 
     resetSuccessMessage() {
@@ -184,7 +194,7 @@ export default {
     mandatoryFieldsAreFilled() {
       return this.contactRequest.userUsername.length > 0 && this.contactRequest.contactFirstName.length > 0 &&
           this.contactRequest.contactLastName.length > 0 && this.contactRequest.contactEmail.length > 0 &&
-           this.contactRequest.countyId > 0
+          this.contactRequest.countyId > 0
     },
 
     mandatoryPasswordFieldsAreFilled() {

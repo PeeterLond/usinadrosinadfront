@@ -1,7 +1,6 @@
 <template>
   <div class="advertisements-master">
     <Advertisement :advertisement-response="advertisementResponse"/>
-
   </div>
 
 </template>
@@ -12,10 +11,11 @@
 import router from "@/router";
 import {ADVERTISEMENTS_IMAGE} from "@/assets/script/ImageSizes";
 import Advertisement from "@/components/Advertisement.vue";
+import Modal from "@/components/modal/Modal.vue";
 
 export default {
   name: 'AdvertisementsView',
-  components: {Advertisement},
+  components: {Modal, Advertisement},
   data() {
     return {
       advertisementResponse: [

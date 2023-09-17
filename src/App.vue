@@ -1,11 +1,13 @@
 <template>
   <div class="flex-master">
     <header>
-      <div class="header-item company-logo">
-        <img src="../src/assets/logo.png" alt="ettevõtte logo" id="company-logo">
-      </div>
-      <div @click="goHome" class="header-item company-name">
-        <h1>Usinad Rosinad</h1>
+      <div class="header-item">
+        <div class="company-logo">
+          <img src="@/assets/image/logo.png" alt="ettevõtte logo" id="company-logo">
+        </div>
+        <div @click="goHome" class="company-name">
+          <h1>Usinad Rosinad</h1>
+        </div>
       </div>
       <div class="header-item">
         <router-link v-if="!loggedIn" to="/login">

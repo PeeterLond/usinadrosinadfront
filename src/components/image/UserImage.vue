@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="round-image">
     <img v-if="imageDataBase64 === null || imageDataBase64 === ''" src="../../assets/image/userDefaultImage.png"
          :style="{height: imgHeight, width: imgWidth}" alt="Kasutaja profiilipilt"/>
     <img v-else :src="imageDataBase64" :style="{height: imgHeight, width: imgWidth}" alt="Kasutaja profiilipilt2"/>

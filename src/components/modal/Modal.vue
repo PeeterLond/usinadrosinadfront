@@ -1,14 +1,14 @@
 <template>
   <div v-if="isOpen" class="modal fade show d-block" tabindex="-1">
-    <div class="modal-dialog" @click.stop>
+    <div class="modal-dialog modal-dialog-centered" @click.stop>
       <div class="modal-content">
-
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">
+          <h1 class="modal-title fs-5" >
             <slot name="header">
               Default title
             </slot>
           </h1>
+          <button type="button" class="btn-close" aria-label="Close" @click="closeModal"></button>
         </div>
         <div class="modal-body form-floating">
           <slot name="body">
@@ -16,7 +16,7 @@
           </slot>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-secondary" @click="closeModal">{{ closeButtonName }}</button>
+          <button type="submit" class="btn btn-secondary" @click="closeModal">Sulge</button>
           <slot name="footer">
             default
           </slot>
@@ -30,9 +30,6 @@
 <script>
 export default {
   name: 'Modal',
-  props: {
-    closeButtonName: String
-  },
   data() {
     return {
       isOpen: false,

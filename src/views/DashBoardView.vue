@@ -49,16 +49,19 @@
     </div>
     <div class="dashboard-item">
       <div class="dashboard-item-item">
-        <h4>Minu kuulutused</h4>
+        <h4>Kuulutused</h4>
         <div class="dashboard-advertisements">
           <Advertisement :advertisement-response="advertisementResponse"></Advertisement>
         </div>
-        <div>
+        <div class="dashboard-advertisements-btn">
           <router-link to="/advertisement"><button type="submit" class="btn btn-dark mt-2">Lisa kuulutus</button></router-link>
         </div>
       </div>
       <div class="dashboard-item-item">
-        Tagasiside
+        <h4>Tagasiside</h4>
+        <div class="dashboard-feedback">
+
+        </div>
       </div>
     </div>
   </div>

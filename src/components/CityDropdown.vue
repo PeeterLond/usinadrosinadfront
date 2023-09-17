@@ -1,5 +1,5 @@
 <template>
-  <select v-model="selectedCityId" @change="emitSelectedCityId">
+  <select v-model="selectedCityId" @change="emitSelectedCityId" class="dropdowns">
     <option selected :value="0">Vali linn</option>
     <option v-for="city in cityResponse" id="city" :value="city.cityId" :key="city.cityId">{{city.cityName}}</option>
   </select>

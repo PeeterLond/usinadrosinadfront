@@ -123,10 +123,14 @@ td {
     width: 13vw;
 }
 
+.dropdowns {
+    width: 95%;
+}
+
 .dashboard-master {
     display: flex;
     justify-content: space-between;
-    padding: 1vh 3vw;
+    padding: 0 5vw;
     height: 100%;
     align-items: center;
 }
@@ -139,9 +143,27 @@ td {
 .dashboard-advertisements {
     overflow: auto;
     border: solid 1px black;
-    height: 40vh;
+    height: 33vh;
     width: 40vw;
     display: flex;
+    justify-content: space-between;
+    padding: 1%;
+    flex-wrap: wrap;
+}
+
+.dashboard-advertisements-btn {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.dashboard-feedback {
+    overflow: auto;
+    border: solid 1px black;
+    height: 20vh;
+    width: 40vw;
+    display: flex;
+    padding: 1%;
+    flex-wrap: wrap;
 }
 
 .advertisement-view-master {
@@ -149,6 +171,32 @@ td {
     justify-content: space-around;
     height: 100%;
     align-items: center;
+}
+
+.advertisement-view-item1 {
+    align-self: flex-start;
+    margin-top: 3%;
+}
+
+.advertisement-view-item1 h2 {
+    margin-bottom: 40%;
+}
+
+.advertisement-view-item1 div {
+    margin-left: 30%;
+}
+
+.advertisement-view-item3 {
+    margin-top: 5%;
+}
+
+.radio-label {
+    margin-left: 1vw;
+}
+
+.advertisement-chore-header {
+    align-self: flex-start;
+    margin-top: 4%
 }
 
 .advertisements-master {
@@ -159,9 +207,8 @@ td {
     flex-wrap: wrap;
     overflow: auto;
     position: relative;
-    top: 7%;
+    top: 6%;
     left: 30%;
-
 }
 
 .advertisements-item {

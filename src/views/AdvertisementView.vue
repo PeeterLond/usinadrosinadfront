@@ -197,7 +197,6 @@ export default {
       }).catch(error => {
         router.push({name: 'errorRoute'})
       })
-
     },
 
     handleAdvertisementChoreAdd(choreId) {
@@ -205,7 +204,6 @@ export default {
       this.advertisementChoreRequest.choreId = choreId
       this.advertisementChoreRequest.advertisementId = this.selectedAdvertisementId
       this.addAdvertisementChore()
-
     },
 
     addAdvertisementChore() {

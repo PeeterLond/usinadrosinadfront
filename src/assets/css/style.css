@@ -205,6 +205,10 @@ td {
 }
 
 .advertisements-master {
+    display: flex;
+}
+
+.advertisements-ads {
     border: 1px solid black;
     width: 55vw;
     height: 66vh;
@@ -212,9 +216,33 @@ td {
     flex-wrap: wrap;
     overflow: auto;
     position: relative;
-    top: 6%;
+    top: 2%;
     left: 30%;
 }
+
+.advertisements-sort {
+    display: flex;
+    justify-content: center;
+    margin-top: 1%;
+    margin-right: 18%;
+}
+
+.sort-arrow {
+    cursor: pointer;
+}
+
+.sort-header {
+    margin: 0 .5% 0 1%;
+}
+
+.advertisements-filter {
+    margin: 5% 0 0 3%;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+
+}
+
 
 .advertisements-item {
     border: 1px solid black;

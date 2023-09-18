@@ -43,7 +43,7 @@
       <div class="dashboard-item-intro">
         {{ userContactInfo.contactIntroduction }}
       </div>
-      <div class="dashboard-item-item">
+      <div v-if="!isAnotherUserDashboard" class="dashboard-item-item">
         <button @click="navigateToUserEditView" type="submit" class="btn btn-dark m-3 ">Redigeeri andmeid</button>
       </div>
     </div>
@@ -53,7 +53,7 @@
         <div class="dashboard-advertisements">
           <Advertisement :advertisement-response="advertisementResponse"></Advertisement>
         </div>
-        <div class="dashboard-advertisements-btn">
+        <div v-if="!isAnotherUserDashboard" class="dashboard-advertisements-btn">
           <router-link to="/advertisement"><button type="submit" class="btn btn-dark mt-2">Lisa kuulutus</button></router-link>
         </div>
       </div>
@@ -61,6 +61,9 @@
         <h4>Tagasiside</h4>
         <div class="dashboard-feedback">
 
+        </div>
+        <div v-if="isAnotherUserDashboard" class="dashboard-feedback-btn">
+          <button type="submit" class="btn btn-dark mt-2">Lisa tagasiside</button>
         </div>
       </div>
     </div>
@@ -73,6 +76,7 @@ import router from "@/router";
 import ImageInput from "@/components/image/ImageInput.vue";
 import {DASHBOARD_PROFILE_IMAGE} from "@/assets/script/ImageSizes";
 import Advertisement from "@/components/Advertisement.vue";
+import {useRoute} from "vue-router";
 
 export default {
   name: 'DashBoardView',
@@ -85,6 +89,8 @@ export default {
   data() {
     return {
       currentUserId: sessionStorage.getItem('userId'),
+      anotherUserId: Number(useRoute().query.userId),
+      isAnotherUserDashboard: false,
       userContactInfo: {
         userUsername: '',
         countyName: '',
@@ -126,10 +132,10 @@ export default {
     navigateToUserEditView() {
       router.push({name: 'userRoute', query: {userId: this.currentUserId}})
     },
-    getUserContactInfo() {
+    getUserContactInfo(userId) {
       this.$http.get("/contact-show", {
             params: {
-              userId: this.currentUserId,
+              userId: userId,
             }
           }
       ).then(response => {
@@ -138,10 +144,10 @@ export default {
         router.push({name: 'errorRoute'})
       })
     },
-    getUserAdvertisementsWithContact() {
+    getUserAdvertisementsWithContact(userId) {
       this.$http.get("/advertisement-user-with-contact", {
             params: {
-              userId: this.currentUserId
+              userId: userId
             }
           }
       ).then(response => {
@@ -151,10 +157,19 @@ export default {
         router.push({name: 'errorRoute'})
       })
     },
+    checkIfAnotherUserDashboard() {
+      this.isAnotherUserDashboard = !isNaN(this.anotherUserId)
+    },
   },
   beforeMount() {
-    this.getUserContactInfo()
-    this.getUserAdvertisementsWithContact()
+    this.checkIfAnotherUserDashboard()
+    if (this.isAnotherUserDashboard) {
+      this.getUserContactInfo(this.anotherUserId);
+      this.getUserAdvertisementsWithContact(this.anotherUserId);
+    } else {
+      this.getUserContactInfo(this.currentUserId);
+      this.getUserAdvertisementsWithContact(this.currentUserId)
+    }
   }
 }
 </script>

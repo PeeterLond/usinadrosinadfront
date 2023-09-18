@@ -1,6 +1,6 @@
 <template>
   <AdvertisementModal ref="advertisementModal"></AdvertisementModal>
-  <div v-for="ad in advertisementResponse" @click="openAdvertisementModal" class="advertisements-item">
+  <div v-for="ad in advertisementResponse" @click="openAdvertisementModal(ad)" class="advertisements-item">
     <div class="front">
       <div class="front-item">
         <UserImage :image-data-base64="ad.contactImageData" :img-height="ADVERTISEMENTS_IMAGE.height"
@@ -39,7 +39,11 @@ export default {
     advertisementResponse: {}
   },
   methods: {
-    openAdvertisementModal() {
+    openAdvertisementModal(ad) {
+      this.$refs.advertisementModal.ad = ad
+      this.$refs.advertisementModal.getAdvertisementChores()
+      this.$refs.advertisementModal.checkIfLoggedIn()
+      this.$refs.advertisementModal.checkIfAdUserIsSameAsCurrentUser()
       this.$refs.advertisementModal.$refs.modalRef.openModal()
     },
   }

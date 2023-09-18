@@ -166,6 +166,11 @@ td {
     flex-wrap: wrap;
 }
 
+.dashboard-feedback-btn {
+    display: flex;
+    justify-content: flex-end;
+}
+
 .advertisement-view-master {
     display: flex;
     justify-content: space-around;
@@ -282,4 +287,46 @@ td {
     font-weight: bold;
     font-size: 110%;
 }
+
+.ad-modal-master {
+    display: flex;
+    flex-direction: column;
+}
+
+.ad-modal-profile {
+    /*border: 1px solid black;*/
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: space-around;
+    margin-bottom: 4%;
+}
+.ad-modal-info {
+    margin-top: 3%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    height: 13vh;
+}
+
+.ad-modal-chores {
+    margin-top: 2%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    height: 30vh;
+}
+
+.ad-modal-footer {
+    display: flex;
+    flex: 1;
+    justify-content: space-between;
+}
+
+.delete-modal-footer {
+    display: flex;
+    flex: 1;
+    justify-content: space-between;
+}
+
 

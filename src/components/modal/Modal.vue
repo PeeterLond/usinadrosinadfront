@@ -16,9 +16,7 @@
           </slot>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-secondary" @click="closeModal">Sulge</button>
           <slot name="footer">
-            default
           </slot>
         </div>
       </div>

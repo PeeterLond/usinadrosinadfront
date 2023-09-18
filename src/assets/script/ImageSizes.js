@@ -10,3 +10,7 @@ export const ADVERTISEMENTS_IMAGE = {
     height: '10vh',
     width: '5vw'
 }
+export const AD_MODAL_IMAGE = {
+    height: '18vh',
+    width: '9vw'
+}

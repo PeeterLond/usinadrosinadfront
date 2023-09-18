@@ -80,7 +80,7 @@ import router from "@/router";
 import CountyDropdown from "@/components/CountyDropdown.vue";
 import CityDropdown from "@/components/CityDropdown.vue";
 import AlertDanger from "@/components/alert/AlertDanger.vue";
-import {ATLEAST_ONE_CHORE_SELECTED, FILL_MANDATORY_FIELDS, NEW_ADVERTISEMENT_ADDED} from "@/assets/script/AlertMessage";
+import {AT_LEAST_ONE_CHORE_SELECTED, FILL_MANDATORY_FIELDS, NEW_ADVERTISEMENT_ADDED} from "@/assets/script/AlertMessage";
 import AlertSuccess from "@/components/alert/AlertSuccess.vue";
 import {useRoute} from "vue-router";
 
@@ -176,7 +176,7 @@ export default {
           router.push({name: 'advertisementsRoute'})
         }, 2500);
       } else {
-        this.errorResponse.message = ATLEAST_ONE_CHORE_SELECTED
+        this.errorResponse.message = AT_LEAST_ONE_CHORE_SELECTED
       }
     },
 

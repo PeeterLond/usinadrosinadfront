@@ -6,3 +6,4 @@ export const NEW_USER_SUCCESSFULLY_ADDED = 'Uus kasutaja andmebaasi registreerit
 export const USER_DATA_SUCCESSFULLY_UPDATED = 'Kasutaja andmed edukalt muudetud.'
 export const NEW_ADVERTISEMENT_ADDED = 'Uus kuulutus lisatud.'
 export const ATLEAST_ONE_CHORE_SELECTED = 'Vähemalt üks teenus peab olema valitud'
+export const PASSWORD_SUCCESSFULLY_UPDATED = 'Parool edukalt muudetud'

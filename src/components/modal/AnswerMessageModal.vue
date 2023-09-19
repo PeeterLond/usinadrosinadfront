@@ -30,6 +30,7 @@ import ViewMessageModal from "@/components/modal/ViewMessageModal.vue";
 import router from "@/router";
 import MailboxView from "@/views/MailboxView.vue";
 import AlertSuccess from "@/components/alert/AlertSuccess.vue";
+import {PASSWORD_SUCCESSFULLY_UPDATED} from "@/assets/script/AlertMessage";
 
 export default {
   name: 'AnswerMessageModal',
@@ -54,7 +55,10 @@ export default {
       this.$http.post("mailbox", this.message,
       ).then(response => {
         this.messageSent = true
-        this.messageGotSent()
+        setTimeout(() => {
+          this.$refs.modalRef.closeModal()
+          window.location.reload()
+        }, 2000);
       }).catch(error => {
         router.push({name: 'errorRoute'})
       })
@@ -69,16 +73,11 @@ export default {
       this.message.receiverUserUsername = user
       this.message.messageLetterBody = ''
       this.message.isRead = false
-    },
-    messageGotSent() {
-      this.$refs.modalRef.closeModal()
-      window.location.reload()
-      // setTimeout( () => {
-      //   router.push({name: 'mailboxRoute'})
-      // },2500)
     }
   }
 }
 
 
 </script>
+
+

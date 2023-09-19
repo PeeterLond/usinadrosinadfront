@@ -1,6 +1,6 @@
 <template>
   <ViewMessageModal ref="viewMessageModalRef"/>
-  <AlertSuccess :alert-message="successMessage"/>
+  <AnswerMessageModal ref="answerMessageModalRef"/>
   <table class="table table-striped">
     <thead>
     <tr>
@@ -11,13 +11,13 @@
     </tr>
     </thead>
     <tbody>
-    <tr v-for="message in messagesRequest" @click="openViewMessageModal(message)">
+    <tr v-for="message in messagesRequest" @click="openViewMessageModal(message)" class="hoverable-link" id="box">
       <td :for="message.senderUserUsername">{{ message.senderUserUsername }}</td>
       <td :for="message.receiverUserUsername">{{ message.receiverUserUsername }}</td>
       <td :for="message.messageLetterTitle">{{ message.messageLetterTitle }}</td>
       <td :for="message.messageLetterTime">{{ message.messageLetterTime }}</td>
       <td>
-        <button type="submit">Vasta</button>
+        <button type="submit" @click="openAnswerMessageModal(message)">Vasta</button>
       </td>
     </tr>
     </tbody>
@@ -31,6 +31,7 @@ import EditPasswordModal from "@/components/modal/EditPasswordModal.vue";
 import ViewMessageModal from "@/components/modal/ViewMessageModal.vue";
 import AnswerMessageModal from "@/components/modal/AnswerMessageModal.vue";
 import AlertSuccess from "@/components/alert/AlertSuccess.vue";
+import answerMessageModal from "@/components/modal/AnswerMessageModal.vue";
 
 export default {
   name: 'MailboxView',
@@ -69,6 +70,11 @@ export default {
     openViewMessageModal(message) {
       this.$refs.viewMessageModalRef.$refs.modalRef.openModal()
       this.$refs.viewMessageModalRef.message = message
+    },
+    openAnswerMessageModal(message) {
+      this.$refs.answerMessageModalRef.$refs.modalRef.openModal()
+      this.$refs.answerMessageModalRef.message = message
+      this.$refs.answerMessageModalRef.handleNewMessageInfo()
     }
   },
   beforeMount() {

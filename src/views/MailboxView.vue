@@ -1,5 +1,6 @@
 <template>
   <ViewMessageModal ref="viewMessageModalRef"/>
+  <AlertSuccess :alert-message="successMessage"/>
   <table class="table table-striped">
     <thead>
     <tr>
@@ -10,7 +11,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr v-for="message in messagesRequest" @click="openViewMessageModal(message)" >
+    <tr v-for="message in messagesRequest" @click="openViewMessageModal(message)">
       <td :for="message.senderUserUsername">{{ message.senderUserUsername }}</td>
       <td :for="message.receiverUserUsername">{{ message.receiverUserUsername }}</td>
       <td :for="message.messageLetterTitle">{{ message.messageLetterTitle }}</td>
@@ -28,13 +29,16 @@
 import router from "@/router";
 import EditPasswordModal from "@/components/modal/EditPasswordModal.vue";
 import ViewMessageModal from "@/components/modal/ViewMessageModal.vue";
+import AnswerMessageModal from "@/components/modal/AnswerMessageModal.vue";
+import AlertSuccess from "@/components/alert/AlertSuccess.vue";
 
 export default {
   name: 'MailboxView',
-  components: {ViewMessageModal, EditPasswordModal},
+  components: {AlertSuccess, AnswerMessageModal, ViewMessageModal, EditPasswordModal},
   data() {
     return {
       userId: sessionStorage.getItem('userId'),
+      successMessage: '',
       messagesRequest: [
         {
           messageLetterTitle: '',
@@ -66,7 +70,6 @@ export default {
       this.$refs.viewMessageModalRef.$refs.modalRef.openModal()
       this.$refs.viewMessageModalRef.message = message
     }
-
   },
   beforeMount() {
     this.getMessages()

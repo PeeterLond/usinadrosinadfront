@@ -1,19 +1,22 @@
 <template>
   <div>
+    <MailboxView ref="mailboxViewRef"/>
+    <AlertSuccess :alert-message="successMessage"/>
     <Modal ref="modalRef">
       <template #header>
         {{ message.messageLetterTitle }}
       </template>
       <template #body>
         <div class="mb-3">
-          <h6 >From: {{message.senderUserUsername}}</h6>
+          <h6>From: {{ message.senderUserUsername }}</h6>
           <h6>To:{{ message.receiverUserUsername }}</h6>
           <label for="message-text" class="col-form-label">Sõnum:</label>
           <textarea class="form-control" v-model="message.messageLetterBody"></textarea>
         </div>
       </template>
       <template #footer>
-        <button class="btn btn-dark" @click="sendResponseMessage">Vasta</button>
+        <button class="btn btn-dark" v-if="messageSent">Saadetud</button>
+        <button class="btn btn-dark" v-else @click="sendResponseMessage">Vasta</button>
       </template>
     </Modal>
   </div>
@@ -25,13 +28,15 @@
 import Modal from "@/components/modal/Modal.vue";
 import ViewMessageModal from "@/components/modal/ViewMessageModal.vue";
 import router from "@/router";
+import MailboxView from "@/views/MailboxView.vue";
+import AlertSuccess from "@/components/alert/AlertSuccess.vue";
 
 export default {
   name: 'AnswerMessageModal',
-  components: {ViewMessageModal, Modal},
+  components: {AlertSuccess, MailboxView, ViewMessageModal, Modal},
   data() {
     return {
-      successMessage: '',
+      messageSent: false,
       message: {
         messageLetterTitle: '',
         messageLetterBody: '',
@@ -48,25 +53,31 @@ export default {
     sendResponseMessage() {
       this.$http.post("mailbox", this.message,
       ).then(response => {
-        this.successMessage = MESSAGE_SENT
-        setTimeout(() => {
-          router.push({name: 'mailboxRoute'})
-        }, 2500)
+        this.messageSent = true
+        this.messageGotSent()
       }).catch(error => {
         router.push({name: 'errorRoute'})
       })
     },
 
     handleNewMessageInfo() {
-      let receiverUsername
-      let senderUsername
-      receiverUsername = this.message.senderUserUsername
-      senderUsername = this.message.receiverUserUsername
-      this.message.senderUserUsername = senderUsername
-      this.message.receiverUserUsername = receiverUsername
+      let user = this.message.senderUserUsername
+      let id = this.message.senderUserId
+      this.message.senderUserUsername = this.message.receiverUserUsername
+      this.message.senderUserId = this.message.receiverUserId
+      this.message.receiverUserId = id
+      this.message.receiverUserUsername = user
       this.message.messageLetterBody = ''
+      this.message.isRead = false
+    },
+    messageGotSent() {
+      this.$refs.modalRef.closeModal()
+      window.location.reload()
+      // setTimeout( () => {
+      //   router.push({name: 'mailboxRoute'})
+      // },2500)
     }
-  },
+  }
 }
 
 

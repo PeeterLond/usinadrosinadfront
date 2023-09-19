@@ -17,7 +17,7 @@
       <td :for="message.messageLetterTitle">{{ message.messageLetterTitle }}</td>
       <td :for="message.messageLetterTime">{{ message.messageLetterTime }}</td>
       <td>
-        <button type="submit" @click="openAnswerMessageModal(message)">Vasta</button>
+        <button type="submit" @click="openAnswerMessageModal(message, $event)">Vasta</button>
       </td>
     </tr>
     </tbody>
@@ -32,10 +32,11 @@ import ViewMessageModal from "@/components/modal/ViewMessageModal.vue";
 import AnswerMessageModal from "@/components/modal/AnswerMessageModal.vue";
 import AlertSuccess from "@/components/alert/AlertSuccess.vue";
 import answerMessageModal from "@/components/modal/AnswerMessageModal.vue";
+import AlertDanger from "@/components/alert/AlertDanger.vue";
 
 export default {
   name: 'MailboxView',
-  components: {AlertSuccess, AnswerMessageModal, ViewMessageModal, EditPasswordModal},
+  components: {AlertDanger, AlertSuccess, AnswerMessageModal, ViewMessageModal, EditPasswordModal},
   data() {
     return {
       userId: sessionStorage.getItem('userId'),
@@ -72,6 +73,7 @@ export default {
       this.$refs.viewMessageModalRef.message = message
     },
     openAnswerMessageModal(message) {
+      event.stopPropagation()
       this.$refs.answerMessageModalRef.$refs.modalRef.openModal()
       this.$refs.answerMessageModalRef.message = message
       this.$refs.answerMessageModalRef.handleNewMessageInfo()

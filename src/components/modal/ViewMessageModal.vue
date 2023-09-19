@@ -42,7 +42,7 @@ export default {
       this.$refs.answerMessageModalRef.$refs.modalRef.openModal()
       this.$refs.answerMessageModalRef.message = this.message
       this.$refs.answerMessageModalRef.handleNewMessageInfo()
-    }
+    },
   },
   components: {AnswerMessageModal, Modal},
   data() {

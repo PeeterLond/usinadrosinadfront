@@ -1,7 +1,7 @@
 <template>
   <div>
+<!--    <AlertDanger :alert-message="errorResponse.message"></AlertDanger>-->
     <MailboxView ref="mailboxViewRef"/>
-    <AlertSuccess :alert-message="successMessage"/>
     <Modal ref="modalRef">
       <template #header>
         {{ message.messageLetterTitle }}
@@ -29,12 +29,11 @@ import Modal from "@/components/modal/Modal.vue";
 import ViewMessageModal from "@/components/modal/ViewMessageModal.vue";
 import router from "@/router";
 import MailboxView from "@/views/MailboxView.vue";
-import AlertSuccess from "@/components/alert/AlertSuccess.vue";
-import {PASSWORD_SUCCESSFULLY_UPDATED} from "@/assets/script/AlertMessage";
+import AlertDanger from "@/components/alert/AlertDanger.vue";
 
 export default {
   name: 'AnswerMessageModal',
-  components: {AlertSuccess, MailboxView, ViewMessageModal, Modal},
+  components: {AlertDanger, MailboxView, ViewMessageModal, Modal},
   data() {
     return {
       messageSent: false,
@@ -48,12 +47,17 @@ export default {
         receiverUserId: '',
         isRead: false
       },
+      errorResponse: {
+        message: '',
+        errorCode: 0
+      }
     }
   },
   methods: {
     sendResponseMessage() {
       this.$http.post("mailbox", this.message,
       ).then(response => {
+        // this.messageLetterBodyFieldIsFilled()
         this.messageSent = true
         setTimeout(() => {
           this.$refs.modalRef.closeModal()
@@ -74,6 +78,13 @@ export default {
       this.message.messageLetterBody = ''
       this.message.isRead = false
     }
+    // messageLetterBodyFieldIsFilled() {
+    //   if (this.message.messageLetterBody.length > 0) {
+    //     return true
+    //   } else {
+    //     this.errorResponse.message = ADD_MESSAGE
+    //   }
+    // }
   }
 }
 

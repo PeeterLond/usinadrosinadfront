@@ -31,7 +31,6 @@ import EditPasswordModal from "@/components/modal/EditPasswordModal.vue";
 import ViewMessageModal from "@/components/modal/ViewMessageModal.vue";
 import AnswerMessageModal from "@/components/modal/AnswerMessageModal.vue";
 import AlertSuccess from "@/components/alert/AlertSuccess.vue";
-import answerMessageModal from "@/components/modal/AnswerMessageModal.vue";
 import AlertDanger from "@/components/alert/AlertDanger.vue";
 
 export default {
@@ -39,7 +38,7 @@ export default {
   components: {AlertDanger, AlertSuccess, AnswerMessageModal, ViewMessageModal, EditPasswordModal},
   data() {
     return {
-      userId: sessionStorage.getItem('userId'),
+      currentUserId: sessionStorage.getItem('userId'),
       successMessage: '',
       messagesRequest: [
         {
@@ -59,7 +58,7 @@ export default {
     getMessages() {
       this.$http.get("/mailbox", {
             params: {
-              userId: this.userId,
+              userId: this.currentUserId,
             }
           }
       ).then(response => {

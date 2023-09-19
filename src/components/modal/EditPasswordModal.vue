@@ -29,7 +29,6 @@
 <script>
 
 import Modal from "@/components/modal/Modal.vue";
-import {PASSWORDS_DONT_MATCH} from "@/assets/script/AlertMessage";
 import {useRoute} from "vue-router";
 
 export default {

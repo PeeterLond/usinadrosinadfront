@@ -1,12 +1,12 @@
 <template>
   <div>
-<!--    <AlertDanger :alert-message="errorResponse.message"></AlertDanger>-->
     <MailboxView ref="mailboxViewRef"/>
     <Modal ref="modalRef">
       <template #header>
         {{ message.messageLetterTitle }}
       </template>
       <template #body>
+        <AlertDanger class="justify-content-center" :alert-message="errorResponse.message"/>
         <div class="mb-3">
           <h6>From: {{ message.senderUserUsername }}</h6>
           <h6>To:{{ message.receiverUserUsername }}</h6>
@@ -16,7 +16,7 @@
       </template>
       <template #footer>
         <button class="btn btn-dark" v-if="messageSent">Saadetud</button>
-        <button class="btn btn-dark" v-else @click="sendResponseMessage">Vasta</button>
+        <button class="btn btn-dark" v-else @click="messageLetterBodyFieldIsFilled">Vasta</button>
       </template>
     </Modal>
   </div>
@@ -30,6 +30,7 @@ import ViewMessageModal from "@/components/modal/ViewMessageModal.vue";
 import router from "@/router";
 import MailboxView from "@/views/MailboxView.vue";
 import AlertDanger from "@/components/alert/AlertDanger.vue";
+import {ADD_MESSAGE} from "@/assets/script/AlertMessage";
 
 export default {
   name: 'AnswerMessageModal',
@@ -57,7 +58,6 @@ export default {
     sendResponseMessage() {
       this.$http.post("mailbox", this.message,
       ).then(response => {
-        // this.messageLetterBodyFieldIsFilled()
         this.messageSent = true
         setTimeout(() => {
           this.$refs.modalRef.closeModal()
@@ -77,14 +77,14 @@ export default {
       this.message.receiverUserUsername = user
       this.message.messageLetterBody = ''
       this.message.isRead = false
+    },
+    messageLetterBodyFieldIsFilled() {
+      if (this.message.messageLetterBody.length > 0) {
+        this.sendResponseMessage()
+      } else {
+        this.errorResponse.message = ADD_MESSAGE;
+      }
     }
-    // messageLetterBodyFieldIsFilled() {
-    //   if (this.message.messageLetterBody.length > 0) {
-    //     return true
-    //   } else {
-    //     this.errorResponse.message = ADD_MESSAGE
-    //   }
-    // }
   }
 }
 

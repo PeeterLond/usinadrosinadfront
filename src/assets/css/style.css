@@ -228,6 +228,8 @@ td {
     transform-style: preserve-3d;
     transition: 2s ease;
     justify-content: left;
+}
+
 #box:hover{
     border: 2px solid black;
     cursor: pointer;

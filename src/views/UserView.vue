@@ -110,8 +110,8 @@ import ImageInput from "@/components/image/ImageInput.vue";
 import AlertSuccess from "@/components/alert/AlertSuccess.vue";
 import {useRoute} from "vue-router";
 import EditPasswordModal from "@/components/modal/EditPasswordModal.vue";
-import CountyDropdown from "@/components/CountyDropdown.vue";
-import CityDropdown from "@/components/CityDropdown.vue";
+import CountyDropdown from "@/components/dropdown/CountyDropdown.vue";
+import CityDropdown from "@/components/dropdown/CityDropdown.vue";
 import router from "@/router";
 import {USER_VIEW_IMAGE} from "@/assets/script/ImageSizes";
 

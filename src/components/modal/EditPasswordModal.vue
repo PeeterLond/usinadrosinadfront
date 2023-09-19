@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Modal close-button-name="Katkesta" ref="modalRef">
+    <Modal ref="modalRef">
 
       <template #header>
         Muuda salasõna:
@@ -8,21 +8,21 @@
 
       <template #body>
 
-                <AlertDanger class="justify-content-center" :alert-message="errorResponse.message"/>
-                <AlertSuccess class="justify-content-center" :alert-message="successMessage"/>
+        <AlertDanger class="justify-content-center" :alert-message="errorResponse.message"/>
+        <AlertSuccess class="justify-content-center" :alert-message="successMessage"/>
 
-          <tr>
-            <td><label for="password">Uus salasõna</label></td>
-            <td><input v-model="inputPassword1" type="password" id="password"></td>
-          </tr>
-          <tr>
-            <td><label for="password">Salasõna uuesti</label></td>
-            <td><input v-model="inputPassword2" type="password" id="password"></td>
-          </tr>
+        <tr>
+          <td><label for="password">Uus salasõna</label></td>
+          <td><input v-model="inputPassword1" type="password" id="password"></td>
+        </tr>
+        <tr>
+          <td><label for="password">Salasõna uuesti</label></td>
+          <td><input v-model="inputPassword2" type="password" id="password"></td>
+        </tr>
       </template>
 
       <template #footer>
-          <button @click="validateAndUpdatePassword" type="submit" class="btn btn-dark">Muuda</button>
+        <button @click="validateAndUpdatePassword" type="submit" class="btn btn-dark">Muuda</button>
 
       </template>
 
@@ -47,7 +47,6 @@ export default {
 
   data() {
     return {
-      isOpen: false,
       currentUserId: Number(useRoute().query.userId),
       inputPassword1: '',
       inputPassword2: '',
@@ -63,9 +62,6 @@ export default {
     }
   },
   methods: {
-    closeModal() {
-      this.isOpen = false
-    },
     validateAndUpdatePassword() {
       this.errorResponse.message = ''
       this.successMessage = ''
@@ -83,22 +79,21 @@ export default {
     sendUpdatePasswordRequest() {
       this.$http.patch("/user", this.userPasswordChange, {
             params: {
-                userId: this.currentUserId,
+              userId: this.currentUserId,
             }
           }
       ).then(response => {
         this.successMessage = PASSWORD_SUCCESSFULLY_UPDATED;
-        // Siin on error, close modal viib registreeri vaatesse
-        // setTimeout(() => {
-        //   router.push({name: this.closeModal()})
-        // }, 2000);
+        setTimeout(() => {
+          this.$refs.modalRef.closeModal()
+        }, 2000);
       }).catch(error => {
         this.errorResponse = error.response.data;
       })
     },
 
-    }
   }
+}
 
 
 </script>

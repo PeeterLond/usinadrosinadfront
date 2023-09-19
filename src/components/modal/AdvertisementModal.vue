@@ -110,6 +110,7 @@ export default defineComponent({
       router.push({name: 'dashboardRoute', query: {userId: this.ad.userId}})
     },
     handleAdvertisementEdit() {
+      router.push({name: 'advertisementRoute', query: {advertisementId: this.ad.advertisementId, edit: 1}})
 
     },
     openAdvertisementDeleteModal() {

@@ -209,14 +209,12 @@ td {
 }
 
 .advertisements-ads {
-    border: 1px solid black;
     width: 55vw;
     height: 66vh;
     display: flex;
     flex-wrap: wrap;
     overflow: auto;
     position: relative;
-    top: 2%;
     left: 30%;
 }
 
@@ -224,7 +222,7 @@ td {
     display: flex;
     justify-content: center;
     margin-top: 1%;
-    margin-right: 18%;
+    margin-right: 12%;
 }
 
 .sort-arrow {
@@ -237,15 +235,14 @@ td {
 
 .advertisements-filter {
     margin: 5% 0 0 3%;
-    border: 1px solid black;
     display: flex;
     flex-direction: column;
+    height: 25vh;
+    justify-content: space-around;
 
 }
 
-
 .advertisements-item {
-    border: 1px solid black;
     border-radius: 10%;
     width: 14vw;
     height: 26vh;
@@ -322,7 +319,6 @@ td {
 }
 
 .ad-modal-profile {
-    /*border: 1px solid black;*/
     display: flex;
     height: 100%;
     align-items: center;
@@ -342,7 +338,7 @@ td {
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
-    height: 30vh;
+    height: 23vh;
 }
 
 .ad-modal-footer {

@@ -5,7 +5,14 @@
         <CountyDropdown @event-update-selected-county-id="getAdvertisementsByCountyAndSetCountyId"></CountyDropdown>
       </div>
       <div>
-        <CityDropdown @event-update-selected-city-id="getAdventuresByCity" ref="cityDropdownRef"></CityDropdown>
+        <CityDropdown @event-update-selected-city-id="getAdvertisementsByCity" ref="cityDropdownRef"></CityDropdown>
+      </div>
+      <div>
+        <TypeDropdown @event-update-selected-type-id="getAdvertisementsByType"></TypeDropdown>
+      </div>
+      <div>
+        <ToolDropdown @event-update-selected-tool-id="getAdvertisementsByTool" />
+
       </div>
     </div>
     <div class="advertisements-inner">
@@ -40,15 +47,15 @@
 
 
 import router from "@/router";
-import {ADVERTISEMENTS_IMAGE} from "@/assets/script/ImageSizes";
 import Advertisement from "@/components/Advertisement.vue";
-import Modal from "@/components/modal/Modal.vue";
-import CountyDropdown from "@/components/CountyDropdown.vue";
-import CityDropdown from "@/components/CityDropdown.vue";
+import CountyDropdown from "@/components/dropdown/CountyDropdown.vue";
+import CityDropdown from "@/components/dropdown/CityDropdown.vue";
+import TypeDropdown from "@/components/dropdown/TypeDropdown.vue";
+import ToolDropdown from "@/components/dropdown/ToolDropdown.vue";
 
 export default {
   name: 'AdvertisementsView',
-  components: {CityDropdown, CountyDropdown, Modal, Advertisement},
+  components: {ToolDropdown, TypeDropdown, CityDropdown, CountyDropdown, Advertisement},
   data() {
     return {
       countyId: 0,
@@ -76,29 +83,58 @@ export default {
           contactEmail: ''
         }
       ]
-
     }
   },
   methods: {
-    getAdventuresByCity(cityId) {
+    getAdvertisementsByTool(toolId) {
+      if (toolId > 0) {
+        this.$http.get("/advertisement-with-contact-by-tool", {
+              params: {
+                toolId: toolId,
+              }
+            }
+        ).then(response => {
+          this.advertisementResponse = response.data
+        }).catch(error => {
+          router.push({name: 'errorRoute'})
+        });
+      } else {
+        this.getAllAdvertisementsWithContactInfo()
+      }
+    },
+
+    getAdvertisementsByType(typeId) {
+      if (typeId > 0) {
+        this.$http.get("/advertisement-with-contact-by-type", {
+              params: {
+                typeId: typeId,
+              }
+            }
+        ).then(response => {
+          this.advertisementResponse = response.data
+        }).catch(error => {
+          router.push({name: 'errorRoute'})
+        })
+      } else {
+        this.getAllAdvertisementsWithContactInfo()
+      }
+    },
+
+    getAdvertisementsByCity(cityId) {
       if (cityId > 0) {
-        this.getAdvertisementsByCity(cityId);
+        this.$http.get("/advertisement-with-contact-by-city", {
+              params: {
+                cityId: cityId,
+              }
+            }
+        ).then(response => {
+          this.advertisementResponse = response.data
+        }).catch(error => {
+          router.push({name: 'errorRoute'})
+        });
       } else {
         this.getAdvertisementsByCounty()
       }
-
-    },
-    getAdvertisementsByCity(cityId) {
-      this.$http.get("/advertisement-with-contact-by-city", {
-            params: {
-              cityId: cityId,
-            }
-          }
-      ).then(response => {
-        this.advertisementResponse = response.data
-      }).catch(error => {
-        router.push({name: 'errorRoute'})
-      })
     },
     
     getAdvertisementsByCountyAndSetCountyId(countyId) {

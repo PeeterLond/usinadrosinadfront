@@ -1,26 +1,21 @@
 <template>
-  <div>
-    <MailboxView ref="mailboxViewRef"/>
     <Modal ref="modalRef">
       <template #header>
-        {{ message.messageLetterTitle }}
+        {{ messageRequest.messageLetterTitle }}
       </template>
       <template #body>
         <AlertDanger class="justify-content-center" :alert-message="errorResponse.message"/>
         <div class="mb-3">
-          <h6>From: {{ message.senderUserUsername }}</h6>
-          <h6>To:{{ message.receiverUserUsername }}</h6>
+          <h6>From: {{ messageRequest.senderUserUsername }}</h6>
+          <h6>To: {{ messageRequest.receiverUserUsername }}</h6>
           <label for="message-text" class="col-form-label">Sõnum:</label>
-          <textarea class="form-control" v-model="message.messageLetterBody"></textarea>
+          <textarea class="form-control" v-model="messageRequest.messageLetterBody"></textarea>
         </div>
       </template>
       <template #footer>
-        <button class="btn btn-dark" v-if="messageSent">Saadetud</button>
-        <button class="btn btn-dark" v-else @click="messageLetterBodyFieldIsFilled">Vasta</button>
+        <button class="btn btn-dark" v-if="!messageSent" @click="validateAndSendMessage">Vasta</button>
       </template>
     </Modal>
-  </div>
-
 </template>
 
 <script>
@@ -30,7 +25,7 @@ import ViewMessageModal from "@/components/modal/ViewMessageModal.vue";
 import router from "@/router";
 import MailboxView from "@/views/MailboxView.vue";
 import AlertDanger from "@/components/alert/AlertDanger.vue";
-import {ADD_MESSAGE} from "@/assets/script/AlertMessage";
+import {MESSAGE_MISSING} from "@/assets/script/AlertMessage";
 
 export default {
   name: 'AnswerMessageModal',
@@ -38,7 +33,7 @@ export default {
   data() {
     return {
       messageSent: false,
-      message: {
+      messageRequest: {
         messageLetterTitle: '',
         messageLetterBody: '',
         messageLetterTime: '',
@@ -46,7 +41,7 @@ export default {
         receiverUserUsername: '',
         senderUserId: '',
         receiverUserId: '',
-        isRead: true
+        isRead: false
       },
       errorResponse: {
         message: '',
@@ -56,39 +51,27 @@ export default {
   },
   methods: {
     sendResponseMessage() {
-      this.$http.post("mailbox", this.message,
+      this.$http.post("mailbox", this.messageRequest,
       ).then(response => {
         this.messageSent = true
         setTimeout(() => {
           this.$refs.modalRef.closeModal()
           window.location.reload()
-        }, 2000);
+        }, 500);
       }).catch(error => {
         router.push({name: 'errorRoute'})
       })
     },
 
-    handleNewMessageInfo() {
-      let user = this.message.senderUserUsername
-      let id = this.message.senderUserId
-      this.message.senderUserUsername = this.message.receiverUserUsername
-      this.message.senderUserId = this.message.receiverUserId
-      this.message.receiverUserId = id
-      this.message.receiverUserUsername = user
-      this.message.messageLetterBody = ''
-      this.message.isRead = false
-    },
-    messageLetterBodyFieldIsFilled() {
-      if (this.message.messageLetterBody.length > 0) {
+    validateAndSendMessage() {
+      if (this.messageRequest.messageLetterBody.length > 0) {
         this.sendResponseMessage()
       } else {
-        this.errorResponse.message = ADD_MESSAGE;
+        this.errorResponse.message = MESSAGE_MISSING;
       }
     }
   }
 }
-
-
 </script>
 
 

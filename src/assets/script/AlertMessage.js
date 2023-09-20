@@ -9,6 +9,6 @@ export const AT_LEAST_ONE_CHORE_SELECTED = 'Vähemalt üks teenus peab olema val
 export const ADVERTISEMENT_DELETED = 'Kuulutus kustutatud.'
 export const ADVERTISEMENT_UPDATED = 'Kuulutus muudetud.'
 export const PASSWORD_SUCCESSFULLY_UPDATED = 'Parool edukalt muudetud.'
-export const ADD_MESSAGE = 'Lisa sõnum.'
+export const MESSAGE_MISSING = 'Lisa sõnum.'
 export const FEEDBACK_SUCCESSFULLY_ADDED = 'Tagasiside edukalt lisatud.'
 export const FEEDBACK_RATING_REQUIRED = 'Täida tagasiside hinnang'

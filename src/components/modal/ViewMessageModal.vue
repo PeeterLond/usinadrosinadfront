@@ -55,7 +55,7 @@ export default {
         receiverUserUsername: '',
         senderUserId: '',
         receiverUserId: '',
-        isRead: false
+        isRead: true
       }
     }
   },

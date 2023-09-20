@@ -11,7 +11,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr v-for="message in messagesRequest" @click="openViewMessageModal(message)" class="hoverable-link" id="box">
+    <tr v-show="!currentUserIsSender(message)" v-for="message in messagesRequest" @click="openViewMessageModal(message)" class="hoverable-link" id="box">
       <td :for="message.senderUserUsername">{{ message.senderUserUsername }}</td>
       <td :for="message.receiverUserUsername">{{ message.receiverUserUsername }}</td>
       <td :for="message.messageLetterTitle">{{ message.messageLetterTitle }}</td>
@@ -49,7 +49,7 @@ export default {
           receiverUserUsername: '',
           senderUserId: '',
           receiverUserId: '',
-          isRead: true
+          isRead: false
         }
       ]
     }
@@ -69,6 +69,7 @@ export default {
     },
     openViewMessageModal(message) {
       this.$refs.viewMessageModalRef.$refs.modalRef.openModal()
+      this.messagesRequest.isRead = true
       this.$refs.viewMessageModalRef.message = message
     },
     openAnswerMessageModal(message) {
@@ -76,6 +77,9 @@ export default {
       this.$refs.answerMessageModalRef.$refs.modalRef.openModal()
       this.$refs.answerMessageModalRef.message = message
       this.$refs.answerMessageModalRef.handleNewMessageInfo()
+    },
+    currentUserIsSender(message){
+      return this.currentUserId === message.senderUserId
     }
   },
   beforeMount() {

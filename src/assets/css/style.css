@@ -390,3 +390,29 @@ td {
     color: #888; /* Gray color for unselected stars */
 }
 
+.mailbox-master {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-around;
+    margin-left: 5%;
+}
+
+.inbox,
+.outbox {
+    overflow: auto;
+}
+
+.message-hover {
+    cursor: pointer;
+}
+
+.message-hover:hover {
+    border: 1px solid black;
+}
+
+.inbox td,
+.outbox td{
+    width: 20%;
+}
+

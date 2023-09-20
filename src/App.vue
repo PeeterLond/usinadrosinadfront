@@ -3,10 +3,11 @@
     <header>
       <div class="header-item">
         <div class="company-logo">
-          <img src="@/assets/image/logo.png" alt="ettevõtte logo" id="company-logo">
+
+          <img @click="goHome" src="@/assets/image/pic.jpg" alt="ettevõtte logo" id="company-logo">
         </div>
         <div @click="goHome" class="company-name">
-          <h1>Usinad Rosinad</h1>
+          <h1></h1>
         </div>
       </div>
       <div class="header-item">

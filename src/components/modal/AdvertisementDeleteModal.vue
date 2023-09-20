@@ -4,11 +4,10 @@
       Kuulutuse kustutamine
     </template>
     <template #body>
-      <AlertSuccess :alert-message="successMessage"></AlertSuccess>
-      <h4>Kas oled ikka kindel, et soovid enda kuulutuse kustutada?</h4>
+      <h4>{{bodyTitle}}</h4>
     </template>
     <template #footer>
-      <div class="delete-modal-footer">
+      <div v-if="!isDeleted" class="delete-modal-footer">
         <div>
           <button @click="closeModal" type="submit" class="btn btn-dark">Katkesta</button>
         </div>
@@ -35,14 +34,16 @@ export default defineComponent({
   data() {
     return {
       advertisementId: '',
-      successMessage: ''
+      bodyTitle: 'Kas oled ikka kindel, et soovid enda kuulutuse kustutada?',
+      isDeleted: false
     }
   },
   methods: {
     handleAdvertisementDelete() {
       this.deleteAdvertisementChores()
       this.deleteAdvertisement()
-      this.successMessage = ADVERTISEMENT_DELETED
+      this.bodyTitle = ADVERTISEMENT_DELETED
+      this.isDeleted = true
       setTimeout( () => {
         this.closeModal()
         window.location.reload()

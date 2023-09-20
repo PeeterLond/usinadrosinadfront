@@ -163,12 +163,26 @@ td {
     width: 40vw;
     display: flex;
     padding: 1%;
-    flex-wrap: wrap;
+    flex-direction: column;
 }
 
 .dashboard-feedback-btn {
     display: flex;
     justify-content: flex-end;
+}
+.feedback-item {
+    border: solid 1px black;
+    display: flex;
+    margin: 1% 0;
+}
+
+.feedback-item-comment {
+    flex: 7;
+}
+
+.feedback-item-rating {
+    flex: 1;
+    margin-left:5%;
 }
 
 .advertisement-view-master {
@@ -273,7 +287,7 @@ td {
     justify-content: center;
     width: 100%;
     height: 100%;
-
+    cursor: pointer;
 }
 
 .back {
@@ -367,5 +381,12 @@ td {
     width: 100%;
     height: 100%;
     overflow: hidden;
+}
+.selected {
+    color: #fff700; /* Yellow color for selected stars */
+
+}
+.unselected {
+    color: #888; /* Gray color for unselected stars */
 }
 

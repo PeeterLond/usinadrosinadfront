@@ -44,7 +44,7 @@
           <div v-else>Linn: </div>
 
         </div>
-        <div>
+        <div class="mt-2">
           Teenused:
         </div>
         <div class="ad-modal-chores">

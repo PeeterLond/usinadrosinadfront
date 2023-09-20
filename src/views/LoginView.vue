@@ -13,8 +13,8 @@
       <button @click="login"  class="btn btn-dark" type="submit">Logi sisse</button>
     </div>
     <div class="login-item">
-      <router-link to="/user"><p>Registreeri kasutaja</p></router-link>
-      <p>Unustasid salasõna?</p>
+      <router-link class="register-item" to="/user"><p>Registreeri kasutaja</p></router-link>
+      <p class="register-item">Unustasid salasõna?</p>
     </div>
   </div>
 </template>

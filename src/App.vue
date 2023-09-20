@@ -6,31 +6,28 @@
 
           <img @click="goHome" src="@/assets/image/pic.jpg" alt="ettevõtte logo" id="company-logo">
         </div>
-        <div @click="goHome" class="company-name">
-          <h1></h1>
-        </div>
       </div>
       <div class="header-item">
         <router-link v-if="!loggedIn" to="/login">
           <button type="button" class="btn btn-dark">Logi sisse</button>
         </router-link>
         <router-link v-else @click="handleLogOut" to="/">
-          <button type="button" class="btn btn-danger">Logi välja</button>
+          <button type="button" class="btn btn-dark">Logi välja</button>
         </router-link>
       </div>
     </header>
     <nav v-if="loggedIn">
       <div class="nav-item">
-        <router-link to="/">Kodu</router-link>
+        <router-link to="/" class="naw-text">Kodu</router-link>
       </div>
       <div class="nav-item">
-        <router-link to="/advertisements">Kuulutused</router-link>
+        <router-link to="/advertisements" class="naw-text">Kuulutused</router-link>
       </div>
       <div class="nav-item">
-        <router-link to="/dashboard">Minu töölaud</router-link>
+        <router-link to="/dashboard" class="naw-text">Minu töölaud</router-link>
       </div>
       <div class="nav-item">
-        <router-link to="/mailbox">Minu sõnumid</router-link>
+        <router-link to="/mailbox" class="naw-text">Minu sõnumid</router-link>
       </div>
     </nav>
     <main>

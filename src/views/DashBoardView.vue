@@ -2,13 +2,13 @@
   <FeedbackModal ref="feedbackModalRef"/>
 
   <div class="dashboard-master">
-    <div class="dashboard-item">
+    <div class="dashboard-item dashboard-width">
       <div class="dashboard-item-image">
         <UserImage :image-data-base64="userContactInfo.imageData" :img-height="DASHBOARD_PROFILE_IMAGE.height"
                    :img-width="DASHBOARD_PROFILE_IMAGE.width"></UserImage>
       </div>
-      <div class="dashboard-item-item">
-        <table>
+      <div class="dashboard-item-profile">
+        <table class="ms-2">
           <tbody>
           <tr>
             <td>Kasutajanimi</td>
@@ -44,22 +44,22 @@
       <div class="dashboard-item-intro">
         {{ userContactInfo.contactIntroduction }}
       </div>
-      <div v-if="!isAnotherUserDashboard" class="dashboard-item-item">
-        <button @click="navigateToUserEditView" type="submit" class="btn btn-dark m-3 ">Redigeeri andmeid</button>
+      <div v-if="!isAnotherUserDashboard" class="dashboard-item-profile">
+        <button @click="navigateToUserEditView" type="submit" class="btn btn-dark m-3">Redigeeri andmeid</button>
       </div>
     </div>
     <div class="dashboard-item">
       <div class="dashboard-item-item">
-        <h4>Kuulutused</h4>
+        <h4 class="ms-4">Kuulutused</h4>
         <div class="dashboard-advertisements">
           <Advertisement :advertisement-response="advertisementResponse"></Advertisement>
         </div>
         <div v-if="!isAnotherUserDashboard" class="dashboard-advertisements-btn">
-          <router-link to="/advertisement"><button type="submit" class="btn btn-dark mt-2">Lisa kuulutus</button></router-link>
+          <router-link to="/advertisement"><button type="submit" class="btn btn-dark me-4 mb-4">Lisa kuulutus</button></router-link>
         </div>
       </div>
       <div class="dashboard-item-item">
-        <h4>Tagasiside</h4>
+        <h4 class="ms-4">Tagasiside</h4>
         <div class="dashboard-feedback">
           <div v-for ="feedback in feedbackResponse" class="feedback-item">
             <div class="feedback-item-comment" >{{feedback.feedbackComment}}</div>
@@ -69,7 +69,7 @@
 
         </div>
         <div v-if="isAnotherUserDashboard" class="dashboard-feedback-btn">
-          <button @click="handleWriteFeedback" type="submit" class="btn btn-dark mt-2">Lisa tagasiside</button>
+          <button @click="handleWriteFeedback" type="submit" class="btn btn-dark me-4 mb-4">Lisa tagasiside</button>
         </div>
       </div>
     </div>

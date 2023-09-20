@@ -2,16 +2,16 @@
   <div class="advertisements-master">
     <div class="advertisements-filter">
       <div>
-        <CountyDropdown @event-update-selected-county-id="getAdvertisementsByCountyAndSetCountyId"></CountyDropdown>
+        <CountyDropdown class="ms-1" @event-update-selected-county-id="getAdvertisementsByCountyAndSetCountyId"></CountyDropdown>
       </div>
       <div>
-        <CityDropdown @event-update-selected-city-id="getAdvertisementsByCity" ref="cityDropdownRef"></CityDropdown>
+        <CityDropdown class="ms-1" @event-update-selected-city-id="getAdvertisementsByCity" ref="cityDropdownRef"></CityDropdown>
       </div>
       <div>
-        <TypeDropdown @event-update-selected-type-id="getAdvertisementsByType"></TypeDropdown>
+        <TypeDropdown class="ms-1" @event-update-selected-type-id="getAdvertisementsByType"></TypeDropdown>
       </div>
       <div>
-        <ToolDropdown @event-update-selected-tool-id="getAdvertisementsByTool" />
+        <ToolDropdown class="ms-1" @event-update-selected-tool-id="getAdvertisementsByTool" />
 
       </div>
     </div>
@@ -21,19 +21,19 @@
           Hind:
         </div>
         <div class="sort-arrow">
-          <font-awesome-icon :icon="['fas', 'arrow-down']" @click="filterPriceDescending" size="xl" style="color: #000000;" />
+          <font-awesome-icon :icon="['fas', 'arrow-down']" @click="filterPriceDescending" size="lg" style="color: #000000;" class="me-2" />
         </div>
         <div class="sort-arrow">
-          <font-awesome-icon :icon="['fas', 'arrow-up']" @click="filterPriceAscending" size="xl" style="color: #000000;" />
+          <font-awesome-icon :icon="['fas', 'arrow-up']" @click="filterPriceAscending" size="lg" style="color: #000000;" />
         </div>
         <div class="sort-header">
           Uuemad:
         </div>
         <div class="sort-arrow">
-          <font-awesome-icon :icon="['fas', 'arrow-down']" @click="filterOldest" size="xl" style="color: #000000;" />
+          <font-awesome-icon :icon="['fas', 'arrow-down']" @click="filterOldest" size="lg" style="color: #000000;" class="me-2" />
         </div>
         <div class="sort-arrow">
-          <font-awesome-icon :icon="['fas', 'arrow-up']" @click="filterNewest" size="xl" style="color: #000000;" />
+          <font-awesome-icon :icon="['fas', 'arrow-up']" @click="filterNewest" size="lg" style="color: #000000;" />
         </div>
       </div>
       <div class="advertisements-ads">

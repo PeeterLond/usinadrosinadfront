@@ -3,7 +3,7 @@
 
   <div class="user-master">
     <div class="user-item">
-      <div class="user-item-item">
+      <div class="user-item-title home-header">
         <h1>{{ title }}</h1>
       </div>
       <div class="user-item-image">
@@ -20,7 +20,7 @@
     </div>
     <div class="user-item">
       <div class="user-item-item">
-        <table>
+        <table class="mt-2 ms-2">
           <tr v-if="!isEdit">
             <td><label for="username">Kasutajanimi</label></td>
             <td><input v-model="contactRequest.userUsername" type="text" id="username"></td>
@@ -67,7 +67,7 @@
         </table>
       </div>
       <div class="user-item-item">
-      <textarea v-model="contactRequest.contactIntroduction" placeholder="Koristaja lühitutvustus" cols="50"
+      <textarea class="mt-2 ms-2" v-model="contactRequest.contactIntroduction" placeholder="Koristaja lühitutvustus" cols="50"
                 rows="5"></textarea>
       </div>
       <div class="user-item-item">

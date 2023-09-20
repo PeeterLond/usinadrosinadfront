@@ -57,7 +57,7 @@
             <td><label for="password">Salasõna</label></td>
             <td v-if="!isEdit"><input v-model="inputPassword1" type="password" id="password"></td>
             <td v-else>
-              <button @click="handleEditPassword" type="submit" class="btn btn-dark">Muuda</button>
+              <button @click="openEditPasswordModal" type="submit" class="btn btn-dark">Muuda</button>
             </td>
           </tr>
           <tr v-if="!isEdit">
@@ -256,7 +256,7 @@ export default {
       this.$refs.cityDropdownRef.selectedCityId = this.contactRequest.cityId
     },
 
-    handleEditPassword() {
+    openEditPasswordModal() {
       this.$refs.editPasswordModalRef.$refs.modalRef.openModal()
     },
 

@@ -1,4 +1,5 @@
 <template>
+  <FeedbackModal ref="feedbackModalRef"/>
 
   <div class="dashboard-master">
     <div class="dashboard-item">
@@ -60,10 +61,15 @@
       <div class="dashboard-item-item">
         <h4>Tagasiside</h4>
         <div class="dashboard-feedback">
+          <div v-for ="feedback in feedbackResponse" class="feedback-item">
+            <div class="feedback-item-comment" >{{feedback.feedbackComment}}</div>
+            <div class="feedback-item-rating">{{feedback.feedbackRating}}<font-awesome-icon :icon="['fas', 'star']" size="lg" style="color: #f7fb28;" /></div>
+
+          </div>
 
         </div>
         <div v-if="isAnotherUserDashboard" class="dashboard-feedback-btn">
-          <button type="submit" class="btn btn-dark mt-2">Lisa tagasiside</button>
+          <button @click="handleWriteFeedback" type="submit" class="btn btn-dark mt-2">Lisa tagasiside</button>
         </div>
       </div>
     </div>
@@ -77,6 +83,7 @@ import ImageInput from "@/components/image/ImageInput.vue";
 import {DASHBOARD_PROFILE_IMAGE} from "@/assets/script/ImageSizes";
 import Advertisement from "@/components/Advertisement.vue";
 import {useRoute} from "vue-router";
+import FeedbackModal from "@/components/modal/FeedbackModal.vue";
 
 export default {
   name: 'DashBoardView',
@@ -85,7 +92,7 @@ export default {
       return DASHBOARD_PROFILE_IMAGE
     }
   },
-  components: {Advertisement, ImageInput, UserImage},
+  components: {FeedbackModal, Advertisement, ImageInput, UserImage},
   data() {
     return {
       currentUserId: sessionStorage.getItem('userId'),
@@ -125,6 +132,13 @@ export default {
           contactMobileNumber: '',
           contactEmail: ''
         }
+      ],
+      feedbackResponse: [
+        {
+          receiverUserId: 0,
+          feedbackRating: 0,
+          feedbackComment: ''
+        }
       ]
     }
   },
@@ -160,15 +174,33 @@ export default {
     checkIfAnotherUserDashboard() {
       this.isAnotherUserDashboard = !isNaN(this.anotherUserId)
     },
+
+    getUserFeedbacks(userId) {
+      this.$http.get("/feedback", {
+            params: {
+              userId: userId
+            }
+          }
+      ).then(response => {
+        this.feedbackResponse = response.data
+      }).catch(error => {
+        router.push({name: 'errorRoute'})
+      })
+    },
+    handleWriteFeedback() {
+      this.$refs.feedbackModalRef.$refs.modalRef.openModal()
+    },
   },
   beforeMount() {
     this.checkIfAnotherUserDashboard()
     if (this.isAnotherUserDashboard) {
       this.getUserContactInfo(this.anotherUserId);
       this.getUserAdvertisementsWithContact(this.anotherUserId);
+      this.getUserFeedbacks(this.anotherUserId)
     } else {
       this.getUserContactInfo(this.currentUserId);
-      this.getUserAdvertisementsWithContact(this.currentUserId)
+      this.getUserAdvertisementsWithContact(this.currentUserId);
+      this.getUserFeedbacks(this.currentUserId)
     }
   }
 }

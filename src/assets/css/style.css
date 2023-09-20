@@ -29,7 +29,9 @@ header {
 }
 
 #company-logo {
-    height: 10vh;
+    height: 9vh;
+    cursor: pointer;
+
 }
 
 nav {

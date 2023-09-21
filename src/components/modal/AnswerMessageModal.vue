@@ -1,7 +1,7 @@
 <template>
     <Modal ref="modalRef">
       <template #header>
-        {{ messageRequest.messageLetterTitle }}
+        <input v-model="messageRequest.messageLetterTitle" type="text">
       </template>
       <template #body>
         <AlertDanger class="justify-content-center" :alert-message="errorResponse.message"/>
@@ -21,27 +21,23 @@
 <script>
 
 import Modal from "@/components/modal/Modal.vue";
-import ViewMessageModal from "@/components/modal/ViewMessageModal.vue";
 import router from "@/router";
-import MailboxView from "@/views/MailboxView.vue";
 import AlertDanger from "@/components/alert/AlertDanger.vue";
 import {MESSAGE_MISSING} from "@/assets/script/AlertMessage";
 
 export default {
   name: 'AnswerMessageModal',
-  components: {AlertDanger, MailboxView, ViewMessageModal, Modal},
+  components: {AlertDanger, Modal},
   data() {
     return {
       messageSent: false,
       messageRequest: {
         messageLetterTitle: '',
         messageLetterBody: '',
-        messageLetterTime: '',
+        senderUserId: 0,
         senderUserUsername: '',
-        receiverUserUsername: '',
-        senderUserId: '',
-        receiverUserId: '',
-        isRead: false
+        receiverUserId: 0,
+        receiverUserUsername: ''
       },
       errorResponse: {
         message: '',
@@ -50,6 +46,10 @@ export default {
     }
   },
   methods: {
+    resetErrorMessage() {
+      this.errorResponse.message = ''
+    },
+
     sendResponseMessage() {
       this.$http.post("mailbox", this.messageRequest,
       ).then(response => {

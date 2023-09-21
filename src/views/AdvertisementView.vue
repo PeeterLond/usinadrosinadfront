@@ -33,7 +33,8 @@
   </div>
   <div v-else class="advertisement-view-master">
     <div class="advertisement-view-item1">
-      <h2>Lisa kuulutus:</h2>
+      <h2 v-if="!isEdit">Lisa kuulutus:</h2>
+      <h2 v-else>Muuda kuulutust:</h2>
       <div v-for="type in typeResponse">
         <input v-model="advertisementRequest.typeId" type="radio" name="radio" :id="type.typeName" :value="type.typeId"
                :key="type.typeId">

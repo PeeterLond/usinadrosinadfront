@@ -1,7 +1,7 @@
 <template>
   <div class="mailbox-master">
     <div class="inbox">
-      <InBox :current-user-id="currentUserId"/>
+      <InBox :current-user-id="currentUserId" @event-update-nr-of-unread-messages="updateNrOfUnreadMessages"/>
     </div>
     <div class="outbox">
       <OutBox :current-user-id="currentUserId"/>
@@ -20,8 +20,17 @@ export default {
   data() {
     return {
       currentUserId: Number(sessionStorage.getItem('userId')),
+      nrOfUnreadMessages: 0,
     }
-  }
+  },
+
+  methods: {
+    updateNrOfUnreadMessages(nrOfUnreadMessages) {
+      this.$emit("update-nr-of-unread-messages", nrOfUnreadMessages)
+      this.nrOfUnreadMessages = nrOfUnreadMessages
+    },
+  },
+
 }
 </script>
 

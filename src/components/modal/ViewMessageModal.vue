@@ -1,12 +1,12 @@
 <template>
   <Modal ref="modalRef">
     <template #header>
-      {{ message.messageLetterTitle }}
+      {{message.letterTitle}}
     </template>
     <template #body>
-      <h6>From: {{ message.senderUserUsername }}</h6>
-      <h6>To: {{ message.receiverUserUsername }}</h6>
-      <div class="fs-4">{{ message.messageLetterBody }}</div>
+      <h6>From: {{message.senderUserUsername}}</h6>
+      <h6>To: {{message.receiverUserUsername}}</h6>
+      <div class="fs-4">{{message.letterBody}}</div>
     </template>
     <template #footer>
       <button class="btn btn-dark" type="submit" @click="closeModal">Tagasi</button>
@@ -18,22 +18,22 @@
 <script>
 
 import Modal from "@/components/modal/Modal.vue";
-import AnswerMessageModal from "@/components/modal/AnswerMessageModal.vue";
 
 export default {
   name: 'ViewMessageModal',
-  components: {AnswerMessageModal, Modal},
+  components: {Modal},
   data() {
     return {
       hide: false,
       message: {
-        messageLetterTitle: '',
-        messageLetterBody: '',
-        messageLetterTime: '',
+        messageId: 0,
+        letterTitle: '',
+        letterBody: '',
+        letterTime: '',
+        senderUserId: 0,
         senderUserUsername: '',
+        receiverUserId: 0,
         receiverUserUsername: '',
-        senderUserId: '',
-        receiverUserId: '',
         isRead: false
       }
     }
@@ -41,7 +41,13 @@ export default {
   methods: {
     closeModal() {
       this.$refs.modalRef.closeModal()
+      window.location.reload()
     },
+
+    openModal() {
+      this.$refs.modalRef.openModal()
+    },
+
     openAnswerModal() {
       this.$refs.modalRef.closeModal()
       this.$emit("event-open-answer-modal", this.message)

@@ -69,7 +69,6 @@ main {
 
 .main-item {
     flex: 1;
-
 }
 
 footer {
@@ -445,8 +444,8 @@ td {
 }
 .selected {
     color: #fff700; /* Yellow color for selected stars */
-
 }
+
 .unselected {
     color: #888; /* Gray color for unselected stars */
 }
@@ -462,6 +461,8 @@ td {
 .inbox,
 .outbox {
     overflow: auto;
+    background-color: wheat;
+    height: 30vh;
 }
 
 .message-hover {

@@ -13,7 +13,7 @@
     <tr v-for="message in messagesResponse" @click="openViewMessageModal(message)" class="message-hover">
       <td>{{message.receiverUserUsername}}</td>
       <td>{{message.messageLetterTitle}}</td>
-      <td>{{getDateFromTimeStamp(message.messageLetterTime)}}</td>
+      <td>{{getDateFromTimeStamp(message.letterTime)}}</td>
     </tr>
     </tbody>
   </table>
@@ -32,13 +32,14 @@ export default {
     return{
       messagesResponse: [
         {
-          messageLetterTitle: '',
-          messageLetterBody: '',
-          messageLetterTime: '',
-          senderUserUsername: '',
-          receiverUserUsername: '',
+          messageId: 0,
+          letterTitle: '',
+          letterBody: '',
+          letterTime: '',
           senderUserId: 0,
+          senderUserUsername: '',
           receiverUserId: 0,
+          receiverUserUsername: '',
           isRead: false
         }
       ]

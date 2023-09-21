@@ -27,12 +27,13 @@
         <router-link to="/dashboard" class="naw-text">Minu töölaud</router-link>
       </div>
       <div class="nav-item">
-        <router-link to="/mailbox" class="naw-text">Minu sõnumid</router-link>
+        <router-link v-if="showNrOfUnreadMessages" to="/mailbox" class="naw-text" ref="routerRef">Minu sõnumid <span style="color: red">{{nrOfUnreadMessages}}</span></router-link>
+        <router-link v-else to="/mailbox" class="naw-text" ref="routerRef">Minu sõnumid</router-link>
       </div>
     </nav>
     <main>
       <div class="main-item">
-        <router-view :key="$route.fullPath" @event-update-nav-menu="updateNavMenu"></router-view>
+        <router-view :key="$route.fullPath" @event-update-nav-menu="updateNavMenu" @update-nr-of-unread-messages="updateNrOfUnreadMessages"></router-view>
       </div>
     </main>
     <footer>
@@ -66,16 +67,25 @@ import {defineComponent} from "vue";
 export default defineComponent({
   data() {
     return {
-      loggedIn: false
+      loggedIn: false,
+      nrOfUnreadMessages: 0,
+      showNrOfUnreadMessages: false
     }
   },
   methods: {
+    updateNrOfUnreadMessages(nrOfUnreadMessages) {
+      this.nrOfUnreadMessages = nrOfUnreadMessages
+      this.showNrOfUnreadMessages = nrOfUnreadMessages > 0;
+    },
+
     goHome() {
       router.push({name: 'homeRoute'})
     },
+
     updateNavMenu() {
       this.loggedIn = sessionStorage.getItem('userId') !== null
     },
+
     handleLogOut() {
       sessionStorage.clear()
       this.updateNavMenu()
@@ -83,6 +93,7 @@ export default defineComponent({
   },
   beforeMount() {
     this.updateNavMenu()
+    this.updateNrOfUnreadMessages()
   }
 })
 

@@ -155,7 +155,6 @@ export default {
           }
       ).then(response => {
         this.userContactInfo = response.data
-        sessionStorage.setItem('username', this.userContactInfo.userUsername)
       }).catch(error => {
         router.push({name: 'errorRoute'})
       })

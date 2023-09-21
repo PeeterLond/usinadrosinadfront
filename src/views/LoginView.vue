@@ -10,7 +10,7 @@
       <input v-model="password" type="password" placeholder="Salasõna">
     </div>
     <div class="login-item">
-      <button @click="login"  class="btn btn-dark" type="submit">Logi sisse</button>
+      <button @click="login" class="btn btn-dark" type="submit">Logi sisse</button>
     </div>
     <div class="login-item">
       <router-link class="register-item" to="/user"><p>Registreeri kasutaja</p></router-link>
@@ -34,6 +34,7 @@ export default {
       password: '',
       loginResponse: {
         userId: 0,
+        username: '',
         roleName: ''
       },
       errorResponse: {
@@ -44,7 +45,7 @@ export default {
   },
   methods: {
 
-login() {
+    login() {
       this.resetErrorMessage();
       if (this.mandatoryFieldsAreFilled()) {
         this.sendLoginRequest();
@@ -54,7 +55,7 @@ login() {
       this.resetPassword();
     },
 
-    resetErrorMessage: function () {
+    resetErrorMessage() {
       this.errorResponse.message = ''
     },
 
@@ -62,11 +63,11 @@ login() {
       return this.username.length > 0 && this.password.length > 0
     },
 
-    resetPassword: function () {
+    resetPassword() {
       this.password = ''
     },
 
-    sendLoginRequest: function () {
+    sendLoginRequest() {
       this.$http.get("/login", {
             params: {
               username: this.username,
@@ -77,6 +78,7 @@ login() {
         this.loginResponse = response.data
         sessionStorage.setItem('userId', this.loginResponse.userId)
         sessionStorage.setItem('roleName', this.loginResponse.roleName)
+        sessionStorage.setItem('userName', this.loginResponse.username)
         this.$emit('event-update-nav-menu')
         router.push({name: 'dashboardRoute'})
 

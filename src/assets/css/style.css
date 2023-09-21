@@ -23,11 +23,6 @@ header {
     align-items: flex-end;
 }
 
-.company-name {
-    cursor: pointer;
-    margin-left: 4vw;
-}
-
 #company-logo {
     height: 9vh;
     cursor: pointer;
@@ -40,7 +35,6 @@ nav {
 
 .nav-item {
     margin: 0 3vw;
-    color: black;
 }
 
 .naw-text {
@@ -78,7 +72,6 @@ footer {
     font-size: 72%;
 }
 
-
 .social-media-icons {
     align-self: center;
     margin-left: 43vw;
@@ -113,6 +106,7 @@ footer {
     margin: 2vh 0;
     background: linear-gradient(to right, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.2));
 }
+
 .register-item {
     color: black;
     text-decoration: none;
@@ -135,9 +129,13 @@ footer {
 
 .user-master {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
+
     padding-top: 5vh;
     height: 100%;
+    width: 51%;
+    margin-left: 25%;
+    background-color: rgba(255, 255, 255, 0.9);
 }
 
 .user-item {
@@ -149,12 +147,20 @@ footer {
     margin: 1vh 0 4vh 0;
 }
 
+.user-item-table {
+    margin-top: 15%;
+}
+
+.user-item-textarea {
+    margin-top: 2%;
+}
+
 td {
     width: 13vw;
 }
 
 .dropdowns {
-    width: 95%;
+    width: 100%;
 }
 
 .dashboard-master {
@@ -164,6 +170,7 @@ td {
     height: 100%;
     align-items: center;
 }
+
 .dashboard-width {
     width: 30%;
 }
@@ -214,10 +221,6 @@ td {
     justify-content: flex-end;
 }
 
-.user-item-item {
-    background: linear-gradient(to right, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.5));
-}
-
 .feedback-item {
     background-color: white;
     display: flex;
@@ -236,39 +239,39 @@ td {
 
 .advertisement-view-master {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     height: 100%;
     align-items: center;
-}
-
-.advertisement-back {
+    flex-direction: column;
+    width: 30%;
+    margin-left: 35%;
     background: rgb(255, 255, 255, 0.8);
 }
 
-.county-city-dropdown-width{
-    width: 44%;
+.ad-view-footer {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    margin-top: 2%;
 }
 
-.advertisement-view-item1 {
-    margin-top: 3%;
-    margin-bottom: 2%;
+.ad-view-radios {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: 10%;
+    width: 90%;
+}
+
+.advertisement-view-header {
+    margin-bottom: 4%;
+}
+
+.advertisement-view-info {
     margin-left: 2%;
 }
 
-.advertisement-view-item1 h2 {
-    margin-bottom: 5%;
-
-}
-
-.advertisement-view-item1 h2 {
-    align-items: flex-start;
-}
-
-.advertisement-view-item2 {
-    margin-left: 2%;
-}
-
-.advertisement-view-item3 {
+.advertisement-view-textarea {
     margin-top: 5%;
     margin-left: 2%;
 }
@@ -277,14 +280,17 @@ td {
     margin-left: 1vw;
 }
 
+.chores-master {
+    justify-content: space-evenly;
+}
+
 .advertisement-chore-header {
     align-self: flex-start;
-    margin-top: 4%;
-    margin-left: 2%;
+    margin-left: 17%;
 }
 
 .advertisement-chore-items {
-    margin-left: 2%;
+    margin-left: 17%;
 }
 
 .advertisements-master {
@@ -326,9 +332,6 @@ td {
     height: 25vh;
     justify-content: space-around;
     background: linear-gradient(to right, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.5));
-
-
-
 }
 
 .advertisements-item {
@@ -465,49 +468,30 @@ td {
     color: #888;
 }
 
-.user-text-background {
-    background-color: rgb(255, 255, 255, 0.8);
-    margin-top: 5%;
-    margin-left: 20%;
-    margin-right: 30%;
-    margin-right: 30%;
-
-}
-.city-county-dropdown {
-    padding-right: 119px;
-}
-
-.advertisement-dropdown {
-    padding-right: 90px;
-}
-
 .mailbox-master {
     display: flex;
     flex-direction: column;
     height: 100%;
+    align-items: center;
     justify-content: space-around;
-    margin-left: 5%;
 }
 
-.inbox {
-    overflow: auto;
-    background-color: rgba(255, 255, 255, 0.9);
-    width: 45%;
-    margin-bottom: 3%;
-}
-
+.inbox,
 .outbox {
     overflow: auto;
-    background-color: wheat;
-    height: 30vh;
-    background-color: rgba(255, 255, 255, 0.9);
     width: 45%;
-    margin-bottom: 15%;
+    background-color: rgba(255, 255, 255, 0.9);
+    height: 30vh;
 }
 
 .inbox-button {
     text-align: right;
     padding: 0 2vh;
+}
+
+.inbox td,
+.outbox td {
+    width: 20%;
 }
 
 .message-hover {
@@ -523,12 +507,6 @@ td {
     font-family: "Montserrat", sans-serif;
 }
 
-.inbox td,
-.outbox td {
-    width: 20%;
+.answer-modal-header {
+    width: 160%;
 }
-
-.county-city-dropdown-width{
-    width: 45%;
-}
-

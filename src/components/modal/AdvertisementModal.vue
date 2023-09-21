@@ -125,12 +125,13 @@ export default defineComponent({
       this.$refs.modalRef.closeModal()
       this.fillMessageRequestFields()
       this.$refs.answerMessageModalRef.messageRequest = this.messageRequest
+      this.$refs.answerMessageModalRef.sendButton = 'Saada'
       this.$refs.answerMessageModalRef.$refs.modalRef.openModal()
     },
 
     fillMessageRequestFields() {
       this.messageRequest.senderUserId = this.currentUserId
-      this.messageRequest.senderUserUsername = sessionStorage.getItem('username')
+      this.messageRequest.senderUserUsername = sessionStorage.getItem('userName')
       this.messageRequest.receiverUserId = this.ad.userId
       this.messageRequest.receiverUserUsername = this.ad.userName
     },

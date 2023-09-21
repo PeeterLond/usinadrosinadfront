@@ -2,17 +2,16 @@
   <div class="advertisements-master">
     <div class="advertisements-filter">
       <div>
-        <CountyDropdown class="ms-1" @event-update-selected-county-id="getAdvertisementsByCountyAndSetCountyId"></CountyDropdown>
+        <CountyDropdown @event-update-selected-county-id="getAdvertisementsByCountyAndSetCountyId"></CountyDropdown>
       </div>
       <div>
-        <CityDropdown class="ms-1" @event-update-selected-city-id="getAdvertisementsByCity" ref="cityDropdownRef"></CityDropdown>
+        <CityDropdown @event-update-selected-city-id="getAdvertisementsByCity" ref="cityDropdownRef"></CityDropdown>
       </div>
       <div>
-        <TypeDropdown class="ms-1" @event-update-selected-type-id="getAdvertisementsByType"></TypeDropdown>
+        <TypeDropdown @event-update-selected-type-id="getAdvertisementsByType"></TypeDropdown>
       </div>
       <div>
-        <ToolDropdown class="ms-1" @event-update-selected-tool-id="getAdvertisementsByTool" />
-
+        <ToolDropdown @event-update-selected-tool-id="getAdvertisementsByTool" />
       </div>
     </div>
     <div class="advertisements-inner">

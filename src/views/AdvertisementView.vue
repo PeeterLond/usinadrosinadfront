@@ -1,6 +1,6 @@
 <template>
-  <!--  <AlertDanger :alert-message="errorResponse.message"></AlertDanger>-->
-<!--  <AlertSuccess :alert-message="successMessage"></AlertSuccess>-->
+  <AlertDanger :alert-message="errorResponse.message"></AlertDanger>
+  <AlertSuccess :alert-message="successMessage"></AlertSuccess>
 
   <div v-if="isChoresAdding" class="advertisement-view-master">
     <div class="advertisement-back">
@@ -41,7 +41,8 @@
     <div class="advertisement-back">
       <div class="advertisement-view-item1">
         <AlertDanger :alert-message="errorResponse.message"></AlertDanger>
-        <h2 class=" ms-2">Lisa kuulutus: </h2>
+        <h2 v-if="!isEdit">Lisa kuulutus:</h2>
+        <h2 v-else>Muuda kuulutust:</h2>
 
         <div v-for="type in typeResponse">
           <input v-model="advertisementRequest.typeId" type="radio" name="radio" :id="type.typeName "

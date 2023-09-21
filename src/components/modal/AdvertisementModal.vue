@@ -1,5 +1,6 @@
 <template>
-  <AdvertisementDeleteModal ref="AdvertisementDeleteModalRef"></AdvertisementDeleteModal>
+  <AdvertisementDeleteModal ref="advertisementDeleteModalRef"></AdvertisementDeleteModal>
+  <AnswerMessageModal ref="answerMessageModalRef"></AnswerMessageModal>
   <Modal ref="modalRef">
     <template #header>
       <h2>{{ ad.typeName }}</h2>
@@ -36,12 +37,12 @@
         </div>
         <div class="ad-modal-info">
           <div>Tunnihind: {{ ad.advertisementPrice }}€/h</div>
-          <div v-if="ad.advertisementArea > 0">Pindala: {{ad.advertisementArea}}m<sup>2</sup></div>
-          <div v-else>Pindala: </div>
-          <div>{{ad.toolName}}</div>
-          <div>Maakond: {{ad.countyName}}</div>
-          <div v-if="ad.cityName !== ''">Linn: {{ad.cityName}}</div>
-          <div v-else>Linn: </div>
+          <div v-if="ad.advertisementArea > 0">Pindala: {{ ad.advertisementArea }}m<sup>2</sup></div>
+          <div v-else>Pindala:</div>
+          <div>{{ ad.toolName }}</div>
+          <div>Maakond: {{ ad.countyName }}</div>
+          <div v-if="ad.cityName !== ''">Linn: {{ ad.cityName }}</div>
+          <div v-else>Linn:</div>
 
         </div>
         <div class="mt-2">
@@ -49,7 +50,7 @@
         </div>
         <div class="ad-modal-chores">
           <p v-for="chore in choreResponse">
-            {{chore.choreName}}
+            {{ chore.choreName }}
           </p>
         </div>
       </div>
@@ -60,12 +61,17 @@
           <button @click="closeAdvertisementModal" type="submit" class="btn btn-dark">Tagasi</button>
         </div>
         <div>
-          <button v-if="isLoggedIn && !isCurrentUserAd" type="submit" class="btn btn-dark">Saada sõnum</button>
-          <button v-if="isCurrentUserAd" @click="handleAdvertisementEdit" type="submit" class="btn btn-dark">Muuda</button>
+          <button v-if="isLoggedIn && !isCurrentUserAd" @click="openAnswerMessageModal" type="submit" class="btn btn-dark">Saada sõnum</button>
+          <button v-if="isCurrentUserAd" @click="handleAdvertisementEdit" type="submit" class="btn btn-dark">Muuda
+          </button>
         </div>
         <div>
-          <button v-if="isLoggedIn && !isCurrentUserAd" @click="goToAdvertisementUserDashboard" type="submit" class="btn btn-dark">Mine kasutaja profiilile</button>
-          <button v-if="isCurrentUserAd" @click="openAdvertisementDeleteModal" type="submit" class="btn btn-dark">Kustuta</button>
+          <button v-if="isLoggedIn && !isCurrentUserAd" @click="goToAdvertisementUserDashboard" type="submit"
+                  class="btn btn-dark">Mine kasutaja profiilile
+          </button>
+          <button v-if="isCurrentUserAd" @click="openAdvertisementDeleteModal" type="submit" class="btn btn-dark">
+            Kustuta
+          </button>
         </div>
       </div>
     </template>
@@ -81,6 +87,7 @@ import {AD_MODAL_IMAGE} from "@/assets/script/ImageSizes";
 import router from "@/router";
 import AdvertisementDeleteModal from "@/components/modal/AdvertisementDeleteModal.vue";
 import {useRoute} from "vue-router";
+import AnswerMessageModal from "@/components/modal/AnswerMessageModal.vue";
 
 export default defineComponent({
   computed: {
@@ -88,7 +95,7 @@ export default defineComponent({
       return AD_MODAL_IMAGE
     }
   },
-  components: {AdvertisementDeleteModal, UserImage, Modal},
+  components: {AnswerMessageModal, AdvertisementDeleteModal, UserImage, Modal},
   data() {
     return {
       isLoggedIn: false,
@@ -102,22 +109,47 @@ export default defineComponent({
           adChoreId: 0,
           choreName: ''
         }
-      ]
+      ],
+      messageRequest: {
+        messageLetterTitle: '',
+        messageLetterBody: '',
+        senderUserId: 0,
+        senderUserUsername: '',
+        receiverUserId: 0,
+        receiverUserUsername: ''
+      }
     }
   },
   methods: {
+    openAnswerMessageModal() {
+      this.$refs.modalRef.closeModal()
+      this.fillMessageRequestFields()
+      this.$refs.answerMessageModalRef.messageRequest = this.messageRequest
+      this.$refs.answerMessageModalRef.$refs.modalRef.openModal()
+    },
+
+    fillMessageRequestFields() {
+      this.messageRequest.senderUserId = this.currentUserId
+      this.messageRequest.senderUserUsername = sessionStorage.getItem('username')
+      this.messageRequest.receiverUserId = this.ad.userId
+      this.messageRequest.receiverUserUsername = this.ad.userName
+    },
+
     goToAdvertisementUserDashboard() {
       router.push({name: 'dashboardRoute', query: {userId: this.ad.userId}})
     },
+
     handleAdvertisementEdit() {
       router.push({name: 'advertisementRoute', query: {advertisementId: this.ad.advertisementId, edit: 1}})
 
     },
+
     openAdvertisementDeleteModal() {
       this.closeAdvertisementModal()
-      this.$refs.AdvertisementDeleteModalRef.advertisementId = this.ad.advertisementId
-      this.$refs.AdvertisementDeleteModalRef.$refs.ModalRef.openModal()
+      this.$refs.advertisementDeleteModalRef.advertisementId = this.ad.advertisementId
+      this.$refs.advertisementDeleteModalRef.$refs.ModalRef.openModal()
     },
+
     checkIfAdUserIsSameAsCurrentUser() {
       this.isAnotherUserDashboard = !isNaN(this.anotherUserId)
       if (this.isAnotherUserDashboard) {
@@ -126,6 +158,7 @@ export default defineComponent({
         this.isCurrentUserAd = this.currentUserId === this.ad.userId;
       }
     },
+
     checkIfLoggedIn() {
       this.isLoggedIn = this.currentUserId > 0
     },
@@ -133,6 +166,7 @@ export default defineComponent({
     closeAdvertisementModal() {
       this.$refs.modalRef.closeModal()
     },
+
     getAdvertisementChores() {
       this.$http.get("/advertisement-chore", {
             params: {

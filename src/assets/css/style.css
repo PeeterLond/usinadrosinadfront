@@ -74,8 +74,10 @@ footer {
 
 .footer-item p {
     line-height: 40%;
-    margin-top: 4.5%;
+    margin-top: 5%;
+    font-size: 72%;
 }
+
 
 .social-media-icons {
     align-self: center;
@@ -256,9 +258,6 @@ td {
 .advertisement-view-item1 h2 {
     margin-bottom: 5%;
 
-}
-
-.advertisement-view-item1 div {
 }
 
 .advertisement-view-item1 h2 {

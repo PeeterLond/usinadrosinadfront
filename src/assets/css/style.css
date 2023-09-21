@@ -499,8 +499,6 @@ td {
 
 .outbox {
     overflow: auto;
-    background-color: wheat;
-    height: 30vh;
     background-color: rgba(255, 255, 255, 0.9);
     width: 45%;
     margin-bottom: 15%;
@@ -522,6 +520,9 @@ td {
 .message-header {
     font-weight: bold;
     font-family: "Montserrat", sans-serif;
+}
+.message-title{
+    width: 160%;
 }
 
 .inbox td,

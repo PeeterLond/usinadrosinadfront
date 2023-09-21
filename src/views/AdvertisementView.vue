@@ -1,6 +1,4 @@
 <template>
-  <AlertDanger :alert-message="errorResponse.message"></AlertDanger>
-  <AlertSuccess :alert-message="successMessage"></AlertSuccess>
 
   <div v-if="isChoresAdding" class="advertisement-view-master">
     <div class="advertisement-back">

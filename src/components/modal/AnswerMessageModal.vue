@@ -1,7 +1,7 @@
 <template>
     <Modal ref="modalRef">
       <template #header>
-        <input v-model="messageRequest.messageLetterTitle" type="text">
+        <input v-model="messageRequest.messageLetterTitle" type="text" class="message-title">
       </template>
       <template #body>
         <AlertDanger class="justify-content-center" :alert-message="errorResponse.message"/>

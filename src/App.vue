@@ -47,11 +47,11 @@
           <font-awesome-icon :icon="['far', 'envelope']" size="2xl"/>
         </a>
       </div>
-      <div class="footer-item">
-        <p> Usinad Rosinad OÜ <br>
-          Reg.nr 314159265 <br>
-          AA: EE3141592658979323 <br>
-          Usina tn 1, Rosina maakond </p>
+      <div class="footer-item" >
+        <p>Usinad Rosinad OÜ</p>
+        <p> Usina tn 1, Rosina maakond, Reg. nr 314159265</p>
+        <p>Arveldusarve: EE3141592658979323</p>
+
       </div>
     </footer>
   </div>

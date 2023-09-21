@@ -2,7 +2,7 @@
   <ViewMessageModal @event-open-answer-modal="openAnswerMessageModal" ref="viewMessageModalRef"/>
   <AnswerMessageModal ref="answerMessageModalRef"/>
 
-    <h6>Saadud kirjad:</h6>
+    <h6 class="message-header mt-2">Saadud kirjad:</h6>
     <table>
       <thead>
       <tr>
@@ -16,7 +16,7 @@
         <td>{{message.senderUserUsername}}</td>
         <td>{{message.messageLetterTitle}}</td>
         <td>{{getDateFromTimeStamp(message.messageLetterTime)}}</td>
-        <td>
+        <td class="inbox-button">
           <button @click="openAnswerMessageModal(message, $event)" type="submit" class="btn btn-dark">Vasta</button>
         </td>
       </tr>

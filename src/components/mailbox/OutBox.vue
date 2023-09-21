@@ -1,6 +1,6 @@
 <template>
   <ViewMessageModal ref="viewMessageModalRef"></ViewMessageModal>
-  <h6>Saadetud kirjad:</h6>
+  <h6 class="message-header mt-2">Saadetud kirjad:</h6>
   <table>
     <thead>
     <tr>

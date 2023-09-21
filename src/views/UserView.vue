@@ -173,7 +173,7 @@ export default {
         this.errorResponse.message = FILL_MANDATORY_FIELDS
       } else if (!this.passwordsAreSame()) {
         this.errorResponse.message = PASSWORDS_DONT_MATCH
-      } else if (!this.contactMobileNumberHasCorrectFormat()) {
+      } else if (!this.contactMobileNumberHasCorrectFormat() && !this.contactRequest.contactMobileNumber === 0) {
         this.errorResponse.message = MOBILE_NUMBER_INCORRECT_FORMAT
       } else if (!this.contactEmailHasCorrectFormat()) {
         this.errorResponse.message = EMAIL_INCORRECT_FORMAT
@@ -266,7 +266,7 @@ export default {
 
       if (!this.mandatoryFieldsAreFilled()) {
         this.errorResponse.message = FILL_MANDATORY_FIELDS
-      } else if (!this.contactMobileNumberHasCorrectFormat()) {
+      } else if (!this.contactMobileNumberHasCorrectFormat() && !this.contactRequest.contactMobileNumber === 0) {
         this.errorResponse.message = MOBILE_NUMBER_INCORRECT_FORMAT
       } else if (!this.contactEmailHasCorrectFormat()) {
         this.errorResponse.message = EMAIL_INCORRECT_FORMAT

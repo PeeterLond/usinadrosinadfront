@@ -9,7 +9,7 @@
                 <AlertSuccess class="justify-content-center" :alert-message="successMessage"/>
         <td colspan="10">
           <div>
-            <textarea v-model="feedbackRequest.feedbackComment" cols="60" rows="10"></textarea>
+            <textarea v-model="feedbackRequest.feedbackComment" cols="50" rows="10"></textarea>
           </div>
         </td>
         <tr>

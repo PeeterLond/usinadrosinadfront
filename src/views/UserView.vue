@@ -66,7 +66,7 @@
         </table>
       </div>
       <div class="user-item-item">
-      <textarea class="mt-2 ms-2" v-model="contactRequest.contactIntroduction" placeholder="Koristaja lühitutvustus" cols="64"
+      <textarea class="mt-2 ms-2" v-model="contactRequest.contactIntroduction" placeholder="Koristaja lühitutvustus" cols="50"
                 rows="5"></textarea>
       </div>
       <div class="user-item-item">

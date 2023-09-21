@@ -21,8 +21,8 @@ header {
 .header-item {
     display: flex;
     align-items: flex-end;
-
 }
+
 .company-name {
     cursor: pointer;
     margin-left: 4vw;
@@ -31,7 +31,6 @@ header {
 #company-logo {
     height: 9vh;
     cursor: pointer;
-
 }
 
 nav {
@@ -42,14 +41,13 @@ nav {
 .nav-item {
     margin: 0 3vw;
     color: black;
-
 }
+
 .naw-text {
     color: black;
     text-decoration: none;
     vertical-align: middle;
     font-family: "Montserrat", sans-serif;
-    /*font-weight: bolder;*/
 }
 
 main {
@@ -65,7 +63,6 @@ main {
 
 .main-item {
     flex: 1;
-
 }
 
 footer {
@@ -74,18 +71,15 @@ footer {
     justify-content: space-between;
     padding: 0 1vw;
 }
+
 .footer-item p {
     line-height: 40%;
     margin-top: 4.5%;
-
-
-
 }
 
 .social-media-icons {
     align-self: center;
     margin-left: 43vw;
-
 }
 
 .icon {
@@ -116,14 +110,12 @@ footer {
 .login-item {
     margin: 2vh 0;
     background: linear-gradient(to right, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.2));
-
 }
 .register-item {
     color: black;
     text-decoration: none;
     vertical-align: middle;
     font-family: "Montserrat", sans-serif;
-
 }
 
 .alert-master {
@@ -145,7 +137,6 @@ footer {
     padding-top: 5vh;
     height: 100%;
 }
-
 
 .user-item {
     display: flex;
@@ -186,19 +177,14 @@ td {
 .dashboard-item-item {
     background-color: rgba(255, 255, 255, 0.9);
     margin-top: 3%;
-
-
 }
 
 .dashboard-item-profile {
     background-color: rgba(255, 255, 255, 0.9);
-
-
 }
 
 .dashboard-advertisements {
     overflow: auto;
-    /*border: solid 1px black;*/
     height: 33vh;
     width: 40vw;
     display: flex;
@@ -214,7 +200,6 @@ td {
 
 .dashboard-feedback {
     overflow: auto;
-    /*border: solid 1px #888888;*/
     height: 20vh;
     width: 40vw;
     display: flex;
@@ -228,14 +213,11 @@ td {
 }
 
 .user-item-item {
-    /*background: linear-gradient(to right, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.5));*/
-
-
+    background: linear-gradient(to right, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.5));
 }
 
 .feedback-item {
     background-color: white;
-    /*border: solid 1px black;*/
     display: flex;
     margin: 1% 0;
 }
@@ -255,20 +237,20 @@ td {
     justify-content: space-around;
     height: 100%;
     align-items: center;
-    /*background: rgb(255, 255, 255, 0.6);*/
 }
 
 .advertisement-back {
     background: rgb(255, 255, 255, 0.8);
 }
 
+.county-city-dropdown-width{
+    width: 44%;
+}
 
 .advertisement-view-item1 {
     margin-top: 3%;
     margin-bottom: 2%;
     margin-left: 2%;
-    /*background: rgb(255, 255, 255, 0.9);*/
-
 }
 
 .advertisement-view-item1 h2 {
@@ -277,7 +259,6 @@ td {
 }
 
 .advertisement-view-item1 div {
-    /*margin-left: 30%;*/
 }
 
 .advertisement-view-item1 h2 {
@@ -285,17 +266,12 @@ td {
 }
 
 .advertisement-view-item2 {
-    /*margin-top: 5%;*/
-    /*background: rgb(255, 255, 255, 0.9);*/
     margin-left: 2%;
-
 }
 
 .advertisement-view-item3 {
     margin-top: 5%;
     margin-left: 2%;
-    /*background: rgb(255, 255, 255, 0.9);*/
-
 }
 
 .radio-label {
@@ -307,8 +283,6 @@ td {
     margin-top: 4%;
     margin-left: 2%;
 }
-
-
 
 .advertisement-chore-items {
     margin-left: 2%;
@@ -336,22 +310,14 @@ td {
     margin-left: 30%;
     background-color: rgba(255, 255, 255, 0.9);
     width: 100%;
-
-}
-
-.advertisements-inner {
-    /*background: rgba(255, 255, 255, 0.8);*/
-
 }
 
 .sort-arrow {
     cursor: pointer;
-    /*background-color: rgba(255, 255, 255, 0.9);*/
 }
 
 .sort-header {
     margin: 0 .5% 0 1%;
-    /*background-color: rgba(255, 255, 255, 0.9);*/
 }
 
 .advertisements-filter {
@@ -463,7 +429,6 @@ td {
 }
 
 .ad-modal-chores {
-    /*margin-top: 2%;*/
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
@@ -482,7 +447,6 @@ td {
     justify-content: space-between;
 }
 
-
 .modal.fade.show.d-block {
     background-color: rgba(0, 0, 0, 0.8);
     position: fixed;
@@ -495,12 +459,11 @@ td {
 }
 
 .selected {
-    color: #fff700; /* Yellow color for selected stars */
-
+    color: #fff700;
 }
 
 .unselected {
-    color: #888; /* Gray color for unselected stars */
+    color: #888;
 }
 
 .user-text-background {
@@ -539,7 +502,6 @@ td {
     background-color: rgba(255, 255, 255, 0.9);
     width: 45%;
     margin-bottom: 15%;
-
 }
 
 .inbox-button {
@@ -558,8 +520,6 @@ td {
 .message-header {
     font-weight: bold;
     font-family: "Montserrat", sans-serif;
-
-
 }
 
 .inbox td,
@@ -567,9 +527,6 @@ td {
     width: 20%;
 }
 
-.advertisement-back {
-    background: rgb(255, 255, 255, 0.8);
-}
 .county-city-dropdown-width{
     width: 45%;
 }

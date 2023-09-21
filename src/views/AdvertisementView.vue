@@ -1,96 +1,110 @@
 <template>
-  <AlertDanger :alert-message="errorResponse.message"></AlertDanger>
-  <AlertSuccess :alert-message="successMessage"></AlertSuccess>
+  <!--  <AlertDanger :alert-message="errorResponse.message"></AlertDanger>-->
+<!--  <AlertSuccess :alert-message="successMessage"></AlertSuccess>-->
 
   <div v-if="isChoresAdding" class="advertisement-view-master">
-    <div class="advertisement-chore-header">
-      <h4 class="mb-5">Vali Teenused:</h4>
-    </div>
-    <div class="advertisement-chore-items">
-      <table>
-        <tr v-for="chore in choreResponse">
-          <td>{{ chore.choreName }}</td>
-          <td>
-            <button v-if="!isChoreSelected[chore.choreId - 1]" @click="handleAdvertisementChoreAdd(chore.choreId)"
-                    class="btn btn-dark" type="submit">Vali
-            </button>
-            <button v-else @click="handleAdvertisementChoreDelete(chore.choreId)" class="btn btn-dark" type="submit">
-              Eemalda
-            </button>
-          </td>
-        </tr>
-      </table>
-    </div>
-    <div class="advertisement-view-items">
-      <button v-if="!advertisementHasChores" @click="removeAddedAdvertisementAndAdvertisementChores"
-              class="btn btn-dark me-3" type="submit">Katkesta</button>
-      <button v-else @click="goBackToEdit" class="btn btn-dark me-3" type="submit">Tagasi</button>
-      <button v-if="!advertisementHasChores" @click="validateAndPushToAdvertisements(NEW_ADVERTISEMENT_ADDED())"
-              class="btn btn-dark" type="submit">Kinnita</button>
-      <button v-else @click="validateAndPushToAdvertisements(ADVERTISEMENT_UPDATED())"
-              class="btn btn-dark" type="submit">Muuda</button>
+    <div class="advertisement-back">
+      <div class="advertisement-chore-header">
+        <AlertSuccess :alert-message="successMessage"></AlertSuccess>
+        <h4 class="mb-2">Vali Teenused:</h4>
+      </div>
+      <div class="advertisement-chore-items">
+        <table>
+          <tr v-for="chore in choreResponse">
+            <td>{{ chore.choreName }}</td>
+            <td>
+              <button v-if="!isChoreSelected[chore.choreId - 1]" @click="handleAdvertisementChoreAdd(chore.choreId)"
+                      class="btn btn-dark" type="submit">Vali
+              </button>
+              <button v-else @click="handleAdvertisementChoreDelete(chore.choreId)" class="btn btn-dark" type="submit">
+                Eemalda
+              </button>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="advertisement-view-items">
+        <button v-if="!advertisementHasChores" @click="removeAddedAdvertisementAndAdvertisementChores"
+                class="btn btn-dark m-3" type="submit">Katkesta
+        </button>
+        <button v-else @click="goBackToEdit" class="btn btn-dark m-2" type="submit">Tagasi</button>
+        <button v-if="!advertisementHasChores" @click="validateAndPushToAdvertisements(NEW_ADVERTISEMENT_ADDED())"
+                class="btn btn-dark m-2" type="submit">Kinnita
+        </button>
+        <button v-else @click="validateAndPushToAdvertisements(ADVERTISEMENT_UPDATED())"
+                class="btn btn-dark" type="submit">Muuda
+        </button>
+      </div>
     </div>
   </div>
   <div v-else class="advertisement-view-master">
-    <div class="advertisement-view-item1">
-      <h2>Lisa kuulutus:</h2>
-      <div v-for="type in typeResponse">
-        <input v-model="advertisementRequest.typeId" type="radio" name="radio" :id="type.typeName" :value="type.typeId"
-               :key="type.typeId">
-        <label :for="type.typeName" class="radio-label">{{ type.typeName }}</label>
-        <br>
+    <div class="advertisement-back">
+      <div class="advertisement-view-item1">
+        <AlertDanger :alert-message="errorResponse.message"></AlertDanger>
+        <h2 class=" ms-2">Lisa kuulutus: </h2>
+
+        <div v-for="type in typeResponse">
+          <input v-model="advertisementRequest.typeId" type="radio" name="radio" :id="type.typeName "
+                 :value="type.typeId"
+                 :key="type.typeId">
+          <label :for="type.typeName" class="radio-label">{{ type.typeName }}</label>
+          <br>
+        </div>
       </div>
-    </div>
-    <div class="advertisement-view-item2">
-      <table>
-        <tr>
-          <td><label for="county">Maakond</label></td>
-          <td>
-            <CountyDropdown @event-update-selected-county-id="setSelectedCountyId" ref="countyDropdownRef" id="county"/>
-          </td>
-        </tr>
-        <tr>
-          <td><label for="city">Linn</label></td>
-          <td>
-            <CityDropdown @event-update-selected-city-id="setSelectedCityId" ref="cityDropdownRef" id="city"/>
-          </td>
-        </tr>
-        <tr>
-          <td><label for="lat">Koordinaadid (laius)</label></td>
-          <td><input v-model="advertisementRequest.coordinateLat" type="text" id="lat"></td>
-        </tr>
-        <tr>
-          <td><label for="long">Koordinaadid (pikkus)</label></td>
-          <td><input v-model="advertisementRequest.coordinateLongField" type="text" id="long"></td>
-        </tr>
-        <tr>
-          <td><label for="price">Tunnihind</label></td>
-          <td><input v-model="advertisementRequest.advertisementPrice" type="text" id="price"></td>
-        </tr>
-        <tr>
-          <td><label for="area">Pindala</label></td>
-          <td><input v-model="advertisementRequest.advertisementArea" type="text" id="area"></td>
-        </tr>
-      </table>
-    </div>
-    <div class="advertisement-view-item3">
+      <div class="advertisement-view-item2">
+        <table>
+          <tr>
+            <td><label for="county">Maakond</label></td>
+            <td class="county-city-dropdown-width">
+              <CountyDropdown @event-update-selected-county-id="setSelectedCountyId" ref="countyDropdownRef"
+                              id="county"/>
+            </td>
+          </tr>
+          <tr>
+            <td ><label for="city">Linn</label></td>
+            <td>
+              <CityDropdown @event-update-selected-city-id="setSelectedCityId" ref="cityDropdownRef" id="city"/>
+            </td>
+          </tr>
+          <tr>
+            <td><label for="lat">Koordinaadid (laius)</label></td>
+            <td><input v-model="advertisementRequest.coordinateLat" type="text" id="lat"></td>
+          </tr>
+          <tr>
+            <td><label for="long">Koordinaadid (pikkus)</label></td>
+            <td><input v-model="advertisementRequest.coordinateLongField" type="text" id="long"></td>
+          </tr>
+          <tr>
+            <td><label for="price">Tunnihind</label></td>
+            <td><input v-model="advertisementRequest.advertisementPrice" type="text" id="price"></td>
+          </tr>
+          <tr>
+            <td><label for="area">Pindala</label></td>
+            <td><input v-model="advertisementRequest.advertisementArea" type="text" id="area"></td>
+          </tr>
+        </table>
+      </div>
+      <div class="advertisement-view-item3">
       <textarea v-model="advertisementRequest.advertisementDescription" placeholder="Kuulutuse tekst" class="mb-4"
                 cols="50" rows="5"></textarea>
-      <div v-for="tool in toolResponse">
-        <input v-model="advertisementRequest.toolId" type="radio" name="radio2" :id="tool.toolName" :key="tool.toolId"
-               :value="tool.toolId">
-        <label :for="tool.toolName" class="radio-label">{{ tool.toolName }}</label>
-        <br>
-      </div>
-      <div class="mt-5">
-        <router-link to="/dashboard">
-          <button class="btn btn-dark m-3" type="submit">Tagasi</button>
-        </router-link>
-        <button v-if="!isEdit" @click="validateFieldsAndAddAdvertisementToUser" class="btn btn-dark m-3" type="submit">
-          Lisa kuulutus
-        </button>
-        <button v-else @click="validateFieldsAndUpdateAdvertisement" class="btn btn-dark m-3" type="submit">Muuda kuulutust
-        </button>
+        <div v-for="tool in toolResponse">
+          <input v-model="advertisementRequest.toolId" type="radio" name="radio2" :id="tool.toolName" :key="tool.toolId"
+                 :value="tool.toolId">
+          <label :for="tool.toolName" class="radio-label">{{ tool.toolName }}</label>
+          <br>
+        </div>
+        <div class="mt-3">
+          <router-link to="/dashboard">
+            <button class="btn btn-dark m-2" type="submit">Tagasi</button>
+          </router-link>
+          <button v-if="!isEdit" @click="validateFieldsAndAddAdvertisementToUser" class="btn btn-dark m-2"
+                  type="submit">
+            Lisa kuulutus
+          </button>
+          <button v-else @click="validateFieldsAndUpdateAdvertisement" class="btn btn-dark m-2" type="submit">Muuda
+            kuulutust
+          </button>
+        </div>
       </div>
     </div>
   </div>

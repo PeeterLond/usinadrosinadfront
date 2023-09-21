@@ -1,16 +1,12 @@
 @import url(https://fonts.google.com/specimen/Montserrat?preview.text=Minu%20töölaud&preview.text_type=custom);
-
 body {
     font-family: 'Montserrat', sans-serif;
 }
-
 
 .flex-master {
     display: flex;
     flex-direction: column;
     height: 100vh;
-
-
 }
 
 header {
@@ -27,7 +23,6 @@ header {
     align-items: flex-end;
 
 }
-
 .company-name {
     cursor: pointer;
     margin-left: 4vw;
@@ -49,7 +44,6 @@ nav {
     color: black;
 
 }
-
 .naw-text {
     color: black;
     text-decoration: none;
@@ -80,10 +74,10 @@ footer {
     justify-content: space-between;
     padding: 0 1vw;
 }
-
 .footer-item p {
     line-height: 40%;
     margin-top: 4.5%;
+
 
 
 }
@@ -117,7 +111,6 @@ footer {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
 }
 
 .login-item {
@@ -125,7 +118,6 @@ footer {
     background: linear-gradient(to right, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.2));
 
 }
-
 .register-item {
     color: black;
     text-decoration: none;
@@ -175,11 +167,10 @@ td {
 .dashboard-master {
     display: flex;
     justify-content: space-between;
-    padding: 0 5vw;
+    padding: 0 15vw;
     height: 100%;
     align-items: center;
 }
-
 .dashboard-width {
     width: 30%;
 }
@@ -237,7 +228,7 @@ td {
 }
 
 .user-item-item {
-    background: linear-gradient(to right, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.5));
+    /*background: linear-gradient(to right, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.5));*/
 
 
 }
@@ -273,7 +264,6 @@ td {
 
 
 .advertisement-view-item1 {
-    /*align-self: flex-start;*/
     margin-top: 3%;
     margin-bottom: 2%;
     margin-left: 2%;
@@ -371,6 +361,7 @@ td {
     height: 25vh;
     justify-content: space-around;
     background: linear-gradient(to right, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.5));
+
 
 
 }
@@ -512,6 +503,22 @@ td {
     color: #888; /* Gray color for unselected stars */
 }
 
+.user-text-background {
+    background-color: rgb(255, 255, 255, 0.8);
+    margin-top: 5%;
+    margin-left: 20%;
+    margin-right: 30%;
+    margin-right: 30%;
+
+}
+.city-county-dropdown {
+    padding-right: 119px;
+}
+
+.advertisement-dropdown {
+    padding-right: 90px;
+}
+
 .mailbox-master {
     display: flex;
     flex-direction: column;
@@ -564,6 +571,6 @@ td {
     background: rgb(255, 255, 255, 0.8);
 }
 .county-city-dropdown-width{
-    width: 44%;
+    width: 45%;
 }
 

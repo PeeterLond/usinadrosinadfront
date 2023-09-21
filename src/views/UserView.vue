@@ -1,9 +1,10 @@
 <template>
   <EditPasswordModal ref="editPasswordModalRef"/>
-
+<div class="user-text-background">
   <div class="user-master">
+
     <div class="user-item">
-      <div class="user-item-title home-header">
+      <div class="user-item-title">
         <h1>{{ title }}</h1>
       </div>
       <div class="user-item-image">
@@ -11,16 +12,14 @@
                    :img-width="USER_VIEW_IMAGE.width"></UserImage>
         <ImageInput @event-emit-base64="setContactRequestImageData"/>
       </div>
-      <div class="user-item-item">
-        <AlertDanger :alert-message="errorResponse.message"></AlertDanger>
-        <AlertSuccess :alert-message="successMessage"></AlertSuccess>
-      </div>
-
-
     </div>
     <div class="user-item">
       <div class="user-item-item">
         <table class="mt-2 ms-2">
+
+          <AlertDanger :alert-message="errorResponse.message"></AlertDanger>
+          <AlertSuccess :alert-message="successMessage"></AlertSuccess>
+
           <tr v-if="!isEdit">
             <td><label for="username">Kasutajanimi</label></td>
             <td><input v-model="contactRequest.userUsername" type="text" id="username"></td>
@@ -43,13 +42,13 @@
           </tr>
           <tr>
             <td><label for="county">Maakond</label></td>
-            <td>
+            <td class="city-county-dropdown">
               <CountyDropdown @event-update-selected-county-id="setContactRequestCountyId" ref="countyDropdownRef"/>
             </td>
           </tr>
           <tr>
             <td><label for="city">Linn</label></td>
-            <td>
+            <td class="city-county-dropdown">
               <CityDropdown @event-update-selected-city-id="setContactRequestCityId" ref="cityDropdownRef"/>
             </td>
           </tr>
@@ -67,7 +66,7 @@
         </table>
       </div>
       <div class="user-item-item">
-      <textarea class="mt-2 ms-2" v-model="contactRequest.contactIntroduction" placeholder="Koristaja lühitutvustus" cols="50"
+      <textarea class="mt-2 ms-2" v-model="contactRequest.contactIntroduction" placeholder="Koristaja lühitutvustus" cols="64"
                 rows="5"></textarea>
       </div>
       <div class="user-item-item">
@@ -94,6 +93,7 @@
       </div>
     </div>
   </div>
+</div>
 </template>
 
 <script>

@@ -3,7 +3,7 @@
 
   <div class="dashboard-master">
     <div class="dashboard-item dashboard-width">
-      <div class="dashboard-item-image">
+      <div class="dashboard-item-image mb-4">
         <UserImage :image-data-base64="userContactInfo.imageData" :img-height="DASHBOARD_PROFILE_IMAGE.height"
                    :img-width="DASHBOARD_PROFILE_IMAGE.width"></UserImage>
       </div>

@@ -1,7 +1,7 @@
 <template>
     <Modal ref="modalRef">
       <template #header>
-        <input v-model="messageRequest.messageLetterTitle" type="text" class="message-title">
+        <input v-model="messageRequest.messageLetterTitle" placeholder="Pealkiri" type="text" class="answer-modal-header">
       </template>
       <template #body>
         <AlertDanger class="justify-content-center" :alert-message="errorResponse.message"/>
@@ -13,7 +13,7 @@
         </div>
       </template>
       <template #footer>
-        <button class="btn btn-dark" v-if="!messageSent" @click="validateAndSendMessage">Vasta</button>
+        <button class="btn btn-dark" v-if="!messageSent" @click="validateAndSendMessage">{{sendButton}}</button>
       </template>
     </Modal>
 </template>
@@ -31,6 +31,7 @@ export default {
   data() {
     return {
       messageSent: false,
+      sendButton: 'Vasta',
       messageRequest: {
         messageLetterTitle: '',
         messageLetterBody: '',

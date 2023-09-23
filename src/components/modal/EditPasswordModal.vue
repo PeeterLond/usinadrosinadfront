@@ -35,12 +35,10 @@
 <script>
 
 import Modal from "@/components/modal/Modal.vue";
-import {PASSWORD_SUCCESSFULLY_UPDATED, PASSWORDS_DONT_MATCH} from "@/assets/script/AlertMessage";
+import {FILL_MANDATORY_FIELDS, PASSWORD_SUCCESSFULLY_UPDATED, PASSWORDS_DONT_MATCH} from "@/assets/script/AlertMessage";
 import {useRoute} from "vue-router";
 import AlertDanger from "@/components/alert/AlertDanger.vue";
 import AlertSuccess from "@/components/alert/AlertSuccess.vue";
-import router from "@/router";
-import userView from "@/views/UserView.vue";
 
 export default {
   name: 'EditPasswordModal',
@@ -66,13 +64,20 @@ export default {
     validateAndUpdatePassword() {
       this.errorResponse.message = ''
       this.successMessage = ''
-      if (this.passwordsAreSame()) {
-        this.userPasswordChange.userPassword = this.inputPassword1;
-        this.sendUpdatePasswordRequest();
+      if (!this.mandatoryFieldsAreFilled()) {
+        this.errorResponse.message = FILL_MANDATORY_FIELDS
+      } else if (!this.passwordsAreSame()) {
+        this.errorResponse.message = PASSWORDS_DONT_MATCH;
       } else {
-        this.errorResponse.message = PASSWORDS_DONT_MATCH
+        this.userPasswordChange.userPassword = this.inputPassword1
+        this.sendUpdatePasswordRequest()
       }
     },
+
+    mandatoryFieldsAreFilled() {
+      return this.inputPassword1.length > 0 && this.inputPassword2.length > 0
+    },
+
     passwordsAreSame() {
       return this.inputPassword1 === this.inputPassword2
     },
@@ -92,7 +97,6 @@ export default {
         this.errorResponse = error.response.data;
       })
     },
-
   }
 }
 

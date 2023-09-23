@@ -9,10 +9,10 @@
                 <AlertSuccess class="justify-content-center" :alert-message="successMessage"/>
         <td colspan="10">
           <div>
-            <textarea v-model="feedbackRequest.feedbackComment" cols="50" rows="10"></textarea>
+            <textarea v-model="feedbackRequest.feedbackComment" cols="50" rows="5"></textarea>
           </div>
         </td>
-        <tr>
+        <tr class="feedback-stars">
           <td v-for="starRating in 5" :key="starRating" @click="updateRating(starRating)">
             <font-awesome-icon :icon="['fas', 'star']" size="lg" :class="{ 'selected': starRating <= feedbackRequest.feedbackRating,
              'unselected': starRating > feedbackRequest.feedbackRating }"/>

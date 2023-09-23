@@ -130,7 +130,6 @@ footer {
 .user-master {
     display: flex;
     justify-content: center;
-
     padding-top: 5vh;
     height: 100%;
     width: 51%;
@@ -156,7 +155,7 @@ footer {
 }
 
 td {
-    width: 13vw;
+    width: 100%;
 }
 
 .dropdowns {
@@ -185,7 +184,7 @@ td {
 
 .dashboard-item-item {
     background-color: rgba(255, 255, 255, 0.9);
-    margin-top: 3%;
+    margin-top: 1%;
 }
 
 .dashboard-item-profile {
@@ -214,6 +213,7 @@ td {
     display: flex;
     padding: 1%;
     flex-direction: column;
+    margin-bottom: 1%;
 }
 
 .dashboard-feedback-btn {
@@ -509,4 +509,8 @@ td {
 
 .answer-modal-header {
     width: 160%;
+}
+
+.feedback-stars {
+    display: flex;
 }

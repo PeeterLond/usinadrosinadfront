@@ -64,9 +64,7 @@
           <div v-for ="feedback in feedbackResponse" class="feedback-item">
             <div class="feedback-item-comment" >{{feedback.feedbackComment}}</div>
             <div class="feedback-item-rating">{{feedback.feedbackRating}}<font-awesome-icon :icon="['fas', 'star']" size="lg" style="color: #f7fb28;" /></div>
-
           </div>
-
         </div>
         <div v-if="isAnotherUserDashboard" class="dashboard-feedback-btn">
           <button @click="handleWriteFeedback" type="submit" class="btn btn-dark me-4 mb-4">Lisa tagasiside</button>

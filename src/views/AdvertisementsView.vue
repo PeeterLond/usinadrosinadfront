@@ -63,6 +63,7 @@ export default {
           advertisementId: 0,
           userId: 0,
           userName: '',
+          user_avg_rating: 0,
           countyName: '',
           cityName: '',
           toolName: '',

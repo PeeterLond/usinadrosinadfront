@@ -29,7 +29,7 @@
           </div>
           <div>
             <font-awesome-icon :icon="['fas', 'star']" style="color: #fff700;"/>
-            5.0
+            {{ad.user_avg_rating}}
           </div>
         </div>
         <div class="ad-modal-description">
@@ -56,7 +56,7 @@
       </div>
     </template>
     <template #footer>
-      <div class="ad-modal-footer">
+      <div class="my-modal-footer">
         <div>
           <button @click="closeAdvertisementModal" type="submit" class="btn btn-dark">Tagasi</button>
         </div>

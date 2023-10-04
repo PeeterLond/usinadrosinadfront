@@ -10,7 +10,7 @@
         <div class="front-item-text user-price">{{ad.advertisementPrice}}€/h</div>
         <div class="front-item-text">{{ad.countyName}}, {{ad.cityName}}</div>
         <div class="front-item-text rating">
-          5.0
+          {{ad.user_avg_rating}}
           <font-awesome-icon :icon="['fas', 'star']" style="color: #fff700;"/>
         </div>
       </div>

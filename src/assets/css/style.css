@@ -437,7 +437,7 @@ td {
     height: 23vh;
 }
 
-.ad-modal-footer {
+.my-modal-footer {
     display: flex;
     flex: 1;
     justify-content: space-between;

@@ -20,8 +20,10 @@
         </tr>
       </template>
       <template #footer>
-        <button @click="closeModal" type="submit" class="btn btn-dark">Tagasi</button>
-        <button @click="addUserFeedback" type="submit" class="btn btn-dark">Lisa</button>
+        <div class="my-modal-footer">
+          <button @click="closeModal" type="submit" class="btn btn-dark">Tagasi</button>
+          <button @click="addUserFeedback" type="submit" class="btn btn-dark">Lisa</button>
+        </div>
       </template>
     </Modal>
   </div>

@@ -39,7 +39,5 @@ export default {
   beforeMount() {
     this.getAdvertisementTools()
   }
-
-
 }
 </script>

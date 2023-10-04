@@ -4,12 +4,7 @@
     <option v-for="type in typeResponse" :value="type.typeId" :key="type.typeId" id="type">
       {{type.typeName}}
     </option>
-
-
   </select>
-
-
-
 </template>
 
 <script>
@@ -26,7 +21,6 @@ export default {
           typeName: ''
         }
       ]
-
     }
   },
   methods: {
@@ -47,5 +41,4 @@ export default {
     this.getAdvertisementTypes()
   }
 }
-
 </script>

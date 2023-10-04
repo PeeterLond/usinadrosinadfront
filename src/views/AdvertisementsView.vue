@@ -2,16 +2,19 @@
   <div class="advertisements-master">
     <div class="advertisements-filter">
       <div>
-        <CountyDropdown @event-update-selected-county-id="getAdvertisementsByCountyAndSetCountyId"></CountyDropdown>
+        <CountyDropdown @event-update-selected-county-id="setFilterCountyId"></CountyDropdown>
       </div>
       <div>
-        <CityDropdown @event-update-selected-city-id="getAdvertisementsByCity" ref="cityDropdownRef"></CityDropdown>
+        <CityDropdown @event-update-selected-city-id="setFilterCityId" ref="cityDropdownRef"></CityDropdown>
       </div>
       <div>
-        <TypeDropdown @event-update-selected-type-id="getAdvertisementsByType"></TypeDropdown>
+        <TypeDropdown @event-update-selected-type-id="setFilterTypeId"></TypeDropdown>
       </div>
       <div>
-        <ToolDropdown @event-update-selected-tool-id="getAdvertisementsByTool" />
+        <ToolDropdown @event-update-selected-tool-id="setFilterToolId" />
+      </div>
+      <div>
+        <button @click="filterAdvertisements" class="btn btn-dark" type="submit">Filtreeri</button>
       </div>
     </div>
     <div class="advertisements-inner">
@@ -20,19 +23,19 @@
           Hind:
         </div>
         <div class="sort-arrow">
-          <font-awesome-icon :icon="['fas', 'arrow-down']" @click="filterPriceDescending" size="lg" style="color: #000000;" class="me-2" />
+          <font-awesome-icon :icon="['fas', 'arrow-down']" @click="sortPriceDescending" size="lg" style="color: #000000;" class="me-2" />
         </div>
         <div class="sort-arrow">
-          <font-awesome-icon :icon="['fas', 'arrow-up']" @click="filterPriceAscending" size="lg" style="color: #000000;" />
+          <font-awesome-icon :icon="['fas', 'arrow-up']" @click="sortPriceAscending" size="lg" style="color: #000000;" />
         </div>
         <div class="sort-header">
           Uuemad:
         </div>
         <div class="sort-arrow">
-          <font-awesome-icon :icon="['fas', 'arrow-down']" @click="filterOldest" size="lg" style="color: #000000;" class="me-2" />
+          <font-awesome-icon :icon="['fas', 'arrow-down']" @click="sortOldest" size="lg" style="color: #000000;" class="me-2" />
         </div>
         <div class="sort-arrow">
-          <font-awesome-icon :icon="['fas', 'arrow-up']" @click="filterNewest" size="lg" style="color: #000000;" />
+          <font-awesome-icon :icon="['fas', 'arrow-up']" @click="sortNewest" size="lg" style="color: #000000;" />
         </div>
       </div>
       <div class="advertisements-ads">
@@ -57,7 +60,12 @@ export default {
   components: {ToolDropdown, TypeDropdown, CityDropdown, CountyDropdown, Advertisement},
   data() {
     return {
-      countyId: 0,
+      advertisementsFilterRequest: {
+        countyId: 0,
+        cityId: 0,
+        toolId: 0,
+        typeId: 0
+      },
       advertisementResponse: [
         {
           advertisementId: 0,
@@ -87,73 +95,13 @@ export default {
     }
   },
   methods: {
-    getAdvertisementsByTool(toolId) {
-      if (toolId > 0) {
-        this.$http.get("/advertisement-with-contact-by-tool", {
-              params: {
-                toolId: toolId,
-              }
-            }
-        ).then(response => {
-          this.advertisementResponse = response.data
-        }).catch(error => {
-          router.push({name: 'errorRoute'})
-        });
-      } else {
-        this.getAllAdvertisementsWithContactInfo()
-      }
-    },
-
-    getAdvertisementsByType(typeId) {
-      if (typeId > 0) {
-        this.$http.get("/advertisement-with-contact-by-type", {
-              params: {
-                typeId: typeId,
-              }
-            }
-        ).then(response => {
-          this.advertisementResponse = response.data
-        }).catch(error => {
-          router.push({name: 'errorRoute'})
-        })
-      } else {
-        this.getAllAdvertisementsWithContactInfo()
-      }
-    },
-
-    getAdvertisementsByCity(cityId) {
-      if (cityId > 0) {
-        this.$http.get("/advertisement-with-contact-by-city", {
-              params: {
-                cityId: cityId,
-              }
-            }
-        ).then(response => {
-          this.advertisementResponse = response.data
-        }).catch(error => {
-          router.push({name: 'errorRoute'})
-        });
-      } else {
-        this.getAdvertisementsByCounty()
-      }
-    },
-    
-    getAdvertisementsByCountyAndSetCountyId(countyId) {
-      this.countyId = countyId
-      if (countyId > 0) {
-        this.getAdvertisementsByCounty();
-      } else {
-        this.getAllAdvertisementsWithContactInfo()
-      }
-
-      this.$refs.cityDropdownRef.selectedCountyId = countyId;
-      this.$refs.cityDropdownRef.getCities()
-    },
-
-    getAdvertisementsByCounty() {
-      this.$http.get("/advertisement-with-contact-by-county", {
+    filterAdvertisements() {
+      this.$http.get("/advertisement-with-contact-filter", {
             params: {
-              countyId: this.countyId,
+              countyId: this.advertisementsFilterRequest.countyId,
+              cityId: this.advertisementsFilterRequest.cityId,
+              toolId: this.advertisementsFilterRequest.toolId,
+              typeId: this.advertisementsFilterRequest.typeId
             }
           }
       ).then(response => {
@@ -162,19 +110,44 @@ export default {
         router.push({name: 'errorRoute'})
       })
     },
-    filterPriceAscending() {
+
+
+    setFilterToolId(toolId) {
+      this.advertisementsFilterRequest.toolId = toolId
+    },
+
+    setFilterTypeId(typeId) {
+      this.advertisementsFilterRequest.typeId = typeId
+    },
+
+    setFilterCityId(cityId) {
+      this.advertisementsFilterRequest.cityId = cityId
+    },
+    
+    setFilterCountyId(countyId) {
+      this.advertisementsFilterRequest.countyId = countyId
+
+      this.$refs.cityDropdownRef.selectedCountyId = countyId;
+      this.$refs.cityDropdownRef.getCities()
+    },
+
+    sortPriceAscending() {
       this.advertisementResponse.sort((a, b) => a.advertisementPrice - b.advertisementPrice)
     },
-    filterPriceDescending() {
+
+    sortPriceDescending() {
       this.advertisementResponse.sort((a, b) => b.advertisementPrice - a.advertisementPrice)
     },
-    filterNewest() {
+
+    sortNewest() {
       this.advertisementResponse.sort((a, b) => new Date(a.advertisementTime) - new Date(b.advertisementTime))
     },
-    filterOldest() {
-      this.filterNewest()
+
+    sortOldest() {
+      this.sortNewest()
       this.advertisementResponse.reverse()
     },
+
     getAllAdvertisementsWithContactInfo() {
       this.$http.get("/advertisement-with-contact")
           .then(response => {

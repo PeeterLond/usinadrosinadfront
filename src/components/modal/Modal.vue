@@ -8,7 +8,7 @@
               Default title
             </slot>
           </h1>
-          <button type="button" class="btn-close" aria-label="Close" @click="closeModal"></button>
+          <button type="button" class="btn-close" aria-label="Close" @click="closeModalAndRefresh"></button>
         </div>
         <div class="modal-body form-floating">
           <slot name="body">
@@ -40,7 +40,12 @@ export default {
 
     closeModal() {
       this.isOpen = false
-    }
+    },
+
+    closeModalAndRefresh() {
+      this.closeModal()
+      window.location.reload()
+    },
   }
 }
 

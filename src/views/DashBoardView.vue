@@ -2,7 +2,7 @@
   <FeedbackModal ref="feedbackModalRef"/>
 
   <div class="dashboard-master">
-    <div class="dashboard-item dashboard-width">
+    <div class="dashboard-item profile-width">
       <div class="dashboard-item-image mb-4">
         <UserImage :image-data-base64="userContactInfo.imageData" :img-height="DASHBOARD_PROFILE_IMAGE.height"
                    :img-width="DASHBOARD_PROFILE_IMAGE.width"></UserImage>
@@ -41,7 +41,7 @@
           </tbody>
         </table>
       </div>
-      <div class="dashboard-item-intro">
+      <div class="dashboard-item-profile profile-intro">
         {{ userContactInfo.contactIntroduction }}
       </div>
       <div v-if="!isAnotherUserDashboard" class="dashboard-item-profile">
@@ -63,7 +63,9 @@
         <div class="dashboard-feedback">
           <div v-for ="feedback in feedbackResponse" class="feedback-item">
             <div class="feedback-item-comment" >{{feedback.feedbackComment}}</div>
-            <div class="feedback-item-rating">{{feedback.feedbackRating}}<font-awesome-icon :icon="['fas', 'star']" size="lg" style="color: #f7fb28;" /></div>
+            <div class="feedback-item-rating">
+              {{feedback.feedbackRating}}<font-awesome-icon :icon="['fas', 'star']" size="lg" style="color: #f7fb28;"/>
+            </div>
           </div>
         </div>
         <div v-if="isAnotherUserDashboard" class="dashboard-feedback-btn">

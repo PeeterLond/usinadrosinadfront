@@ -11,7 +11,8 @@
     </tr>
     </thead>
     <tbody>
-    <tr v-for="message in messagesResponse" @click="openViewMessageModal(message)" v-bind:style="message.isRead ? 'font-weight: normal;' : 'font-weight: bold;'" class="message-hover" >
+    <tr v-for="message in messagesResponse" @click="openViewMessageModal(message)"
+        v-bind:style="message.isRead ? 'font-weight: normal;' : 'font-weight: bold;'" class="message-hover" >
       <td>{{message.senderUserUsername}}</td>
       <td>{{message.letterTitle}}</td>
       <td>{{getDateFromTimeStamp(message.letterTime) }}</td>

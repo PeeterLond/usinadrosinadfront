@@ -14,7 +14,7 @@
         <ToolDropdown @event-update-selected-tool-id="setFilterToolId" />
       </div>
       <div>
-        <button @click="filterAdvertisements" class="btn btn-dark" type="submit">Filtreeri</button>
+        <button @click="filterAdvertisements" class="btn btn-dark mt-3" type="submit">Filtreeri</button>
       </div>
     </div>
     <div class="advertisements-inner">

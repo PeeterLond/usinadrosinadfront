@@ -10,7 +10,7 @@
       <input v-model="password" type="password" placeholder="Salasõna">
     </div>
     <div class="login-item">
-      <button @click="login" class="btn btn-dark" type="submit">Logi sisse</button>
+      <button @click="login" class="btn btn-dark mb-4" type="submit">Logi sisse</button>
     </div>
     <div class="login-item">
       <router-link class="register-item" to="/user"><p>Registreeri kasutaja</p></router-link>

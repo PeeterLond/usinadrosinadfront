@@ -92,6 +92,7 @@ footer {
 
 .home-header {
     background: linear-gradient(to right, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.2));
+    border-radius: 4px;
 }
 
 .login-master {
@@ -108,9 +109,6 @@ footer {
 
 .register-item {
     color: black;
-    text-decoration: none;
-    vertical-align: middle;
-    font-family: "Montserrat", sans-serif;
 }
 
 .alert-master {
@@ -133,7 +131,8 @@ footer {
     height: 100%;
     width: 51%;
     margin-left: 25%;
-    background-color: rgba(255, 255, 255, 0.9);
+    background: linear-gradient(to right, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.1));
+
 }
 
 .user-item {
@@ -169,20 +168,17 @@ td {
     align-items: center;
 }
 
-.dashboard-width {
+.profile-width {
     width: 30%;
 }
 
-.dashboard-item-intro {
-    width: 100%;
-    background-color: rgba(255, 255, 255, 0.9);
+.profile-intro {
     padding: 2%;
-    justify-content: space-between;
-
 }
 
 .dashboard-item-profile {
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(255, 255, 255, 0.4);
+    border-radius: 4px;
 }
 
 .dashboard-advertisements {
@@ -216,7 +212,8 @@ td {
 }
 
 .feedback-item {
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.4);
+    border-radius: 4px;
     display: flex;
     margin: 1% 0;
 }
@@ -239,7 +236,7 @@ td {
     flex-direction: column;
     width: 30%;
     margin-left: 35%;
-    background: rgb(255, 255, 255, 0.8);
+    background: rgb(255, 255, 255, 0.4);
 }
 
 .ad-view-footer {
@@ -280,10 +277,6 @@ td {
 
 .advertisement-chore-header {
     align-self: flex-start;
-    margin-left: 17%;
-}
-
-.advertisement-chore-items {
     margin-left: 17%;
 }
 
@@ -471,7 +464,8 @@ td {
 .outbox {
     overflow: auto;
     width: 45%;
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
     height: 30vh;
 }
 
@@ -487,6 +481,7 @@ td {
 
 .message-hover {
     cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.6);;
 }
 
 .message-hover:hover {

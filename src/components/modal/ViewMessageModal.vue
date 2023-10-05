@@ -9,8 +9,10 @@
       <div class="fs-4">{{message.letterBody}}</div>
     </template>
     <template #footer>
-      <button class="btn btn-dark" type="submit" @click="closeModal">Tagasi</button>
-      <button v-if="!hide" class="btn btn-dark" @click="openAnswerModal">Vasta</button>
+      <div class="my-modal-footer">
+        <button class="btn btn-dark" type="submit" @click="closeModal">Tagasi</button>
+        <button v-if="!hide" class="btn btn-dark" @click="openAnswerModal">Vasta</button>
+      </div>
     </template>
   </Modal>
 </template>

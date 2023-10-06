@@ -1,80 +1,83 @@
 <template>
   <div v-if="isChoresAdding" class="advertisement-view-master chores-master">
-      <div class="advertisement-chore-header">
-        <AlertSuccess :alert-message="successMessage"></AlertSuccess>
-        <AlertDanger :alert-message="errorResponse.message"></AlertDanger>
-        <h4 class="mb-2">Vali Teenused:</h4>
-      </div>
-      <div class="advertisement-chore-items">
-        <table>
-          <tr v-for="chore in choreResponse">
-            <td>{{ chore.choreName }}</td>
-            <td>
-              <button v-if="!isChoreSelected[chore.choreId - 1]" @click="handleAdvertisementChoreAdd(chore.choreId)"
-                      class="btn btn-dark" type="submit">Vali
-              </button>
-              <button v-else @click="handleAdvertisementChoreDelete(chore.choreId)" class="btn btn-dark" type="submit">
-                Eemalda
-              </button>
-            </td>
-          </tr>
-        </table>
-      </div>
-      <div class="ad-view-footer chores-footer">
-        <button v-if="!advertisementHasChores" @click="removeAddedAdvertisementAndAdvertisementChores"
-                class="btn btn-dark" type="submit">Katkesta
-        </button>
-        <button v-else @click="goBackToEdit" class="btn btn-dark" type="submit">Tagasi</button>
-        <button v-if="!advertisementHasChores" @click="validateAndPushToAdvertisements(NEW_ADVERTISEMENT_ADDED())"
-                class="btn btn-dark" type="submit">Kinnita
-        </button>
-        <button v-else @click="validateAndPushToAdvertisements(ADVERTISEMENT_UPDATED())"
-                class="btn btn-dark" type="submit">Muuda
-        </button>
-      </div>
+    <div class="advertisement-chore-header">
+      <AlertSuccess :alert-message="successMessage"></AlertSuccess>
+      <AlertDanger :alert-message="errorResponse.message"></AlertDanger>
+      <h4 class="mb-2">Vali Teenused:</h4>
+    </div>
+    <div class="advertisement-chore-items">
+      <table>
+        <tr v-for="chore in choreResponse">
+          <td>{{ chore.choreName }}</td>
+          <td>
+            <button v-if="!isChoreSelected[chore.choreId - 1]" @click="handleAdvertisementChoreAdd(chore.choreId)"
+                    class="btn btn-dark" type="submit">Vali
+            </button>
+            <button v-else @click="handleAdvertisementChoreDelete(chore.choreId)" class="btn btn-dark" type="submit">
+              Eemalda
+            </button>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="ad-view-footer chores-footer">
+      <button v-if="!advertisementHasChores" @click="removeAddedAdvertisementAndAdvertisementChores"
+              class="btn btn-dark" type="submit">Katkesta
+      </button>
+      <button v-else @click="goBackToEdit" class="btn btn-dark" type="submit">Tagasi</button>
+      <button v-if="!advertisementHasChores" @click="validateAndPushToAdvertisements(NEW_ADVERTISEMENT_ADDED())"
+              class="btn btn-dark" type="submit">Kinnita
+      </button>
+      <button v-else @click="validateAndPushToAdvertisements(ADVERTISEMENT_UPDATED())"
+              class="btn btn-dark" type="submit">Muuda
+      </button>
+    </div>
   </div>
   <div v-else class="advertisement-view-master">
-      <div class="advertisement-view-header">
-        <AlertDanger :alert-message="errorResponse.message"></AlertDanger>
-        <h2 v-if="!isEdit">Lisa kuulutus:</h2>
-        <h2 v-else>Muuda kuulutust:</h2>
-      </div>
-      <div class="advertisement-view-info">
-        <table>
-          <tr>
-            <td><label for="county">Maakond</label></td>
-            <td>
-              <CountyDropdown @event-update-selected-county-id="setSelectedCountyId" ref="countyDropdownRef" id="county"/>
-            </td>
-          </tr>
-          <tr>
-            <td ><label for="city">Linn</label></td>
-            <td>
-              <CityDropdown @event-update-selected-city-id="setSelectedCityId" ref="cityDropdownRef" id="city"/>
-            </td>
-          </tr>
-          <tr>
-            <td><label for="lat">Koordinaadid (laius)</label></td>
-            <td><input v-model="advertisementRequest.coordinateLat" type="text" id="lat"></td>
-          </tr>
-          <tr>
-            <td><label for="long">Koordinaadid (pikkus)</label></td>
-            <td><input v-model="advertisementRequest.coordinateLongField" type="text" id="long"></td>
-          </tr>
-          <tr>
-            <td><label for="price">Tunnihind</label></td>
-            <td><input v-model="advertisementRequest.advertisementPrice" type="text" id="price"></td>
-          </tr>
-          <tr>
-            <td><label for="area">Pindala</label></td>
-            <td><input v-model="advertisementRequest.advertisementArea" type="text" id="area"></td>
-          </tr>
-        </table>
-      </div>
-      <div class="advertisement-view-textarea">
+    <div class="leaflet-map">
+      <LeafletMap ref="leafletMapRef"></LeafletMap>
+    </div>
+    <div class="advertisement-view-header">
+      <AlertDanger :alert-message="errorResponse.message"></AlertDanger>
+      <h2 v-if="!isEdit">Lisa kuulutus:</h2>
+      <h2 v-else>Muuda kuulutust:</h2>
+    </div>
+    <div class="advertisement-view-info">
+      <table>
+        <tr>
+          <td><label for="county">Maakond</label></td>
+          <td>
+            <CountyDropdown @event-update-selected-county-id="setSelectedCountyId" ref="countyDropdownRef" id="county"/>
+          </td>
+        </tr>
+        <tr>
+          <td><label for="city">Linn</label></td>
+          <td>
+            <CityDropdown @event-update-selected-city-id="setSelectedCityId" ref="cityDropdownRef" id="city"/>
+          </td>
+        </tr>
+        <tr>
+          <td><label for="long">Koordinaadid (pikkus)</label></td>
+          <td><input v-model="advertisementRequest.coordinateLongField" type="text" id="long"></td>
+        </tr>
+        <tr>
+          <td><label for="lat">Koordinaadid (laius)</label></td>
+          <td><input v-model="advertisementRequest.coordinateLat" type="text" id="lat"></td>
+        </tr>
+        <tr>
+          <td><label for="price">Tunnihind</label></td>
+          <td><input v-model="advertisementRequest.advertisementPrice" type="text" id="price"></td>
+        </tr>
+        <tr>
+          <td><label for="area">Pindala</label></td>
+          <td><input v-model="advertisementRequest.advertisementArea" type="text" id="area"></td>
+        </tr>
+      </table>
+    </div>
+    <div class="advertisement-view-textarea">
       <textarea v-model="advertisementRequest.advertisementDescription" placeholder="Kuulutuse tekst" class="mb-2"
-               cols="50" rows="4" ></textarea>
-      </div>
+                cols="50" rows="4"></textarea>
+    </div>
     <div class="ad-view-radios">
       <div v-for="type in typeResponse">
         <input v-model="advertisementRequest.typeId" type="radio" name="radio" :id="type.typeName " :value="type.typeId"
@@ -119,11 +122,12 @@ import {
 } from "@/assets/script/AlertMessage";
 import AlertSuccess from "@/components/alert/AlertSuccess.vue";
 import {useRoute} from "vue-router";
+import LeafletMap from "@/components/LeafletMap.vue";
 
 
 export default {
   name: 'AdvertisementView',
-  components: {AlertSuccess, AlertDanger, CityDropdown, CountyDropdown},
+  components: {LeafletMap, AlertSuccess, AlertDanger, CityDropdown, CountyDropdown},
   data() {
     return {
       isChoreSelected: [],
@@ -351,6 +355,8 @@ export default {
       ).then(response => {
         this.advertisementRequest = response.data
         this.setLocationFields()
+        this.$refs.leafletMapRef.addLocationToMap(this.advertisementRequest)
+        this.$refs.leafletMapRef.zoomInToLocationOnMap(this.advertisementRequest)
       }).catch(error => {
         router.push({name: 'errorRoute'})
       })

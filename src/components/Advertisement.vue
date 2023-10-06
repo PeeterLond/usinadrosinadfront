@@ -1,6 +1,6 @@
 <template>
   <AdvertisementModal ref="advertisementModal"></AdvertisementModal>
-  <div v-for="ad in advertisementResponse" @click="openAdvertisementModal(ad)" class="advertisements-item">
+  <div v-for="ad in advertisementResponse" @click="handleOnClick(ad)" class="advertisements-item">
     <div class="front">
       <div class="front-item">
         <UserImage :image-data-base64="ad.contactImageData" :img-height="ADVERTISEMENTS_IMAGE.height"
@@ -39,12 +39,25 @@ export default {
     advertisementResponse: {}
   },
   methods: {
+    handleOnClick(ad) {
+      this.openAdvertisementModal(ad);
+
+      if (this.hasCoordinates(ad)) {
+        this.$emit("event-zoom-to-location-on-map", ad)
+      }
+
+    },
+
     openAdvertisementModal(ad) {
       this.$refs.advertisementModal.ad = ad
       this.$refs.advertisementModal.getAdvertisementChores()
       this.$refs.advertisementModal.checkIfLoggedIn()
       this.$refs.advertisementModal.checkIfAdUserIsSameAsCurrentUser()
       this.$refs.advertisementModal.$refs.modalRef.openModal()
+    },
+
+    hasCoordinates(ad) {
+      return ad.coordinateLongField !== null && ad.coordinateLat !== null;
     },
   }
 }

@@ -500,3 +500,14 @@ td {
 .feedback-stars {
     display: flex;
 }
+
+#map {
+    height: 36vh;
+    width: 23vw;
+}
+
+.leaflet-map {
+    position: absolute;
+    bottom: 11%;
+    left: 3%;
+}

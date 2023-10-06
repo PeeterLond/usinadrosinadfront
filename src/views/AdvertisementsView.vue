@@ -17,6 +17,9 @@
         <button @click="filterAdvertisements" class="btn btn-dark mt-3" type="submit">Filtreeri</button>
       </div>
     </div>
+    <div class="leaflet-map">
+      <LeafletMap ref="leafletMapRef"></LeafletMap>
+    </div>
     <div class="advertisements-inner">
       <div class="advertisements-sort">
         <div class="sort-header">
@@ -39,7 +42,7 @@
         </div>
       </div>
       <div class="advertisements-ads">
-        <Advertisement :advertisement-response="advertisementResponse"/>
+        <Advertisement @event-zoom-to-location-on-map="handleZoomToLocation" :advertisement-response="advertisementResponse"/>
       </div>
     </div >
   </div>
@@ -54,10 +57,11 @@ import CountyDropdown from "@/components/dropdown/CountyDropdown.vue";
 import CityDropdown from "@/components/dropdown/CityDropdown.vue";
 import TypeDropdown from "@/components/dropdown/TypeDropdown.vue";
 import ToolDropdown from "@/components/dropdown/ToolDropdown.vue";
+import LeafletMap from "@/components/LeafletMap.vue";
 
 export default {
   name: 'AdvertisementsView',
-  components: {ToolDropdown, TypeDropdown, CityDropdown, CountyDropdown, Advertisement},
+  components: {LeafletMap, ToolDropdown, TypeDropdown, CityDropdown, CountyDropdown, Advertisement},
   data() {
     return {
       advertisementsFilterRequest: {
@@ -95,6 +99,10 @@ export default {
     }
   },
   methods: {
+    handleZoomToLocation(ad) {
+      this.$refs.leafletMapRef.zoomInToLocationOnMap(ad)
+    },
+
     filterAdvertisements() {
       this.$http.get("/advertisement-with-contact-filter", {
             params: {
@@ -152,6 +160,9 @@ export default {
       this.$http.get("/advertisement-with-contact")
           .then(response => {
             this.advertisementResponse = response.data
+            this.sortOldest()
+            this.$refs.leafletMapRef.advertisementResponse = this.advertisementResponse
+            this.$refs.leafletMapRef.addLocationsToMap()
           })
           .catch(error => {
             router.push({name: 'errorRoute'})

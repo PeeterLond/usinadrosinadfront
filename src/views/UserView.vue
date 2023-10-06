@@ -67,21 +67,23 @@
       </div>
       <div class="user-item-item">
         <table>
-          <tr>
-            <td v-if="!isEdit">
+          <tr v-if="!isEdit">
+            <td>
               <router-link to="/login">
                 <button type="submit" class="btn btn-dark m-3">Katkesta</button>
               </router-link>
             </td>
-            <td v-else>
+            <td>
+              <button @click="validateAndCreateContact" type="submit" class="btn btn-dark m-3">Kinnita</button>
+            </td>
+          </tr>
+          <tr v-else>
+            <td>
               <router-link to="/dashBoard">
                 <button type="submit" class="btn btn-dark m-3">Katkesta</button>
               </router-link>
             </td>
-            <td v-if="!isEdit">
-              <button @click="validateAndCreateContact" type="submit" class="btn btn-dark m-3">Kinnita</button>
-            </td>
-            <td v-else>
+            <td>
               <button @click="validateAndUpdateContact" type="submit" class="btn btn-dark m-3">Kinnita</button>
             </td>
           </tr>

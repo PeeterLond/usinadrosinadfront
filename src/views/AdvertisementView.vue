@@ -188,9 +188,11 @@ export default {
     ADVERTISEMENT_UPDATED() {
       return ADVERTISEMENT_UPDATED
     },
+
     NEW_ADVERTISEMENT_ADDED() {
       return NEW_ADVERTISEMENT_ADDED
     },
+
     setSelectedCountyId(selectedCountyId) {
       this.advertisementRequest.countyId = selectedCountyId
       this.$refs.cityDropdownRef.selectedCountyId = selectedCountyId

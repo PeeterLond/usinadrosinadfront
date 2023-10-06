@@ -148,6 +148,7 @@ export default {
     navigateToUserEditView() {
       router.push({name: 'userRoute', query: {userId: this.currentUserId}})
     },
+
     getUserContactInfo(userId) {
       this.$http.get("/contact-show", {
             params: {
@@ -160,6 +161,7 @@ export default {
         router.push({name: 'errorRoute'})
       })
     },
+
     getUserAdvertisementsWithContact(userId) {
       this.$http.get("/advertisement-user-with-contact", {
             params: {
@@ -173,6 +175,7 @@ export default {
         router.push({name: 'errorRoute'})
       })
     },
+
     checkIfAnotherUserDashboard() {
       this.isAnotherUserDashboard = !isNaN(this.anotherUserId)
     },
@@ -189,6 +192,7 @@ export default {
         router.push({name: 'errorRoute'})
       })
     },
+
     handleWriteFeedback() {
       this.$refs.feedbackModalRef.$refs.modalRef.openModal()
     },

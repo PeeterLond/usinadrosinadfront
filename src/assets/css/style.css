@@ -107,8 +107,16 @@ footer {
     margin: 2vh 0;
 }
 
-.register-item {
+.black-item {
     color: black;
+}
+
+.reset-password-master {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
 }
 
 .alert-master {

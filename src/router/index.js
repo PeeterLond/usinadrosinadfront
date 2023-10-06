@@ -7,6 +7,7 @@ import UserView from "@/views/UserView.vue";
 import advertisementView from "@/views/AdvertisementView.vue";
 import advertisementsView from "@/views/AdvertisementsView.vue";
 import mailboxView from "@/views/MailboxView.vue";
+import resetPasswordView from "@/views/ResetPasswordView.vue";
 
 const routes = [
   {
@@ -48,6 +49,11 @@ const routes = [
     path:'/mailbox',
     name: 'mailboxRoute',
     component: mailboxView
+  },
+  {
+    path:'/resetPassword',
+    name: 'resetPasswordRoute',
+    component: resetPasswordView
   },
 
 ]

@@ -111,6 +111,7 @@ import CountyDropdown from "@/components/dropdown/CountyDropdown.vue";
 import CityDropdown from "@/components/dropdown/CityDropdown.vue";
 import router from "@/router";
 import {USER_VIEW_IMAGE} from "@/assets/script/ImageSizes";
+import {CONTACT_USERNAME_UNAVAILABLE} from "@/assets/script/ErrorCode";
 
 export default {
   name: 'UserView',
@@ -221,6 +222,9 @@ export default {
         }, 2500)
       }).catch(error => {
         this.errorResponse = error.response.data
+        if (this.errorResponse.errorCode !== CONTACT_USERNAME_UNAVAILABLE) {
+          router.push({name: 'errorRoute'})
+        }
       })
     },
 

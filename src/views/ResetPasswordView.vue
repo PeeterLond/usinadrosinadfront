@@ -2,15 +2,18 @@
   <div class="reset-password-master">
     <AlertDanger :alert-message="errorResponse.message"></AlertDanger>
     <AlertSuccess :alert-message="successMessage"></AlertSuccess>
-    <div>
-      <p>Unustasid salasõna?</p>
+    <div class="reset-item">
+      <h3>Unustasid enda salasõna?</h3>
+    </div>
+    <div class="reset-item" >
+      <p>Sisesta enda email ja me saadame sulle sinu uue salasõna</p>
     </div>
     <div>
       <label class="me-3" for="email">Email</label>
       <input v-model="email" type="text" name="" id="email">
     </div>
     <div>
-      <button @click="handleResetPassword" class="btn btn-dark mt-5" type="submit">Saada</button>
+      <button @click="handleResetPassword" class="btn btn-dark mt-3" type="submit">Saada</button>
     </div>
   </div>
 

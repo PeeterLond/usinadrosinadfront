@@ -119,6 +119,18 @@ footer {
     justify-content: center;
 }
 
+.reset-item h3 {
+    position: absolute;
+    top: 20%;
+    left: 40%;
+}
+
+.reset-item p {
+    position: absolute;
+    top: 38%;
+    left: 37%;
+}
+
 .alert-master {
     display: flex;
     justify-content: center;
